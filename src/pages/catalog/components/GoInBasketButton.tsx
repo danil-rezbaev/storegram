@@ -12,7 +12,7 @@ const GoInBasketButton: FC<GoInBasketButtonProps> = (props) => {
   return (
     productsCount > 0
       ? (
-      <div className="catalog-page--control">
+      <div className="catalog-page--control goInBasketButton">
         <Button
           variant="success"
           className="text-white w-100"
