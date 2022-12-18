@@ -1,0 +1,21 @@
+@use "pages";
+@use "components";
+@import "variables";
+@import "~bootstrap/scss/bootstrap";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+}
+
+.app {
+  text-align: center;
+  margin: 0 auto;
+}
