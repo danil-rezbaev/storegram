@@ -1,4 +1,6 @@
 .goInBasketButton {
+  z-index: 10;
+
   @media (max-width: 768px) {
     font-size: 17px;
   }
@@ -7,7 +9,7 @@
     font-size: 15px;
   }
 
-  @media (max-width: 375px) {
-    font-size: 12px;
+  .btn {
+    font-size: inherit;
   }
 }

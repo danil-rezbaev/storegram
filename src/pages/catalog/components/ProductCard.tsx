@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap'
 import cs from 'classnames'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
 import { addProduct, removeProduct } from '../../../store/basketSlice'
-// import ProductInfo from '../../../components/productInfo/ProductInfo'
+import ProductInfo from '../../../components/productInfo/ProductInfo'
 
 export type ProductCardProps = {
   id: number,
@@ -31,12 +31,16 @@ const ProductCard: FC<ProductCardProps> = (props) => {
   })
 
   const currentElementCount = currentElement?.count ? currentElement.count : 0
-
   const cardRef = useRef<HTMLDivElement>(null)
 
   const [active, setActive] = useState<boolean>(false)
+  const [infoVisible, setInfoVisible] = useState<boolean>(false)
   const [quantity, setQuantity] = useState<number>(currentElementCount)
   const [totalPrice, setTotalPrice] = useState<number>(price)
+
+  const infoVisibleHandle = useCallback((value: boolean): void => {
+    setInfoVisible(value)
+  }, [])
 
   useEffect(() => {
     setTotalPrice(quantity * price)
@@ -49,6 +53,8 @@ const ProductCard: FC<ProductCardProps> = (props) => {
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = useCallback((event) => {
     const getName = event.currentTarget.name
+
+    setInfoVisible(true)
 
     if (getName === 'increment') {
       setQuantity(value => ++value)
@@ -122,13 +128,11 @@ const ProductCard: FC<ProductCardProps> = (props) => {
         </div>
       </div>
 
-      {/* <BottomPopup> */}
-      {/*  {title} */}
-      {/* </BottomPopup> */}
-
-      {/* <ProductInfo */}
-      {/*  {...props} */}
-      {/* /> */}
+      <ProductInfo
+        {...props}
+        show={infoVisible}
+        showHandle={infoVisibleHandle}
+      />
     </div>
   )
 }

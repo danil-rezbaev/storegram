@@ -29,9 +29,7 @@ const basketSlice = createSlice({
         state.products.push(action.payload)
       }
 
-      console.log('state.quantity before', state.quantity)
       state.quantity = state.products.reduce((accum, item) => accum += (item.count ? item.count : 0), 0)
-      console.log('state.quantity after', state.quantity)
       state.amount = state.products.reduce((accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
     },
     removeProduct (state, action: PayloadAction<ProductCardProps>) {
@@ -57,9 +55,6 @@ const basketSlice = createSlice({
       state.products = copyProducts
       state.quantity = copyProducts.reduce((accum, item) => accum += (item.count ? item.count : 0), 0)
       state.amount = copyProducts.reduce((accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
-
-      console.log('state.products.length', state.products.length)
-      console.log('copyProducts', [...copyProducts])
     },
     clearBasket (state) {
       state.products = []

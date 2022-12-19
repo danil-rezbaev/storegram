@@ -1,16 +1,19 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import BottomPopup from '../bottomPopup/BottomPopup'
 import { ProductCardProps } from '../../pages/catalog/components/ProductCard'
 import { Button, ButtonGroup } from 'react-bootstrap'
+import { ReactComponent as CloseIcon } from '../../assets/images/pages/catalog/close.svg'
 
 export type ProductInfoProperties = {
   id: number,
   title: string,
-  values: string[]
+  values: string[],
 }
 
 export type ProductInfoProps = ProductCardProps & {
   properties?: ProductInfoProperties[]
+  show: boolean,
+  showHandle: (value: boolean) => void,
 }
 
 const ProductInfo: FC<ProductInfoProps> = (props) => {
@@ -18,20 +21,25 @@ const ProductInfo: FC<ProductInfoProps> = (props) => {
     img,
     title,
     description,
-    properties
+    properties,
+    show,
+    showHandle
   } = props
 
-  const [visible, setVisible] = useState<boolean>(true)
-
-  const handleClose = () => setVisible(false)
-  // const handleShow = () => setShow(true)
+  const handleClose = () => showHandle(false)
 
   return (
     <BottomPopup
-      visible={visible}
+      title={title}
+      visible={show}
+      visibleHandle={showHandle}
       className="product-info"
     >
-      <Button onClick={handleClose}>+</Button>
+      <Button
+        className="product-info--close-btn bg-white text-black border-0"
+        onClick={handleClose}>
+        <CloseIcon/>
+      </Button>
 
       <div className="product-info--img-container">
         <img src={img} alt="" className="product-info--img"/>
@@ -42,7 +50,7 @@ const ProductInfo: FC<ProductInfoProps> = (props) => {
           <h1 className="product-info--title">{title}</h1>
         </div>
 
-        <p className="product-info--header">{description}</p>
+        <p className="product-info--description">{description}</p>
 
         {properties?.map((item) => (
           <div

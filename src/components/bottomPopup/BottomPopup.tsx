@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import cs from 'classnames'
 import { Offcanvas } from 'react-bootstrap'
 
@@ -6,35 +6,28 @@ export type BottomPopupProps = {
   title?: string,
   className?: string,
   children: React.ReactNode,
-  visible: boolean
+  visible: boolean,
+  visibleHandle: (value: boolean) => void,
 }
 
 const BottomPopup: FC<BottomPopupProps> = (props) => {
   const {
-    title,
     className,
     children,
-    visible
+    visible,
+    visibleHandle
   } = props
 
-  const [show, setShow] = useState(visible)
-
-  const handleClose = () => setShow(false)
-  // const handleShow = () => setShow(true)
+  const handleClose = () => visibleHandle(false)
 
   return (
     <Offcanvas
       className={cs('bottom-popup', className)}
-      show={show}
+      show={visible}
       onHide={handleClose}
       placement="bottom"
       {...props}
     >
-      <Offcanvas.Header closeButton>
-        { title
-          ? <Offcanvas.Title> {title} </Offcanvas.Title>
-          : null }
-      </Offcanvas.Header>
 
       <Offcanvas.Body>
         { children }
