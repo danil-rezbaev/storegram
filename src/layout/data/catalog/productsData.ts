@@ -1,4 +1,6 @@
-export const productsData = [
+import { ProductType } from '../../types/catalog/productsDataTypes'
+
+export const productsData: ProductType[] = [
   {
     id: 1,
     category: {
@@ -14,20 +16,25 @@ export const productsData = [
         weight: 600,
         price: 500,
         count: 0,
-        options: {
-          properties: [
-            {
-              id: 1,
-              title: 'Размер',
-              values: ['Маленькая', 'Средняя', 'Большая']
-            },
-            {
-              id: 2,
-              title: 'Тесто',
-              values: ['Тонкое', 'Стандартное']
-            }
-          ]
-        }
+        properties: [
+          {
+            id: 1,
+            title: 'Размер',
+            values: [
+              { id: 1, title: 'Маленькая', priceСhange: -200 },
+              { id: 2, title: 'Средняя', priceСhange: 0 },
+              { id: 3, title: 'Большая', priceСhange: +250 }
+            ]
+          },
+          {
+            id: 2,
+            title: 'Тесто',
+            values: [
+              { id: 1, title: 'Тонкое', priceСhange: -100 },
+              { id: 2, title: 'Стандартное', priceСhange: 0 }
+            ]
+          }
+        ]
       },
       {
         id: 2,

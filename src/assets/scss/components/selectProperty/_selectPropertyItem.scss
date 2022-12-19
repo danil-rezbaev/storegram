@@ -1,0 +1,30 @@
+@use "../../variables";
+
+.select-property-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-radius: 10px;
+  background: variables.$light-gray;
+  margin: 18px 0;
+
+  .select-property-item--title {
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.2;
+    color: variables.$black;
+    margin: 0;
+  }
+
+  .select-property-item--button {
+    background: variables.$black;
+    color: variables.$white;
+
+    &:hover, &:focus {
+      background: variables.$white;
+      color: variables.$black;
+      border-color: initial;
+    }
+  }
+}

@@ -12,6 +12,7 @@ export type BottomPopupProps = {
 
 const BottomPopup: FC<BottomPopupProps> = (props) => {
   const {
+    title,
     className,
     children,
     visible,
@@ -28,6 +29,10 @@ const BottomPopup: FC<BottomPopupProps> = (props) => {
       placement="bottom"
       {...props}
     >
+
+      {title
+        ? <Offcanvas.Header title={title}/>
+        : null}
 
       <Offcanvas.Body>
         { children }

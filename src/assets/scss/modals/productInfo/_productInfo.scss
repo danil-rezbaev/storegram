@@ -6,6 +6,8 @@
     width: calc(100% + 32px);
     margin-left: -16px;
     margin-top: -16px;
+    min-height: 200px;
+    max-height: 450px;
     overflow: hidden;
   }
 
@@ -30,7 +32,11 @@
     margin-top: 25px;
   }
 
-  .product-info--header {}
+  .product-info--header {
+    display: grid;
+    grid-template-columns: 1fr 30px;
+    align-items: center;
+  }
 
   .product-info--title {
     font-weight: 600;

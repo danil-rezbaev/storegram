@@ -1,17 +1,12 @@
 import React, { FC } from 'react'
-import BottomPopup from '../bottomPopup/BottomPopup'
 import { ProductCardProps } from '../../pages/catalog/components/ProductCard'
-import { Button, ButtonGroup } from 'react-bootstrap'
+import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { ReactComponent as CloseIcon } from '../../assets/images/pages/catalog/close.svg'
-
-export type ProductInfoProperties = {
-  id: number,
-  title: string,
-  values: string[],
-}
+import { ReactComponent as InfoIcon } from '../../assets/images/pages/catalog/info.svg'
+import BottomPopup from '../../components/bottomPopup/BottomPopup'
+import SelectPropertyItem from '../../components/selectProperty/SelectPropertyItem'
 
 export type ProductInfoProps = ProductCardProps & {
-  properties?: ProductInfoProperties[]
   show: boolean,
   showHandle: (value: boolean) => void,
 }
@@ -22,15 +17,28 @@ const ProductInfo: FC<ProductInfoProps> = (props) => {
     title,
     description,
     properties,
+    price,
     show,
     showHandle
   } = props
 
+  // const [tooltipVisible, setTooltipVisible] = useState(false)
+  // const target = useRef(null)
+
+  // const tooltipVisibleToggler = useCallback(() => {
+  //   setTooltipVisible(value => !value)
+  // }, [])
+
   const handleClose = () => showHandle(false)
+
+  const renderTooltip = () => (
+    <Tooltip className="button-tooltip" style={{ zIndex: 10000000 }}>
+      Simple tooltip
+    </Tooltip>
+  )
 
   return (
     <BottomPopup
-      title={title}
       visible={show}
       visibleHandle={showHandle}
       className="product-info"
@@ -48,20 +56,24 @@ const ProductInfo: FC<ProductInfoProps> = (props) => {
       <div className="product-info--content">
         <div className="product-info--header">
           <h1 className="product-info--title">{title}</h1>
+
+          <OverlayTrigger
+            placement="left-end"
+            overlay={renderTooltip}
+          >
+            <InfoIcon/>
+          </OverlayTrigger>
         </div>
 
         <p className="product-info--description">{description}</p>
 
         {properties?.map((item) => (
-          <div
+          <SelectPropertyItem
             key={item.id}
-            className="product-info--options"
-          >
-            <p>{item.title}</p>
-            <ButtonGroup className="mb-2">
-              {item.values.map((value, index) => <Button key={index}>{ value }</Button>)}
-            </ButtonGroup>
-          </div>
+            title={item.title}
+            properties={item.values}
+            priceChange={price}
+          />
         ))}
       </div>
     </BottomPopup>

@@ -3,17 +3,10 @@ import { Button } from 'react-bootstrap'
 import cs from 'classnames'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
 import { addProduct, removeProduct } from '../../../store/basketSlice'
-import ProductInfo from '../../../components/productInfo/ProductInfo'
+import ProductInfo from '../../../modals/ProductInfo/ProductInfo'
+import { ProductItem } from '../../../layout/types/catalog/productsDataTypes'
 
-export type ProductCardProps = {
-  id: number,
-  img: string,
-  title: string,
-  description?: string,
-  weight?: number,
-  price: number,
-  count?: number
-}
+export type ProductCardProps = ProductItem
 
 const ProductCard: FC<ProductCardProps> = (props) => {
   const {
