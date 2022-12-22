@@ -20,18 +20,20 @@ export const productsData: ProductType[] = [
           {
             id: 1,
             title: 'Размер',
+            type: 'checkbox',
             values: [
-              { id: 1, title: 'Маленькая', priceСhange: -200 },
-              { id: 2, title: 'Средняя', priceСhange: 0 },
-              { id: 3, title: 'Большая', priceСhange: +250 }
+              { id: 1, title: 'Маленькая', priceChange: -200 },
+              { id: 2, title: 'Средняя', priceChange: 0 },
+              { id: 3, title: 'Большая', priceChange: +250 }
             ]
           },
           {
             id: 2,
             title: 'Тесто',
+            type: 'radio',
             values: [
-              { id: 1, title: 'Тонкое', priceСhange: -100 },
-              { id: 2, title: 'Стандартное', priceСhange: 0 }
+              { id: 1, title: 'Тонкое', priceChange: -100 },
+              { id: 2, title: 'Стандартное', priceChange: 0 }
             ]
           }
         ]

@@ -31,7 +31,9 @@ const BottomPopup: FC<BottomPopupProps> = (props) => {
     >
 
       {title
-        ? <Offcanvas.Header title={title}/>
+        ? <Offcanvas.Header title={title}>
+          <Offcanvas.Title>{ title }</Offcanvas.Title>
+        </Offcanvas.Header>
         : null}
 
       <Offcanvas.Body>

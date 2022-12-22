@@ -6,12 +6,15 @@ export type ProductCategory = {
 export type ProductItemPropertiesValues = {
   id: number,
   title: string,
-  priceСhange: number
+  priceChange: number
 }
+
+export type Fields = 'checkbox' | 'radio'
 
 export type ProductItemProperties = {
   id: number,
   title: string,
+  type: Fields,
   values: ProductItemPropertiesValues[]
 }
 
@@ -24,6 +27,10 @@ export type ProductItem = {
   price: number,
   count?: number,
   properties?: ProductItemProperties[]
+}
+
+export type ProductItemStore = ProductItem & {
+  currentProperties: ProductItemPropertiesValues[]
 }
 
 export type ProductType = {

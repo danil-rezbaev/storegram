@@ -17,7 +17,7 @@ const ProductInfo: FC<ProductInfoProps> = (props) => {
     title,
     description,
     properties,
-    price,
+    // price,
     show,
     showHandle
   } = props
@@ -72,7 +72,6 @@ const ProductInfo: FC<ProductInfoProps> = (props) => {
             key={item.id}
             title={item.title}
             properties={item.values}
-            priceChange={price}
           />
         ))}
       </div>

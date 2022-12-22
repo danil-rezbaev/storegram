@@ -6,13 +6,11 @@ import { ProductItemPropertiesValues } from '../../layout/types/catalog/products
 export type SelectPropertyItemProps = {
   title: string,
   properties: ProductItemPropertiesValues[],
-  priceChange: number
 }
 
 const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
   const {
     title,
-    priceChange,
     properties
   } = props
 
@@ -40,11 +38,10 @@ const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
       </Button>
 
       <SelectPropertyQuiz
-        title={title}
+        title={titleFormat}
         properties={properties}
         show={modalVisible}
         showHandle={modalVisibleHandle}
-        priceChange={priceChange}
       />
     </div>
   )

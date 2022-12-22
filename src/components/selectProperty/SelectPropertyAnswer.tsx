@@ -1,42 +1,49 @@
-import React, { FC, useCallback, useState } from 'react'
-import { Button } from 'react-bootstrap'
+import React, { FC, useCallback, useMemo } from 'react'
 import cs from 'classnames'
+import { ReactComponent as CheckIcon } from '../../assets/images/pages/catalog/check.svg'
+import { Fields } from '../../layout/types/catalog/productsDataTypes'
 
 export type SelectPropertyAnswerProps = {
   title: string,
-  selected: boolean,
   priceChange: number,
   type: 'radio' | 'checkbox',
+  checkList: string[],
+  checkListHandler: (value: string, type: Fields) => void,
 }
 
 const SelectPropertyAnswer: FC<SelectPropertyAnswerProps> = (props) => {
   const {
     title,
     type,
-    priceChange = 0
+    priceChange = 0,
+    checkList,
+    checkListHandler
   } = props
 
-  const [selected, setSelected] = useState<boolean>(false)
+  const isActive = useMemo(() => {
+    return checkList.find((item) => item === title)
+  }, [checkList])
 
-  const toggleSelected = useCallback(() => {
-    setSelected(value => !value)
-  }, [])
+  const selectedHandler = useCallback(() => {
+    checkListHandler(title, type)
+  }, [checkList])
 
   return (
-    <div className={ cs('select-property-answer', selected ? 'selected' : null) }>
-      <div className={ cs('select-property-answer--field', type) }></div>
+    <button
+      type="button"
+      className={ cs('select-property-answer', isActive ? 'selected' : null) }
+      onClick={selectedHandler}
+      >
+      <div className={ cs('select-property-answer--field', type) }>
+        <CheckIcon className="icon"/>
+      </div>
 
       <p className="select-property-answer--title">{title}</p>
 
-      <Button
-        variant="black"
-        size="sm"
-        className="select-property-item--button"
-        onClick={toggleSelected}
-      >
+      <span className="select-property-item--price">
         { priceChange }
-      </Button>
-    </div>
+      </span>
+    </button>
   )
 }
 

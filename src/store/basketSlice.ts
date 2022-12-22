@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import _ from 'lodash'
-import { ProductCardProps } from '../pages/catalog/components/ProductCard'
+import { ProductItem } from '../layout/types/catalog/productsDataTypes'
 
 export type BasketState = {
-  products: ProductCardProps[],
+  products: ProductItem[],
   amount: number,
   quantity: number
 }
@@ -18,7 +18,7 @@ const basketSlice = createSlice({
   name: 'basket',
   initialState,
   reducers: {
-    addProduct: function (state, action: PayloadAction<ProductCardProps>) {
+    addProduct: function (state, action: PayloadAction<ProductItem>) {
       const currentProduct = state.products.find((product) => {
         return product.title === action.payload.title
       })
@@ -32,7 +32,7 @@ const basketSlice = createSlice({
       state.quantity = state.products.reduce((accum, item) => accum += (item.count ? item.count : 0), 0)
       state.amount = state.products.reduce((accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
     },
-    removeProduct (state, action: PayloadAction<ProductCardProps>) {
+    removeProduct (state, action: PayloadAction<ProductItem>) {
       const currentProduct = state.products.find((product) => {
         return product.title === action.payload.title
       })

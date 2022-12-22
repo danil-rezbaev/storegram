@@ -1,0 +1,26 @@
+@use "../../variables";
+
+.select-property-quiz {
+  height: 90% !important;
+
+  .select-property-quiz--content {}
+
+  .select-property-quiz--close-btn {
+    background: variables.$black;
+    color: variables.$white;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    position: absolute;
+    right: 16px;
+    top: 10px;
+    border-radius: 100%;
+  }
+
+  .select-property-quiz--next-btn {
+    margin-top: 1.5em;
+    width: 100%;
+    color: variables.$white;
+    background: variables.$green;
+  }
+}

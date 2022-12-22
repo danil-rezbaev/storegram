@@ -19,4 +19,10 @@ body {
 .app {
   text-align: center;
   margin: 0 auto;
+
+  .offcanvas .offcanvas-bottom {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    overflow: hidden;
+  }
 }
