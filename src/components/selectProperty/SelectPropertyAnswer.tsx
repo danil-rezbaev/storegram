@@ -1,18 +1,20 @@
 import React, { FC, useCallback, useMemo } from 'react'
 import cs from 'classnames'
 import { ReactComponent as CheckIcon } from '../../assets/images/pages/catalog/check.svg'
-import { Fields } from '../../layout/types/catalog/productsDataTypes'
+import { Fields, ProductItemPropertiesValue } from '../../layout/types/catalog/productsDataTypes'
 
 export type SelectPropertyAnswerProps = {
+  id: number,
   title: string,
   priceChange: number,
   type: 'radio' | 'checkbox',
-  checkList: string[],
-  checkListHandler: (value: string, type: Fields) => void,
+  checkList: ProductItemPropertiesValue[],
+  checkListHandler: (value: ProductItemPropertiesValue, type: Fields) => void,
 }
 
 const SelectPropertyAnswer: FC<SelectPropertyAnswerProps> = (props) => {
   const {
+    id,
     title,
     type,
     priceChange = 0,
@@ -21,11 +23,14 @@ const SelectPropertyAnswer: FC<SelectPropertyAnswerProps> = (props) => {
   } = props
 
   const isActive = useMemo(() => {
-    return checkList.find((item) => item === title)
+    return checkList.find((item) => {
+      return item.id === id
+    })
   }, [checkList])
 
   const selectedHandler = useCallback(() => {
-    checkListHandler(title, type)
+    const newObj = { id, title, priceChange }
+    checkListHandler(newObj, type)
   }, [checkList])
 
   return (

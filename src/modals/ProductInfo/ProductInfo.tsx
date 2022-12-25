@@ -1,18 +1,19 @@
 import React, { FC } from 'react'
-import { ProductCardProps } from '../../pages/catalog/components/ProductCard'
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { ReactComponent as CloseIcon } from '../../assets/images/pages/catalog/close.svg'
 import { ReactComponent as InfoIcon } from '../../assets/images/pages/catalog/info.svg'
 import BottomPopup from '../../components/bottomPopup/BottomPopup'
 import SelectPropertyItem from '../../components/selectProperty/SelectPropertyItem'
+import { ProductItem } from '../../layout/types/catalog/productsDataTypes'
 
-export type ProductInfoProps = ProductCardProps & {
+export type ProductInfoProps = ProductItem & {
   show: boolean,
   showHandle: (value: boolean) => void,
 }
 
 const ProductInfo: FC<ProductInfoProps> = (props) => {
   const {
+    id,
     img,
     title,
     description,
@@ -70,6 +71,9 @@ const ProductInfo: FC<ProductInfoProps> = (props) => {
         {properties?.map((item) => (
           <SelectPropertyItem
             key={item.id}
+            id={item.id}
+            productId={id}
+            type={item.type}
             title={item.title}
             properties={item.values}
           />

@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
-import { Button } from 'react-bootstrap'
 import { useAppSelector } from '../../../hooks/redux'
+import BottomButton from '../../../components/BottomButton'
 
 export type GoInBasketButtonProps = unknown
 
@@ -12,15 +12,9 @@ const GoInBasketButton: FC<GoInBasketButtonProps> = (props) => {
   return (
     productsCount > 0
       ? (
-      <div className="catalog-page--control goInBasketButton">
-        <Button
-          variant="success"
-          className="text-white w-100"
-          size="lg"
-        >
-          В корзине { basketStore.quantity } товар на сумму { basketStore.amount }
-        </Button>
-      </div>
+      <BottomButton className="goInBasketButton">
+        В корзине { basketStore.quantity } товар на сумму { basketStore.amount }
+      </BottomButton>
         )
       : null
   )

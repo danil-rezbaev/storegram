@@ -3,8 +3,9 @@ export type ProductCategory = {
   title: string
 }
 
-export type ProductItemPropertiesValues = {
+export type ProductItemPropertiesValue = {
   id: number,
+  productId?: number,
   title: string,
   priceChange: number
 }
@@ -15,7 +16,7 @@ export type ProductItemProperties = {
   id: number,
   title: string,
   type: Fields,
-  values: ProductItemPropertiesValues[]
+  values: ProductItemPropertiesValue[]
 }
 
 export type ProductItem = {
@@ -30,7 +31,7 @@ export type ProductItem = {
 }
 
 export type ProductItemStore = ProductItem & {
-  currentProperties: ProductItemPropertiesValues[]
+  currentProperties: Record<string, ProductItemPropertiesValue[]>
 }
 
 export type ProductType = {

@@ -17,14 +17,14 @@
     margin: 0;
   }
 
-  .select-property-item--button {
-    background: variables.$black;
-    color: variables.$white;
-
-    &:hover, &:focus {
-      background: variables.$white;
-      color: variables.$black;
-      border-color: initial;
-    }
-  }
+  //.select-property-item--button {
+  //  background: variables.$black;
+  //  color: variables.$white;
+  //
+  //  &:hover, &:focus {
+  //    background: variables.$white;
+  //    color: variables.$black;
+  //    border-color: initial;
+  //  }
+  //}
 }

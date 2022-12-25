@@ -10,6 +10,7 @@ export type ProductCardProps = ProductItem
 
 const ProductCard: FC<ProductCardProps> = (props) => {
   const {
+    id,
     img,
     title,
     description,
@@ -20,7 +21,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
   const dispatch = useAppDispatch()
   const basket = useAppSelector(state => state.basket)
   const currentElement = basket.products.find((item) => {
-    return item.title === title
+    return item.id === id
   })
 
   const currentElementCount = currentElement?.count ? currentElement.count : 0
@@ -51,10 +52,10 @@ const ProductCard: FC<ProductCardProps> = (props) => {
 
     if (getName === 'increment') {
       setQuantity(value => ++value)
-      dispatch(addProduct({ ...props, count: quantity + 1 }))
+      dispatch(addProduct({ ...props, count: quantity + 1, currentProperties: {} }))
     } else if (getName === 'decrement') {
       setQuantity(value => --value)
-      dispatch(removeProduct({ ...props, count: quantity - 1 }))
+      dispatch(removeProduct({ ...props, count: quantity - 1, currentProperties: {} }))
     }
 
     activeAnimation()

@@ -1,23 +1,34 @@
 import React, { FC, useCallback, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import SelectPropertyQuiz from './SelectPropertyQuiz'
-import { ProductItemPropertiesValues } from '../../layout/types/catalog/productsDataTypes'
+import { Fields, ProductItemPropertiesValue } from '../../layout/types/catalog/productsDataTypes'
 
 export type SelectPropertyItemProps = {
+  id: number,
+  productId: number,
   title: string,
-  properties: ProductItemPropertiesValues[],
+  type: Fields,
+  properties: ProductItemPropertiesValue[],
 }
 
 const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
   const {
+    id,
+    type,
+    productId,
     title,
     properties
   } = props
 
   const [modalVisible, setModalVisible] = useState<boolean>(false)
+  const [selected, setSelected] = useState<boolean>(false)
 
   const modalVisibleHandle = useCallback((value: boolean): void => {
     setModalVisible(value)
+  }, [])
+
+  const selectedHandle = useCallback((value: boolean): void => {
+    setSelected(value)
   }, [])
 
   const showModal = () => modalVisibleHandle(true)
@@ -29,19 +40,23 @@ const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
       <p className="select-property-item--title">{ titleFormat }</p>
 
       <Button
-        variant="black"
+        variant={selected ? 'success' : 'dark'}
         size="sm"
-        className="select-property-item--button"
+        className="text-white"
         onClick={showModal}
       >
-        выбрать
+        {selected ? 'выбрано' : 'выбрать'}
       </Button>
 
       <SelectPropertyQuiz
-        title={titleFormat}
-        properties={properties}
+        id={id}
+        productId={productId}
+        title={title}
+        type={type}
+        values={properties}
         show={modalVisible}
         showHandle={modalVisibleHandle}
+        selectedHandle={selectedHandle}
       />
     </div>
   )

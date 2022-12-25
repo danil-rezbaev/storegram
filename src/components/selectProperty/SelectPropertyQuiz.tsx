@@ -1,40 +1,50 @@
-import React, { FC, useCallback, useState } from 'react'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { ReactComponent as CloseIcon } from '../../assets/images/pages/catalog/close.svg'
 import BottomPopup from '../../components/bottomPopup/BottomPopup'
-import { Fields, ProductItemPropertiesValues } from '../../layout/types/catalog/productsDataTypes'
+import { Fields, ProductItemProperties, ProductItemPropertiesValue } from '../../layout/types/catalog/productsDataTypes'
 import SelectPropertyAnswer from './SelectPropertyAnswer'
 import _ from 'lodash'
+import { useAppDispatch } from '../../hooks/redux'
+import { addProperties } from '../../store/basketSlice'
 
-export type SelectPropertyQuizProps = {
-  title: string,
-  properties: ProductItemPropertiesValues[],
+export type SelectPropertyQuizProps = ProductItemProperties & {
+  productId: number,
   show: boolean,
   showHandle: (value: boolean) => void,
+  selectedHandle: (value: boolean) => void,
 }
 
 const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
   const {
+    productId,
     title,
-    properties,
+    values,
     show,
-    showHandle
+    showHandle,
+    selectedHandle
   } = props
+
+  const titleFormat = `Выбрать ${title.toLowerCase()}`
 
   const handleClose = () => showHandle(false)
 
-  const [checkList, setCheckList] = useState<string[]>([])
+  const [checkList, setCheckList] = useState<ProductItemPropertiesValue[]>([])
 
-  const isExist = useCallback((value: string): boolean => (
-    Boolean(_.find(checkList, (item) => (item === value)))
+  useEffect(() => {
+    selectedHandle(checkList.length > 0)
+  }, [checkList])
+
+  const isExist = useCallback((value: ProductItemPropertiesValue): boolean => (
+    Boolean(_.find(checkList, (item) => (item.id === value.id)))
   ), [checkList])
 
-  const checkListHandler = useCallback((value: string, type: Fields): void => {
+  const checkListHandler = useCallback((value: ProductItemPropertiesValue, type: Fields): void => {
     const result = isExist(value)
 
     if (result) {
       setCheckList(array => _.filter(array, (item) => (
-        item !== value
+        item.id !== value.id
       )))
     } else {
       if (type === 'checkbox') {
@@ -45,9 +55,16 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
     }
   }, [isExist, checkList])
 
+  const dispatch = useAppDispatch()
+
+  const nextButtonHandle = useCallback(() => {
+    dispatch(addProperties({ productId, checkList, questionTitle: title }))
+    handleClose()
+  }, [checkList])
+
   return (
     <BottomPopup
-      title={title}
+      title={titleFormat}
       visible={show}
       visibleHandle={showHandle}
       className="select-property-quiz"
@@ -59,11 +76,12 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
           <CloseIcon/>
         </Button>
 
-        {properties.map((item) => (
+        {values.map((item) => (
           <SelectPropertyAnswer
             key={item.id}
-            type="checkbox"
+            id={item.id}
             title={item.title}
+            type="checkbox"
             priceChange={item.priceChange}
             checkList={checkList}
             checkListHandler={checkListHandler}
@@ -76,8 +94,9 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
             size="lg"
             variant="success"
             className="select-property-quiz--next-btn"
+            onClick={nextButtonHandle}
           >
-            Далее
+            Выбрать
           </Button>
             )
           : null }
