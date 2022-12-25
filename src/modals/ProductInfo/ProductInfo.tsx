@@ -5,6 +5,7 @@ import { ReactComponent as InfoIcon } from '../../assets/images/pages/catalog/in
 import BottomPopup from '../../components/bottomPopup/BottomPopup'
 import SelectPropertyItem from '../../components/selectProperty/SelectPropertyItem'
 import { ProductItem } from '../../layout/types/catalog/productsDataTypes'
+import BottomButton from '../../components/BottomButton'
 
 export type ProductInfoProps = ProductItem & {
   show: boolean,
@@ -19,7 +20,7 @@ const ProductInfo: FC<ProductInfoProps> = (props) => {
     title,
     description,
     properties,
-    // price,
+    price,
     show,
     showHandle
   } = props
@@ -74,6 +75,10 @@ const ProductInfo: FC<ProductInfoProps> = (props) => {
           />
         ))}
       </div>
+
+      <BottomButton>
+        Добавить в корзину за {price} р
+      </BottomButton>
     </BottomPopup>
   )
 }
