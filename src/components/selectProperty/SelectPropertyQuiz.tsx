@@ -21,6 +21,7 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
     title,
     values,
     show,
+    type,
     showHandle,
     selectedHandle
   } = props
@@ -81,7 +82,7 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
             key={item.id}
             id={item.id}
             title={item.title}
-            type="checkbox"
+            type={type}
             priceChange={item.priceChange}
             checkList={checkList}
             checkListHandler={checkListHandler}
