@@ -15,6 +15,7 @@ const ProductInfo: FC<ProductInfoProps> = (props) => {
   const {
     id,
     img,
+    info,
     title,
     description,
     properties,
@@ -23,18 +24,11 @@ const ProductInfo: FC<ProductInfoProps> = (props) => {
     showHandle
   } = props
 
-  // const [tooltipVisible, setTooltipVisible] = useState(false)
-  // const target = useRef(null)
-
-  // const tooltipVisibleToggler = useCallback(() => {
-  //   setTooltipVisible(value => !value)
-  // }, [])
-
   const handleClose = () => showHandle(false)
 
-  const renderTooltip = () => (
-    <Tooltip className="button-tooltip" style={{ zIndex: 10000000 }}>
-      Simple tooltip
+  const renderTooltip = (props: Record<string, any>) => (
+    <Tooltip id="tooltip" {...props}>
+      { info }
     </Tooltip>
   )
 
@@ -58,12 +52,13 @@ const ProductInfo: FC<ProductInfoProps> = (props) => {
         <div className="product-info--header">
           <h1 className="product-info--title">{title}</h1>
 
-          <OverlayTrigger
-            placement="left-end"
-            overlay={renderTooltip}
-          >
-            <InfoIcon/>
-          </OverlayTrigger>
+          {info
+            ? (
+            <OverlayTrigger placement="left" overlay={renderTooltip}>
+              <InfoIcon/>
+            </OverlayTrigger>
+              )
+            : null}
         </div>
 
         <p className="product-info--description">{description}</p>

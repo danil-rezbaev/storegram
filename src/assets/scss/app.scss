@@ -3,6 +3,8 @@
 @use "modals";
 @import "variables";
 @import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/tooltip";
+@import "~bootstrap/scss/popover";
 
 * {
   margin: 0;

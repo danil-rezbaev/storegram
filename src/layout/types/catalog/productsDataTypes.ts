@@ -22,6 +22,7 @@ export type ProductItemProperties = {
 export type ProductItem = {
   id: number,
   img: string,
+  info?: string,
   title: string,
   description: string,
   weight?: number,

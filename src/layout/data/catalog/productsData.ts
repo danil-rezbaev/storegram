@@ -15,6 +15,7 @@ export const productsData: ProductType[] = [
         description: 'Соус томатный, шампиньоны, помидоры, сыр моцарелла',
         weight: 600,
         price: 500,
+        info: 'Вес: 300г Ккал: 100г',
         properties: [
           {
             id: 101,
