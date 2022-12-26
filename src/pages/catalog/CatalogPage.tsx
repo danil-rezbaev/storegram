@@ -32,19 +32,19 @@ function CatalogPage () {
   }, [])
 
   return (
-    <div className="catalog-page">
+    <div className="page page--catalog">
       <Container>
-        <div className="catalog-page--header">
+        <div className="catalog--header">
           <CategoryList
             visibleCategory={visibleCategory}
           />
         </div>
 
-        <div className="catalog-page--body">
+        <div className="catalog--body">
           <ProductList />
         </div>
 
-        <GoInBasketButton/>
+        <GoInBasketButton className="catalog--control"/>
       </Container>
     </div>
   )

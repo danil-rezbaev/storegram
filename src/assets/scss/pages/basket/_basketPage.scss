@@ -1,0 +1,28 @@
+@use "../../variables";
+
+.page--basket {
+  .basket--header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .basket--title {
+    font-weight: 600;
+    font-size: 2.1rem;
+    line-height: 1.2;
+  }
+
+  .basket--delete-btn {
+    background: transparent;
+  }
+
+  .basket--delete-icon {
+    width: 20px;
+  }
+
+  .basket--product-list {}
+
+  .basket--product-item {}
+
+}

@@ -1,10 +1,7 @@
 @use "../../variables";
 
-.catalog-page {
-  position: relative;
-  padding: 1.5rem 0 5rem;
-
-  .catalog-page--header {
+.page--catalog {
+  .catalog--header {
     position: sticky;
     top: 0;
     z-index: 5;
@@ -21,8 +18,4 @@
       left: 0;
     }
   }
-
-  .catalog-page--body {}
-
-  .catalog-page--control {}
 }

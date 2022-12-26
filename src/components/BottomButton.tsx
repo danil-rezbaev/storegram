@@ -1,11 +1,8 @@
-import React, { FC, ReactNode } from 'react'
-import { Button } from 'react-bootstrap'
+import React, { FC } from 'react'
+import { Button, ButtonProps } from 'react-bootstrap'
 import cs from 'classnames'
 
-export type BottomButtonProps = {
-  children: ReactNode,
-  className?: string
-}
+export type BottomButtonProps = ButtonProps
 
 const BottomButton: FC<BottomButtonProps> = (props) => {
   const {
@@ -17,6 +14,7 @@ const BottomButton: FC<BottomButtonProps> = (props) => {
       <div className="bottom-button">
         <Button
           variant="success"
+          {...props}
           className={cs('text-white w-100', className)}
           size="lg"
         >

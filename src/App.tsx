@@ -6,6 +6,7 @@ import CatalogPage from './pages/catalog/CatalogPage'
 import NotFoundPage from './pages/notFound/NotFoundPage'
 import { Provider } from 'react-redux'
 import store from './store'
+import BasketPage from './pages/basket/BasketPage'
 
 function App () {
   return (
@@ -14,6 +15,7 @@ function App () {
         <Routes>
           <Route index element={<MainPage/>} />
           <Route path={'catalog'} element={<CatalogPage/>} />
+          <Route path={'basket'} element={<BasketPage/>} />
           <Route path={'*'} element={<NotFoundPage/>} />
         </Routes>
       </div>
