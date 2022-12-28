@@ -1,0 +1,13 @@
+@use "../../../variables";
+
+.basket-product-properties {
+  font-size: 0.75rem;
+  margin: 0.5rem 0 0;
+  padding: 0;
+
+  .properties--item {
+    font-size: inherit;
+    list-style: none;
+    margin-bottom: 2px;
+  }
+}

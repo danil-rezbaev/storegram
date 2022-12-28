@@ -1,19 +1,15 @@
 import React, { FC } from 'react'
-import { ProductItemStore } from '../../../layout/types/catalog/productsDataTypes'
 import BasketProductCard from './BasketProductCard'
+import { useAppSelector } from '../../../hooks/redux'
 
-export type BasketProductListProps = {
-  products: ProductItemStore[]
-}
+export type BasketProductListProps = unknown
 
-const BasketProductList: FC<BasketProductListProps> = (props) => {
-  const {
-    products
-  } = props
+const BasketProductList: FC<BasketProductListProps> = () => {
+  const basket = useAppSelector(state => state.basket)
 
   return (
     <div className="basket-product-list">
-       { products.map(item => (
+       { basket.products.map(item => (
           <BasketProductCard
             key={item.id}
             {...item}

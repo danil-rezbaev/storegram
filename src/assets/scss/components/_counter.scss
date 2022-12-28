@@ -1,0 +1,21 @@
+@use "../variables";
+
+.counter {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: 2rem 1fr 2rem;
+  align-items: center;
+  justify-content: center;
+
+  .counter--button {
+    line-height: 1;
+    padding: 0;
+    height: 2rem;
+  }
+
+  .counter--title {
+    font-size: 0.75rem;
+    margin: 0;
+    text-align: center;
+  }
+}

@@ -32,7 +32,9 @@ export type ProductItem = {
 }
 
 export type ProductItemStore = ProductItem & {
-  currentProperties: Record<string, ProductItemPropertiesValue[]>
+  currentProperties: Record<string, ProductItemPropertiesValue[]>,
+  count: number,
+  totalPrice: number,
 }
 
 export type ProductType = {

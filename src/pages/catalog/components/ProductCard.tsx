@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
 import { addProduct, removeProduct } from '../../../store/basketSlice'
 import ProductInfo from '../../../modals/ProductInfo/ProductInfo'
 import { ProductItem } from '../../../layout/types/catalog/productsDataTypes'
+import Counter from '../../../components/Counter'
 
 export type ProductCardProps = ProductItem
 
@@ -52,10 +53,10 @@ const ProductCard: FC<ProductCardProps> = (props) => {
 
     if (getName === 'increment') {
       setQuantity(value => ++value)
-      dispatch(addProduct({ ...props, count: quantity + 1, currentProperties: {} }))
+      dispatch(addProduct({ ...props, count: quantity + 1, totalPrice, currentProperties: {} }))
     } else if (getName === 'decrement') {
       setQuantity(value => --value)
-      dispatch(removeProduct({ ...props, count: quantity - 1, currentProperties: {} }))
+      dispatch(removeProduct({ ...props, count: quantity - 1, totalPrice, currentProperties: {} }))
     }
 
     activeAnimation()
@@ -84,28 +85,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
           { quantity > 0
             ? (
                 <>
-                  <div className="product-card-control">
-                    <Button
-                      variant="secondary"
-                      className="product-card-control--button"
-                      name="decrement"
-                      onClick={handleClick}
-                    >
-                      -
-                    </Button>
-
-                    <p className="product-card-control--title"> {totalPrice} ₽</p>
-
-                    <Button
-                      variant="secondary"
-                      className="product-card-control--button"
-                      name="increment"
-                      onClick={handleClick}
-                    >
-                      +
-                    </Button>
-                  </div>
-
+                  <Counter title={`${totalPrice} ₽`} handler={handleClick} className='product-card-control' />
                   <div className="product-card--quantity-hint">{quantity}</div>
                 </>
               )

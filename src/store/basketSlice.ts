@@ -23,8 +23,9 @@ const basketSlice = createSlice({
         return product.id === action.payload.id
       })
 
-      if (currentProduct && currentProduct.count) {
+      if (currentProduct?.count) {
         currentProduct.count++
+        currentProduct.totalPrice = currentProduct.count * currentProduct.price
       } else {
         state.products.push(action.payload)
       }
@@ -47,10 +48,11 @@ const basketSlice = createSlice({
 
       if (currentProduct.count > 0) {
         currentProduct.count--
-      }
-      if (currentProduct.count === 0) {
+      } else if (currentProduct.count === 0) {
         copyProducts = _.filter(state.products, (product) => product.id !== action.payload.id)
       }
+
+      currentProduct.totalPrice = currentProduct.count * currentProduct.price
 
       state.products = copyProducts
       state.quantity = copyProducts.reduce((accum, item) => accum += (item.count ? item.count : 0), 0)
@@ -68,9 +70,9 @@ const basketSlice = createSlice({
       }
 
       if (currentProduct.currentProperties?.[questionTitle]) {
-        currentProduct.currentProperties[questionTitle] = [...currentProduct.currentProperties[questionTitle], checkList]
+        currentProduct.currentProperties[questionTitle] = [...currentProduct.currentProperties[questionTitle], ...checkList]
       } else if (currentProduct.currentProperties) {
-        currentProduct.currentProperties[questionTitle] = [checkList]
+        currentProduct.currentProperties[questionTitle] = checkList
       }
 
       console.log('currentProduct', currentProduct)

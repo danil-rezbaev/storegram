@@ -1,51 +1,40 @@
 import React from 'react'
 import { Button, Container } from 'react-bootstrap'
 import { ReactComponent as DeleteIcon } from '../../assets/images/pages/basket/delete.svg'
+import BasketProductList from './components/BasketProductList'
 import { useAppSelector } from '../../hooks/redux'
+import { Link } from 'react-router-dom'
 
 function BasketPage () {
-  // const dispatch = useAppDispatch()
   const basket = useAppSelector(state => state.basket)
-
-  console.log(basket)
+  const productsSize = basket.products.length
 
   return (
     <div className="page page--basket">
       <Container>
-        <div className="basket--header">
-          <h1 className="basket--title">Корзина</h1>
+        {productsSize > 0
+          ? (
+          <main>
+            <div className="basket--header">
+              <h1 className="basket--title">Корзина</h1>
 
-          <Button
-            variant="light"
-            className="basket--delete-btn bg-transparent border-0">
-            <DeleteIcon className="basket--delete-icon"/>
-          </Button>
-        </div>
+              <Button
+                variant="light"
+                className="basket--delete-btn bg-transparent border-0">
+                <DeleteIcon className="basket--delete-icon"/>
+              </Button>
+            </div>
 
-        <div className="basket--product-list">
-           {
-            basket.products.map(item => (
-              <div
-                key={item.id}
-                className="basket--product-item">
-                <div className="product-item--body">
-                  <div>
-                    <img src={item.img} alt="" className="product-item--img"/>
-                  </div>
-
-                  <div className="product-item--content">
-                    <b className="product-item--title">{item.title}</b>
-                    <p className="product-item--description">{item.description}</p>
-                  </div>
-                </div>
-
-                <div className="product-item--footer">
-                  <p className="product-item--price">{ item.price }</p>
-                </div>
-              </div>
-            ))
-           }
-        </div>
+            <BasketProductList />
+          </main>
+            )
+          : (
+            <main>
+              <h2 className="m-auto">Корзина пуста</h2>
+              <Link to='/catalog' title="Перейти к покупкам" className="d-block mt-3">Перейти к покупкам</Link>
+            </main>
+            )
+        }
       </Container>
     </div>
   )
