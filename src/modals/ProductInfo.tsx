@@ -2,11 +2,11 @@ import React, { FC, useCallback } from 'react'
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { ReactComponent as CloseIcon } from '../../assets/images/pages/catalog/close.svg'
 import { ReactComponent as InfoIcon } from '../../assets/images/pages/catalog/info.svg'
-import BottomPopup from '../../components/bottomPopup/BottomPopup'
-import SelectPropertyItem from '../../components/selectProperty/SelectPropertyItem'
-import BottomButton from '../../components/BottomButton'
-import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { visibleHandle } from '../../store/productInfoSlice'
+import BottomPopup from '../components/bottomPopup/BottomPopup'
+import SelectPropertyItem from '../components/selectProperty/SelectPropertyItem'
+import BottomButton from '../components/BottomButton'
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
+import { visibleHandle } from '../store/productInfoSlice'
 
 export type ProductInfoProps = unknown
 
