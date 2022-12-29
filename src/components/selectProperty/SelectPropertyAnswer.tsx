@@ -1,15 +1,15 @@
 import React, { FC, useCallback, useMemo } from 'react'
 import cs from 'classnames'
 import { ReactComponent as CheckIcon } from '../../assets/images/pages/catalog/check.svg'
-import { Fields, ProductItemPropertiesValue } from '../../layout/types/catalog/productsDataTypes'
+import { Fields, ProductItemOptionsValue } from '../../layout/types/catalog/productsDataTypes'
 
 export type SelectPropertyAnswerProps = {
   id: number,
   title: string,
   priceChange: number,
   type: 'radio' | 'checkbox',
-  checkList: ProductItemPropertiesValue[],
-  checkListHandler: (value: ProductItemPropertiesValue, type: Fields) => void,
+  checkList: ProductItemOptionsValue[],
+  checkListHandler: (value: ProductItemOptionsValue, type: Fields) => void,
 }
 
 const SelectPropertyAnswer: FC<SelectPropertyAnswerProps> = (props) => {

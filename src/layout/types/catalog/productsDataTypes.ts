@@ -3,7 +3,7 @@ export type ProductCategory = {
   title: string
 }
 
-export type ProductItemPropertiesValue = {
+export type ProductItemOptionsValue = {
   id: number,
   productId?: number,
   title: string,
@@ -12,11 +12,11 @@ export type ProductItemPropertiesValue = {
 
 export type Fields = 'checkbox' | 'radio'
 
-export type ProductItemProperties = {
+export type ProductItemOptions = {
   id: number,
   title: string,
   type: Fields,
-  values: ProductItemPropertiesValue[]
+  values: ProductItemOptionsValue[]
 }
 
 export type ProductItem = {
@@ -28,11 +28,11 @@ export type ProductItem = {
   weight?: number,
   price: number,
   count?: number,
-  properties?: ProductItemProperties[]
+  options?: ProductItemOptions[]
 }
 
 export type ProductItemStore = ProductItem & {
-  currentProperties: Record<string, ProductItemPropertiesValue[]>,
+  currentOptions: Record<string, ProductItemOptionsValue[]>,
   count: number,
   totalPrice: number,
 }

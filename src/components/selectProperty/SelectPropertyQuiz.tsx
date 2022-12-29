@@ -2,13 +2,13 @@ import React, { FC, useCallback, useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { ReactComponent as CloseIcon } from '../../assets/images/pages/catalog/close.svg'
 import BottomPopup from '../../components/bottomPopup/BottomPopup'
-import { Fields, ProductItemProperties, ProductItemPropertiesValue } from '../../layout/types/catalog/productsDataTypes'
+import { Fields, ProductItemOptions, ProductItemOptionsValue } from '../../layout/types/catalog/productsDataTypes'
 import SelectPropertyAnswer from './SelectPropertyAnswer'
 import _ from 'lodash'
 import { useAppDispatch } from '../../hooks/redux'
-import { addProperties } from '../../store/basketSlice'
+import { addOptions } from '../../store/basketSlice'
 
-export type SelectPropertyQuizProps = ProductItemProperties & {
+export type SelectPropertyQuizProps = ProductItemOptions & {
   productId: number,
   show: boolean,
   showHandle: (value: boolean) => void,
@@ -30,17 +30,17 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
 
   const handleClose = () => showHandle(false)
 
-  const [checkList, setCheckList] = useState<ProductItemPropertiesValue[]>([])
+  const [checkList, setCheckList] = useState<ProductItemOptionsValue[]>([])
 
   useEffect(() => {
     selectedHandle(checkList.length > 0)
   }, [checkList])
 
-  const isExist = useCallback((value: ProductItemPropertiesValue): boolean => (
+  const isExist = useCallback((value: ProductItemOptionsValue): boolean => (
     Boolean(_.find(checkList, (item) => (item.id === value.id)))
   ), [checkList])
 
-  const checkListHandler = useCallback((value: ProductItemPropertiesValue, type: Fields): void => {
+  const checkListHandler = useCallback((value: ProductItemOptionsValue, type: Fields): void => {
     const result = isExist(value)
 
     if (result) {
@@ -59,7 +59,7 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
   const dispatch = useAppDispatch()
 
   const nextButtonHandle = useCallback(() => {
-    dispatch(addProperties({ productId, checkList, questionTitle: title }))
+    dispatch(addOptions({ productId, checkList, questionTitle: title }))
     handleClose()
   }, [checkList])
 

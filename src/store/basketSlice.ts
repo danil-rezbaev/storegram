@@ -58,7 +58,7 @@ const basketSlice = createSlice({
       state.quantity = copyProducts.reduce((accum, item) => accum += (item.count ? item.count : 0), 0)
       state.amount = copyProducts.reduce((accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
     },
-    addProperties (state, action) {
+    addOptions (state, action) {
       const { productId, questionTitle, checkList } = action.payload
 
       const currentProduct = state.products.find((product) => {
@@ -69,10 +69,10 @@ const basketSlice = createSlice({
         return
       }
 
-      if (currentProduct.currentProperties?.[questionTitle]) {
-        currentProduct.currentProperties[questionTitle] = [...currentProduct.currentProperties[questionTitle], ...checkList]
-      } else if (currentProduct.currentProperties) {
-        currentProduct.currentProperties[questionTitle] = checkList
+      if (currentProduct.currentOptions?.[questionTitle]) {
+        currentProduct.currentOptions[questionTitle] = [...currentProduct.currentOptions[questionTitle], ...checkList]
+      } else if (currentProduct.currentOptions) {
+        currentProduct.currentOptions[questionTitle] = checkList
       }
 
       console.log('currentProduct', currentProduct)
@@ -83,6 +83,6 @@ const basketSlice = createSlice({
   }
 })
 
-export const { addProduct, removeProduct, clearBasket, addProperties } = basketSlice.actions
+export const { addProduct, removeProduct, clearBasket, addOptions } = basketSlice.actions
 
 export default basketSlice.reducer

@@ -1,14 +1,14 @@
 import React, { FC, useCallback, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import SelectPropertyQuiz from './SelectPropertyQuiz'
-import { Fields, ProductItemPropertiesValue } from '../../layout/types/catalog/productsDataTypes'
+import { Fields, ProductItemOptionsValue } from '../../layout/types/catalog/productsDataTypes'
 
 export type SelectPropertyItemProps = {
   id: number,
   productId: number,
   title: string,
   type: Fields,
-  properties: ProductItemPropertiesValue[],
+  options: ProductItemOptionsValue[],
 }
 
 const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
@@ -17,7 +17,7 @@ const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
     type,
     productId,
     title,
-    properties
+    options
   } = props
 
   const [modalVisible, setModalVisible] = useState<boolean>(false)
@@ -53,7 +53,7 @@ const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
         productId={productId}
         title={title}
         type={type}
-        values={properties}
+        values={options}
         show={modalVisible}
         showHandle={modalVisibleHandle}
         selectedHandle={selectedHandle}

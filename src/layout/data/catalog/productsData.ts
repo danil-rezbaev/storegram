@@ -16,7 +16,7 @@ export const productsData: ProductType[] = [
         weight: 600,
         price: 500,
         info: 'Вес: 300г Ккал: 100г',
-        properties: [
+        options: [
           {
             id: 101,
             title: 'Размер',

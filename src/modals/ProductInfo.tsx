@@ -25,7 +25,7 @@ const ProductInfo: FC<ProductInfoProps> = () => {
     info,
     title,
     description,
-    properties,
+    options,
     price
   } = productInfo
 
@@ -71,14 +71,14 @@ const ProductInfo: FC<ProductInfoProps> = () => {
 
         <p className="product-info--description">{description}</p>
 
-        {properties?.map((item) => (
+        {options?.map((item) => (
           <SelectPropertyItem
             key={item.id}
             id={item.id}
             productId={id}
             type={item.type}
             title={item.title}
-            properties={item.values}
+            options={item.values}
           />
         ))}
       </div>

@@ -1,6 +1,6 @@
 import React, { FC, MouseEventHandler, useCallback, useState } from 'react'
 import { ProductItemStore } from '../../../layout/types/catalog/productsDataTypes'
-import BasketProductProperties from './BasketProductProperties'
+import BasketProductOptions from './BasketProductOptions'
 import Counter from '../../../components/Counter'
 import { useAppDispatch } from '../../../hooks/redux'
 import { addProduct, removeProduct } from '../../../store/basketSlice'
@@ -14,7 +14,7 @@ const BasketProductCard: FC<BasketProductCardProps> = (props) => {
     description,
     totalPrice,
     count,
-    currentProperties
+    currentOptions
   } = props
 
   const [quantity, setQuantity] = useState<number>(count)
@@ -29,10 +29,10 @@ const BasketProductCard: FC<BasketProductCardProps> = (props) => {
 
     if (getName === 'increment') {
       setQuantity(value => ++value)
-      dispatch(addProduct({ ...props, count: quantity + 1, currentProperties: {} }))
+      dispatch(addProduct({ ...props, count: quantity + 1, currentOptions: {} }))
     } else if (getName === 'decrement') {
       setQuantity(value => --value)
-      dispatch(removeProduct({ ...props, count: quantity - 1, currentProperties: {} }))
+      dispatch(removeProduct({ ...props, count: quantity - 1, currentOptions: {} }))
     }
   }, [quantity])
 
@@ -47,7 +47,7 @@ const BasketProductCard: FC<BasketProductCardProps> = (props) => {
           <b className="basket-product-card--title">{title}</b>
           <p className="basket-product-card--description">{description}</p>
 
-          <BasketProductProperties currentProperties={currentProperties} />
+          <BasketProductOptions currentOptions={currentOptions} />
         </div>
       </div>
 

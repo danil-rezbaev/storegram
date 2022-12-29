@@ -43,7 +43,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
 
   const buttonClick: MouseEventHandler<HTMLButtonElement> = useCallback((event) => {
     const getName = event.currentTarget.name
-    const newObject = { ...props, count: quantity, totalPrice, currentProperties: {} }
+    const newObject = { ...props, count: quantity, totalPrice, currentOptions: {} }
 
     if (getName === 'increment') {
       setQuantity(value => ++value)
@@ -53,13 +53,13 @@ const ProductCard: FC<ProductCardProps> = (props) => {
       dispatch(removeProduct(newObject))
     }
 
-    console.log('properties', currentElement?.properties, currentElement?.currentProperties)
+    console.log('options', currentElement?.options, currentElement?.currentOptions)
 
-    if (currentElement?.properties && (currentElement?.properties)?.length !== _.keys((currentElement?.currentProperties))?.length) {
+    if (currentElement?.options && (currentElement?.options)?.length !== _.keys((currentElement?.currentOptions))?.length) {
       dispatch(openModal(newObject))
 
-      // if (currentElement.properties.length !== currentElement.currentProperties.length) {
-      //   dispatch(addProduct({ ...props, count: quantity + 1, totalPrice, currentProperties: {} }))
+      // if (currentElement.options.length !== currentElement.currentOptions.length) {
+      //   dispatch(addProduct({ ...props, count: quantity + 1, totalPrice, currentOptions: {} }))
       // }
     }
 
@@ -67,7 +67,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
   }, [quantity, currentElement])
 
   const cardClick: MouseEventHandler<HTMLDivElement> = useCallback(() => {
-    const newObject = { ...props, count: quantity, totalPrice, currentProperties: {} }
+    const newObject = { ...props, count: quantity, totalPrice, currentOptions: {} }
     dispatch(openModal(newObject))
   }, [])
 
