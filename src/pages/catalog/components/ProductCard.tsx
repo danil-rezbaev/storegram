@@ -21,9 +21,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
   const dispatch = useAppDispatch()
   const store = useAppSelector(state => state)
   const basket = store.basket
-  const currentElement = basket.products.find((item) => {
-    return item.id === id
-  })
+  const currentElement = basket.products[id]
 
   const currentElementCount = currentElement?.count ? currentElement.count : 0
   const cardRef = useRef<HTMLDivElement>(null)
@@ -47,7 +45,8 @@ const ProductCard: FC<ProductCardProps> = (props) => {
 
     if (getName === 'increment') {
       setQuantity(value => ++value)
-      dispatch(addProduct(newObject))
+      console.log('quantity', quantity)
+      dispatch(addProduct({ ...props, count: quantity + 1, totalPrice, currentOptions: {} }))
     } else if (getName === 'decrement') {
       setQuantity(value => --value)
       dispatch(removeProduct(newObject))

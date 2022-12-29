@@ -27,7 +27,6 @@ export type ProductItem = {
   info?: string,
   title: string,
   description: string,
-  weight?: number,
   price: number,
   count?: number,
   options?: ProductItemOptions[],

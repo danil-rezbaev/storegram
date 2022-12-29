@@ -6,13 +6,13 @@ import { useAppSelector } from '../../hooks/redux'
 import { Link } from 'react-router-dom'
 
 function BasketPage () {
-  const basket = useAppSelector(state => state.basket)
-  const productsSize = basket.products.length
+  const basketStore = useAppSelector(state => state.basket)
+  // const productsCount = basketStore.quantity
 
   return (
     <div className="page page--basket">
       <Container>
-        {productsSize > 0
+        {basketStore.quantity > 0
           ? (
           <main>
             <div className="basket--header">

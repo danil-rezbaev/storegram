@@ -12,8 +12,13 @@ const GoInBasketButton: FC<GoInBasketButtonProps> = (props) => {
   const { className } = props
 
   const basketStore = useAppSelector(state => state.basket)
-  const productsStore = basketStore.products
-  const productsCount = productsStore.reduce((accum, item) => accum += (item.count ? item.count : 0), 0)
+  // const productsCount = basketStore.quantity
+
+  // useEffect(() => {
+  //   console.log('basketStore.quantity', basketStore.quantity)
+  // }, [basketStore])
+
+  // console.log(productsCount)
 
   const navigate = useNavigate()
 
@@ -22,7 +27,7 @@ const GoInBasketButton: FC<GoInBasketButtonProps> = (props) => {
   }
 
   return (
-    productsCount > 0
+    basketStore.quantity > 0
       ? (
       <BottomButton
         className={cs('goInBasketButton', className)}

@@ -3,13 +3,13 @@ import _ from 'lodash'
 import { ProductItemStore } from '../layout/types/catalog/productsDataTypes'
 
 export type BasketState = {
-  products: ProductItemStore[],
+  products: Record<string, ProductItemStore>,
   amount: number,
   quantity: number
 }
 
 const initialState: BasketState = {
-  products: [],
+  products: {},
   amount: 0,
   quantity: 0
 }
@@ -19,26 +19,21 @@ const basketSlice = createSlice({
   initialState,
   reducers: {
     addProduct (state, action: PayloadAction<ProductItemStore>) {
-      const currentProduct = state.products.find((product) => {
-        return product.id === action.payload.id
-      })
+      const currentProduct = state.products[action.payload.id]
 
       if (currentProduct?.count) {
         currentProduct.count++
         currentProduct.totalPrice = currentProduct.count * currentProduct.price
       } else {
-        state.products.push(action.payload)
+        state.products[action.payload.id] = action.payload
       }
 
-      state.quantity = state.products.reduce((accum, item) => accum += (item.count ? item.count : 0), 0)
-      state.amount = state.products.reduce((accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
+      const productsValues = _.values(state.products)
+      state.quantity = _.reduce(productsValues, (accum, item) => accum += (item.count ? item.count : 0), 0)
+      state.amount = _.reduce(productsValues, (accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
     },
     removeProduct (state, action: PayloadAction<ProductItemStore>) {
-      const currentProduct = state.products.find((product) => {
-        return product.id === action.payload.id
-      })
-
-      let copyProducts = state.products
+      const currentProduct = state.products[action.payload.id]
 
       if (!currentProduct) {
         throw new Error("product doesn't exist")
@@ -49,21 +44,18 @@ const basketSlice = createSlice({
       if (currentProduct.count > 0) {
         currentProduct.count--
       } else if (currentProduct.count === 0) {
-        copyProducts = _.filter(state.products, (product) => product.id !== action.payload.id)
+        delete state.products[action.payload.id]
       }
 
-      currentProduct.totalPrice = currentProduct.count * currentProduct.price
+      const productsValues = _.values(state.products)
 
-      state.products = copyProducts
-      state.quantity = copyProducts.reduce((accum, item) => accum += (item.count ? item.count : 0), 0)
-      state.amount = copyProducts.reduce((accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
+      currentProduct.totalPrice = currentProduct.count * currentProduct.price
+      state.quantity = productsValues.reduce((accum, item) => accum += (item.count ? item.count : 0), 0)
+      state.amount = productsValues.reduce((accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
     },
     addOptions (state, action) {
       const { productId, questionTitle, checkList } = action.payload
-
-      const currentProduct = state.products.find((product) => {
-        return product.id === productId
-      })
+      const currentProduct = state.products[productId]
 
       if (!currentProduct) {
         return
@@ -74,11 +66,9 @@ const basketSlice = createSlice({
       } else if (currentProduct.currentOptions) {
         currentProduct.currentOptions[questionTitle] = checkList
       }
-
-      console.log('currentProduct', currentProduct)
     },
     clearBasket (state) {
-      state.products = []
+      state.products = {}
     }
   }
 })

@@ -55,8 +55,10 @@ export const productsData: ProductType[] = [
         img: 'https://baking-academy.ru/upload/iblock/591/591d601f27b30d737aecafb72d046db9.jpg',
         title: 'Крем-чиз с грибами',
         description: 'Сочная говядина, хрустящий бекон, шампиньоны, лук, моцарелла, сливочный сыр «крем чиз» и смесь итальянских трав',
-        weight: 680,
-        price: 900
+        price: 900,
+        properties: {
+          weight: 600
+        }
       },
       {
         id: 400,
