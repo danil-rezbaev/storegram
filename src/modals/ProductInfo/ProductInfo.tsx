@@ -1,18 +1,24 @@
-import React, { FC } from 'react'
+import React, { FC, useCallback } from 'react'
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { ReactComponent as CloseIcon } from '../../assets/images/pages/catalog/close.svg'
 import { ReactComponent as InfoIcon } from '../../assets/images/pages/catalog/info.svg'
 import BottomPopup from '../../components/bottomPopup/BottomPopup'
 import SelectPropertyItem from '../../components/selectProperty/SelectPropertyItem'
-import { ProductItem } from '../../layout/types/catalog/productsDataTypes'
 import BottomButton from '../../components/BottomButton'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import { visibleHandle } from '../../store/productInfoSlice'
 
-export type ProductInfoProps = ProductItem & {
-  show: boolean,
-  showHandle: (value: boolean) => void,
-}
+export type ProductInfoProps = unknown
 
-const ProductInfo: FC<ProductInfoProps> = (props) => {
+const ProductInfo: FC<ProductInfoProps> = () => {
+  const dispatch = useAppDispatch()
+  const store = useAppSelector(state => state.productInfoSlice)
+  const productInfo = store.product
+
+  const {
+    visible
+  } = store
+
   const {
     id,
     img,
@@ -20,12 +26,14 @@ const ProductInfo: FC<ProductInfoProps> = (props) => {
     title,
     description,
     properties,
-    price,
-    show,
-    showHandle
-  } = props
+    price
+  } = productInfo
 
-  const handleClose = () => showHandle(false)
+  const handleClose = () => visibleHandler(false)
+
+  const visibleHandler = useCallback((value: boolean): void => {
+    dispatch(visibleHandle({ value }))
+  }, [])
 
   const renderTooltip = (props: Record<string, any>) => (
     <Tooltip id="tooltip" {...props}>
@@ -35,8 +43,8 @@ const ProductInfo: FC<ProductInfoProps> = (props) => {
 
   return (
     <BottomPopup
-      visible={show}
-      visibleHandle={showHandle}
+      visible={visible}
+      visibleHandle={visibleHandler}
       className="product-info"
     >
       <Button
@@ -53,12 +61,11 @@ const ProductInfo: FC<ProductInfoProps> = (props) => {
         <div className="product-info--header">
           <h1 className="product-info--title">{title}</h1>
 
-          {info
+          { info
             ? (
             <OverlayTrigger placement="left" overlay={renderTooltip}>
               <InfoIcon/>
-            </OverlayTrigger>
-              )
+            </OverlayTrigger>)
             : null}
         </div>
 

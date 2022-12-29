@@ -3,6 +3,7 @@ import ProductList from './components/ProductList'
 import CategoryList from './components/CategoryList'
 import { Container } from 'react-bootstrap'
 import GoInBasketButton from './components/GoInBasketButton'
+import ProductInfo from '../../modals/ProductInfo/ProductInfo'
 
 function CatalogPage () {
   const [visibleCategory, setVisibleCategory] = useState<string | null>(null)
@@ -46,6 +47,8 @@ function CatalogPage () {
 
         <GoInBasketButton className="catalog--control"/>
       </Container>
+
+      <ProductInfo />
     </div>
   )
 }

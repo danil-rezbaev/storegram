@@ -3,9 +3,10 @@ import { Button } from 'react-bootstrap'
 import cs from 'classnames'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
 import { addProduct, removeProduct } from '../../../store/basketSlice'
-import ProductInfo from '../../../modals/ProductInfo/ProductInfo'
 import { ProductItem } from '../../../layout/types/catalog/productsDataTypes'
 import Counter from '../../../components/Counter'
+import { openModal } from '../../../store/productInfoSlice'
+import _ from 'lodash'
 
 export type ProductCardProps = ProductItem
 
@@ -14,13 +15,12 @@ const ProductCard: FC<ProductCardProps> = (props) => {
     id,
     img,
     title,
-    description,
-    weight,
     price
   } = props
 
   const dispatch = useAppDispatch()
-  const basket = useAppSelector(state => state.basket)
+  const store = useAppSelector(state => state)
+  const basket = store.basket
   const currentElement = basket.products.find((item) => {
     return item.id === id
   })
@@ -29,13 +29,8 @@ const ProductCard: FC<ProductCardProps> = (props) => {
   const cardRef = useRef<HTMLDivElement>(null)
 
   const [active, setActive] = useState<boolean>(false)
-  const [infoVisible, setInfoVisible] = useState<boolean>(false)
   const [quantity, setQuantity] = useState<number>(currentElementCount)
   const [totalPrice, setTotalPrice] = useState<number>(price)
-
-  const infoVisibleHandle = useCallback((value: boolean): void => {
-    setInfoVisible(value)
-  }, [])
 
   useEffect(() => {
     setTotalPrice(quantity * price)
@@ -46,67 +41,68 @@ const ProductCard: FC<ProductCardProps> = (props) => {
     setTimeout(() => setActive(false), 250)
   }, [])
 
-  const handleClick: MouseEventHandler<HTMLButtonElement> = useCallback((event) => {
+  const buttonClick: MouseEventHandler<HTMLButtonElement> = useCallback((event) => {
     const getName = event.currentTarget.name
-
-    setInfoVisible(true)
+    const newObject = { ...props, count: quantity, totalPrice, currentProperties: {} }
 
     if (getName === 'increment') {
       setQuantity(value => ++value)
-      dispatch(addProduct({ ...props, count: quantity + 1, totalPrice, currentProperties: {} }))
+      dispatch(addProduct(newObject))
     } else if (getName === 'decrement') {
       setQuantity(value => --value)
-      dispatch(removeProduct({ ...props, count: quantity - 1, totalPrice, currentProperties: {} }))
+      dispatch(removeProduct(newObject))
+    }
+
+    console.log('properties', currentElement?.properties, currentElement?.currentProperties)
+
+    if (currentElement?.properties && (currentElement?.properties)?.length !== _.keys((currentElement?.currentProperties))?.length) {
+      dispatch(openModal(newObject))
+
+      // if (currentElement.properties.length !== currentElement.currentProperties.length) {
+      //   dispatch(addProduct({ ...props, count: quantity + 1, totalPrice, currentProperties: {} }))
+      // }
     }
 
     activeAnimation()
-  }, [quantity])
+  }, [quantity, currentElement])
+
+  const cardClick: MouseEventHandler<HTMLDivElement> = useCallback(() => {
+    const newObject = { ...props, count: quantity, totalPrice, currentProperties: {} }
+    dispatch(openModal(newObject))
+  }, [])
 
   return (
-    <div className={cs('product-card', { active })} ref={cardRef}>
+    <div className={cs('product-card', { active })}
+         ref={cardRef}
+         onClick={cardClick}
+    >
       <div className="product-card--img">
         <img src={img} alt=""/>
       </div>
 
       <div className="product-card--info">
-        <div className="product-card--info-container">
+        <div className="product-card--info-container" onClick={cardClick}>
           <h3 className="product-card--title">{title}</h3>
-          <div className="product-card--properties">
-            { weight
-              ? <p className="product-card--weight">{weight} г</p>
-              : null }
-            { description
-              ? <p className="product-card--description">{description}</p>
-              : null }
-          </div>
         </div>
 
         <div className="product-card--button-container">
           { quantity > 0
             ? (
                 <>
-                  <Counter title={`${totalPrice} ₽`} handler={handleClick} className='product-card-control' />
+                  <Counter title={`${totalPrice} ₽`} handler={buttonClick} className='product-card-control' />
                   <div className="product-card--quantity-hint">{quantity}</div>
-                </>
-              )
+                </>)
             : (
                 <Button
                   variant="secondary"
                   className="product-card--button w-100"
                   name="increment"
-                  onClick={handleClick}
+                  onClick={buttonClick}
                 >
                   {price} ₽
-                </Button>
-              ) }
+                </Button>) }
         </div>
       </div>
-
-      <ProductInfo
-        {...props}
-        show={infoVisible}
-        showHandle={infoVisibleHandle}
-      />
     </div>
   )
 }
