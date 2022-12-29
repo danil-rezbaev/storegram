@@ -1,3 +1,5 @@
+export type ProductProperties = 'weight'
+
 export type ProductCategory = {
   code: string,
   title: string
@@ -28,7 +30,8 @@ export type ProductItem = {
   weight?: number,
   price: number,
   count?: number,
-  options?: ProductItemOptions[]
+  options?: ProductItemOptions[],
+  properties?: Record<ProductProperties, number>
 }
 
 export type ProductItemStore = ProductItem & {
