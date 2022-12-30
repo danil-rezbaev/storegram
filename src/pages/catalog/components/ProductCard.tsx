@@ -15,17 +15,18 @@ const ProductCard: FC<ProductCardProps> = (props) => {
     id,
     img,
     title,
-    price
+    price,
+    options
   } = props
 
   const dispatch = useAppDispatch()
   const store = useAppSelector(state => state)
   const basket = store.basket
+
   const currentElement = basket.products[id]
-
   const currentElementCount = currentElement?.count ? currentElement.count : 0
-  const cardRef = useRef<HTMLDivElement>(null)
 
+  const cardRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState<boolean>(false)
   const [quantity, setQuantity] = useState<number>(currentElementCount)
   const [totalPrice, setTotalPrice] = useState<number>(price)
@@ -45,21 +46,15 @@ const ProductCard: FC<ProductCardProps> = (props) => {
 
     if (getName === 'increment') {
       setQuantity(value => ++value)
-      console.log('quantity', quantity)
       dispatch(addProduct({ ...props, count: quantity + 1, totalPrice, currentOptions: {} }))
     } else if (getName === 'decrement') {
       setQuantity(value => --value)
-      dispatch(removeProduct(newObject))
+      dispatch(removeProduct({ ...props, count: quantity - 1, totalPrice, currentOptions: {} }))
     }
 
-    console.log('options', currentElement?.options, currentElement?.currentOptions)
-
-    if (currentElement?.options && (currentElement?.options)?.length !== _.keys((currentElement?.currentOptions))?.length) {
+    if ((options && typeof currentElement === 'undefined') ||
+      (options && (options?.length !== _.keys((currentElement?.currentOptions))?.length))) {
       dispatch(openModal(newObject))
-
-      // if (currentElement.options.length !== currentElement.currentOptions.length) {
-      //   dispatch(addProduct({ ...props, count: quantity + 1, totalPrice, currentOptions: {} }))
-      // }
     }
 
     activeAnimation()
@@ -73,9 +68,8 @@ const ProductCard: FC<ProductCardProps> = (props) => {
   return (
     <div className={cs('product-card', { active })}
          ref={cardRef}
-         onClick={cardClick}
     >
-      <div className="product-card--img">
+      <div className="product-card--img" onClick={cardClick}>
         <img src={img} alt=""/>
       </div>
 

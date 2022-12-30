@@ -14,6 +14,23 @@
     margin: 0;
   }
 
+  .basket--link-btn {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 15px 1fr;
+    grid-gap: 7.5px;
+    text-align: left;
+    margin: 5px 0;
+
+    .icon {
+      width: 15px;
+    }
+
+    .text {
+      margin: 0;
+    }
+  }
+
   .basket--delete-btn {
     background: transparent;
   }

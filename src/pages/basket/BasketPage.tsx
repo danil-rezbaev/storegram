@@ -4,10 +4,10 @@ import { ReactComponent as DeleteIcon } from '../../assets/images/pages/basket/d
 import BasketProductList from './components/BasketProductList'
 import { useAppSelector } from '../../hooks/redux'
 import { Link } from 'react-router-dom'
+import { ReactComponent as ArrowLeft } from '../../assets/images/pages/basket/arrow.svg'
 
 function BasketPage () {
   const basketStore = useAppSelector(state => state.basket)
-  // const productsCount = basketStore.quantity
 
   return (
     <div className="page page--basket">
@@ -15,6 +15,11 @@ function BasketPage () {
         {basketStore.quantity > 0
           ? (
           <main>
+            <Link to='/catalog' className="basket--link-btn">
+              <ArrowLeft className="icon"/>
+              <p className="text">каталог</p>
+            </Link>
+
             <div className="basket--header">
               <h1 className="basket--title">Корзина</h1>
 
