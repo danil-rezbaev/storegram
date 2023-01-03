@@ -1,39 +1,36 @@
-import React, { FC, useCallback, useEffect, useState } from 'react'
-import { Button } from 'react-bootstrap'
-import { ReactComponent as CloseIcon } from '../../assets/images/pages/catalog/close.svg'
-import BottomPopup from '../../components/bottomPopup/BottomPopup'
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { Fields, ProductItemOptions, ProductItemOptionsValue } from '../../layout/types/catalog/productsDataTypes'
 import SelectPropertyAnswer from './SelectPropertyAnswer'
 import _ from 'lodash'
 import { useAppDispatch } from '../../hooks/redux'
 import { addOptions } from '../../store/basketSlice'
+import cs from 'classnames'
 
 export type SelectPropertyQuizProps = ProductItemOptions & {
   productId: number,
   show: boolean,
-  showHandle: (value: boolean) => void,
-  selectedHandle: (value: boolean) => void,
+  selectedHandle: (id: string | number, action: string) => void,
 }
 
 const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
   const {
+    id,
     productId,
     title,
     values,
     show,
     type,
-    showHandle,
     selectedHandle
   } = props
 
   const titleFormat = `Выбрать ${title.toLowerCase()}`
 
-  const handleClose = () => showHandle(false)
-
   const [checkList, setCheckList] = useState<ProductItemOptionsValue[]>([])
+  const visible = useMemo(() => show, [show])
 
   useEffect(() => {
-    selectedHandle(checkList.length > 0)
+    const action = checkList.length > 0 ? 'remove' : 'push'
+    selectedHandle(id, action)
   }, [checkList])
 
   const isExist = useCallback((value: ProductItemOptionsValue): boolean => (
@@ -58,24 +55,14 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
 
   const dispatch = useAppDispatch()
 
-  const nextButtonHandle = useCallback(() => {
+  useEffect(() => {
     dispatch(addOptions({ productId, checkList, questionTitle: title }))
-    handleClose()
   }, [checkList])
 
   return (
-    <BottomPopup
-      title={titleFormat}
-      visible={show}
-      visibleHandle={showHandle}
-      className="select-property-quiz"
-    >
+    <div className={cs('select-property-quiz', !visible ? 'd-none' : null)}>
       <div className='select-property-quiz--content'>
-        <Button
-          className="select-property-quiz--close-btn border-0"
-          onClick={handleClose}>
-          <CloseIcon/>
-        </Button>
+        <h2 className="select-property-quiz--title">{titleFormat}</h2>
 
         {values.map((item) => (
           <SelectPropertyAnswer
@@ -88,21 +75,8 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
             checkListHandler={checkListHandler}
           />
         ))}
-
-        {checkList.length > 0
-          ? (
-          <Button
-            size="lg"
-            variant="success"
-            className="select-property-quiz--next-btn"
-            onClick={nextButtonHandle}
-          >
-            Выбрать
-          </Button>
-            )
-          : null }
       </div>
-    </BottomPopup>
+    </div>
   )
 }
 

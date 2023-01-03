@@ -63,14 +63,15 @@ const ProductCard: FC<ProductCardProps> = (props) => {
   const cardClick: MouseEventHandler<HTMLDivElement> = useCallback(() => {
     const newObject = { ...props, count: quantity, totalPrice, currentOptions: {} }
     dispatch(openModal(newObject))
-  }, [])
+  }, [quantity])
 
   return (
-    <div className={cs('product-card', { active })}
-         ref={cardRef}
+    <div
+      className={cs('product-card', { active })}
+      ref={cardRef}
     >
       <div className="product-card--img" onClick={cardClick}>
-        <img src={img} alt=""/>
+        <img src={img[0]} alt=""/>
       </div>
 
       <div className="product-card--info">
@@ -85,8 +86,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
                   <Counter title={`${totalPrice} ₽`} handler={buttonClick} className='product-card-control' />
                   <div className="product-card--quantity-hint">{quantity}</div>
                 </>)
-            : (
-                <Button
+            : (<Button
                   variant="secondary"
                   className="product-card--button w-100"
                   name="increment"

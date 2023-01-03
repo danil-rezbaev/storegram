@@ -7,6 +7,10 @@ import SelectPropertyItem from '../components/selectProperty/SelectPropertyItem'
 import BottomButton from '../components/BottomButton'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import { visibleHandle } from '../store/productInfoSlice'
+import { Pagination } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css/pagination'
+import 'swiper/css'
 
 export type ProductInfoProps = unknown
 
@@ -54,7 +58,20 @@ const ProductInfo: FC<ProductInfoProps> = () => {
       </Button>
 
       <div className="product-info--img-container">
-        <img src={img} alt="" className="product-info--img"/>
+        <Swiper
+          spaceBetween={2.5}
+          slidesPerView={1}
+          pagination={{ clickable: true }}
+          modules={[Pagination]}
+        >
+          {img.map((item, index) => (
+            <SwiperSlide
+              key={index}
+            >
+              <img src={item} alt="" className="product-info--img"/>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
 
       <div className="product-info--content">
@@ -62,8 +79,7 @@ const ProductInfo: FC<ProductInfoProps> = () => {
           <h1 className="product-info--title">{title}</h1>
 
           { info
-            ? (
-            <OverlayTrigger placement="left" overlay={renderTooltip}>
+            ? (<OverlayTrigger placement="left" overlay={renderTooltip}>
               <InfoIcon/>
             </OverlayTrigger>)
             : null}
@@ -71,14 +87,17 @@ const ProductInfo: FC<ProductInfoProps> = () => {
 
         <p className="product-info--description">{description}</p>
 
-        {options?.map((item) => (
+        {options?.map((item, index) => (
           <SelectPropertyItem
             key={item.id}
             id={item.id}
-            productId={id}
+            index={index}
+            length={options.length}
             type={item.type}
             title={item.title}
             options={item.values}
+            productId={id}
+            optionsArray={options}
           />
         ))}
       </div>

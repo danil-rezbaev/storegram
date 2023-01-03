@@ -13,7 +13,7 @@
   }
 
   .product-info--img {
-    max-width: inherit;
+    max-width: 100%;
   }
 
   .product-info--close-btn {
@@ -27,6 +27,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
   }
 
   .product-info--content {

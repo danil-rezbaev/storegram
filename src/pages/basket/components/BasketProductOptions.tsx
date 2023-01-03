@@ -11,6 +11,8 @@ const BasketProductOptions: FC<BasketProductOptionsProps> = (props) => {
     currentOptions
   } = props
 
+  console.log('currentOptions', currentOptions)
+
   const optionsMemo = useMemo(() => {
     return _.entries(currentOptions).map(([key, value]) => (
       [key, _.values(value).map((item) => item.title).join(', ')]

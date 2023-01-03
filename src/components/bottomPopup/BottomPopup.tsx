@@ -27,7 +27,6 @@ const BottomPopup: FC<BottomPopupProps> = (props) => {
       show={visible}
       onHide={handleClose}
       placement="bottom"
-      {...props}
     >
 
       {title

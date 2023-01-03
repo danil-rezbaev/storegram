@@ -35,10 +35,8 @@ const basketSlice = createSlice({
     removeProduct (state, action: PayloadAction<ProductItemStore>) {
       const currentProduct = state.products[action.payload.id]
 
-      if (!currentProduct) {
-        throw new Error("product doesn't exist")
-      } else if (typeof currentProduct.count === 'undefined') {
-        throw new Error("count doesn't exist")
+      if (!(currentProduct.count)) {
+        throw new Error("product or count doesn't exist")
       }
 
       if (currentProduct.count > 0) {
@@ -48,13 +46,12 @@ const basketSlice = createSlice({
       }
 
       const productsValues = _.values(state.products)
-
       currentProduct.totalPrice = currentProduct.count * currentProduct.price
-      state.quantity = productsValues.reduce((accum, item) => accum += (item.count ? item.count : 0), 0)
-      state.amount = productsValues.reduce((accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
+      state.quantity = _.reduce(productsValues, (accum, item) => accum += (item.count ? item.count : 0), 0)
+      state.amount = _.reduce(productsValues, (accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
     },
     addOptions (state, action) {
-      const { productId, questionTitle, checkList } = action.payload
+      const { productId, checkList, questionTitle = 'Свойства' } = action.payload
       const currentProduct = state.products[productId]
 
       if (!currentProduct) {

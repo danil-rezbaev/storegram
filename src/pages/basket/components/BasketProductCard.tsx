@@ -28,10 +28,10 @@ const BasketProductCard: FC<BasketProductCardProps> = (props) => {
     const getName = event.currentTarget.name
 
     if (getName === 'increment') {
-      setQuantity(value => ++value)
+      setQuantity(value => value + 1)
       dispatch(addProduct({ ...props, count: quantity + 1, currentOptions: {} }))
     } else if (getName === 'decrement') {
-      setQuantity(value => --value)
+      setQuantity(value => value - 1)
       dispatch(removeProduct({ ...props, count: quantity - 1, currentOptions: {} }))
     }
   }, [quantity])
@@ -40,7 +40,7 @@ const BasketProductCard: FC<BasketProductCardProps> = (props) => {
     <div className="basket-product-card">
       <div className="basket-product-card--body">
         <div className="basket-product-card--img-container">
-          <img src={img} alt="" className="basket-product-card--img"/>
+          <img src={img[0]} alt="" className="basket-product-card--img"/>
         </div>
 
         <div className="basket-product-card--content">

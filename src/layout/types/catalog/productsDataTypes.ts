@@ -23,7 +23,7 @@ export type ProductItemOptions = {
 
 export type ProductItem = {
   id: number,
-  img: string,
+  img: string[],
   info?: string,
   title: string,
   description: string,

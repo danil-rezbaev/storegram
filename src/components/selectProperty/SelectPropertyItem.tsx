@@ -1,63 +1,57 @@
 import React, { FC, useCallback, useState } from 'react'
 import { Button } from 'react-bootstrap'
-import SelectPropertyQuiz from './SelectPropertyQuiz'
-import { Fields, ProductItemOptionsValue } from '../../layout/types/catalog/productsDataTypes'
+import { Fields, ProductItemOptions, ProductItemOptionsValue } from '../../layout/types/catalog/productsDataTypes'
+import { useAppDispatch } from '../../hooks/redux'
+import { openModal } from '../../store/propertyQuizSlice'
 
 export type SelectPropertyItemProps = {
   id: number,
   productId: number,
   title: string,
+  index: number,
+  length: number,
   type: Fields,
   options: ProductItemOptionsValue[],
+  optionsArray: ProductItemOptions[],
 }
 
 const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
   const {
-    id,
-    type,
     productId,
+    index,
+    length,
     title,
-    options
+    options,
+    optionsArray
   } = props
 
-  const [modalVisible, setModalVisible] = useState<boolean>(false)
-  const [selected, setSelected] = useState<boolean>(false)
+  const dispatch = useAppDispatch()
+  // const store = useAppSelector(state => state)
+  // const basket = store.basket
 
-  const modalVisibleHandle = useCallback((value: boolean): void => {
-    setModalVisible(value)
+  console.log('options\n' +
+    'optionsArray', options,
+  optionsArray)
+
+  const [selected] = useState<boolean>(false)
+
+  const showModal = useCallback(() => {
+    dispatch(openModal({ options: optionsArray, productId, index, length }))
   }, [])
-
-  const selectedHandle = useCallback((value: boolean): void => {
-    setSelected(value)
-  }, [])
-
-  const showModal = () => modalVisibleHandle(true)
 
   const titleFormat = `Выбрать ${title.toLowerCase()}`
 
   return (
-    <div className="select-property-item">
+    <div className="select-property-item" onClick={showModal}>
       <p className="select-property-item--title">{ titleFormat }</p>
 
       <Button
         variant={selected ? 'success' : 'dark'}
         size="sm"
         className="text-white"
-        onClick={showModal}
       >
         {selected ? 'выбрано' : 'выбрать'}
       </Button>
-
-      <SelectPropertyQuiz
-        id={id}
-        productId={productId}
-        title={title}
-        type={type}
-        values={options}
-        show={modalVisible}
-        showHandle={modalVisibleHandle}
-        selectedHandle={selectedHandle}
-      />
     </div>
   )
 }
