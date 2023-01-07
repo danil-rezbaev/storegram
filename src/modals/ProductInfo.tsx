@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react'
+import React, { FC, useCallback, useMemo } from 'react'
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { ReactComponent as CloseIcon } from '../assets/images/pages/catalog/close.svg'
 import { ReactComponent as InfoIcon } from '../assets/images/pages/catalog/info.svg'
@@ -11,6 +11,7 @@ import { Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css/pagination'
 import 'swiper/css'
+import { addProduct } from '../store/basketSlice'
 
 export type ProductInfoProps = unknown
 
@@ -44,6 +45,22 @@ const ProductInfo: FC<ProductInfoProps> = () => {
       { info }
     </Tooltip>
   )
+
+  const optionsStore = useAppSelector(state => state.optionsQuizSlice)
+  const { selectedOptions, productId } = optionsStore
+
+  const selectedOptionsMemo = useMemo(() => selectedOptions ? selectedOptions[id] : undefined, [selectedOptions])
+
+  const basketStore = useAppSelector(state => state.basket)
+  const currentElement = basketStore.products[id]
+  const currentElementCount = currentElement?.count ? currentElement.count : 0
+
+  console.log('currentElementCount', currentElementCount)
+
+  const addProductInBasket = useCallback(() => {
+    const currentOptionsFormat = id === productId ? selectedOptionsMemo : {}
+    dispatch(addProduct({ ...productInfo, currentOptions: currentOptionsFormat }))
+  }, [selectedOptionsMemo, productInfo])
 
   return (
     <BottomPopup
@@ -102,7 +119,7 @@ const ProductInfo: FC<ProductInfoProps> = () => {
         ))}
       </div>
 
-      <BottomButton>
+      <BottomButton onClick={addProductInBasket}>
         Добавить в корзину за {price} р
       </BottomButton>
     </BottomPopup>

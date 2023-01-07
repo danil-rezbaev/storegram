@@ -1,17 +1,13 @@
 import React, { FC, useMemo } from 'react'
-import { ProductItemOptionsValue } from '../../../layout/types/catalog/productsDataTypes'
+import { ProductItemStore } from '../../../layout/types/catalog/productsDataTypes'
 import _ from 'lodash'
 
-export type BasketProductOptionsProps = {
-  currentOptions: Record<string, ProductItemOptionsValue[]>
-}
+export type BasketProductOptionsProps = Pick<ProductItemStore, 'currentOptions'>
 
 const BasketProductOptions: FC<BasketProductOptionsProps> = (props) => {
   const {
     currentOptions
   } = props
-
-  console.log('currentOptions', currentOptions)
 
   const optionsMemo = useMemo(() => {
     return _.entries(currentOptions).map(([key, value]) => (

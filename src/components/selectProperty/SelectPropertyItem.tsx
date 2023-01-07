@@ -1,8 +1,9 @@
-import React, { FC, useCallback, useState } from 'react'
+import React, { FC, useCallback, useMemo } from 'react'
 import { Button } from 'react-bootstrap'
 import { Fields, ProductItemOptions, ProductItemOptionsValue } from '../../layout/types/catalog/productsDataTypes'
-import { useAppDispatch } from '../../hooks/redux'
-import { openModal } from '../../store/propertyQuizSlice'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import { openModal } from '../../store/optionsQuizSlice'
+import _ from 'lodash'
 
 export type SelectPropertyItemProps = {
   id: number,
@@ -18,26 +19,27 @@ export type SelectPropertyItemProps = {
 const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
   const {
     productId,
+    id,
     index,
     length,
     title,
-    options,
     optionsArray
   } = props
 
   const dispatch = useAppDispatch()
-  // const store = useAppSelector(state => state)
-  // const basket = store.basket
+  const store = useAppSelector(state => state.optionsQuizSlice)
 
-  console.log('options\n' +
-    'optionsArray', options,
-  optionsArray)
+  const {
+    questions
+  } = store
 
-  const [selected] = useState<boolean>(false)
+  const currentQuestion = useMemo(() => _.find(questions, (item) => item.id === id), [questions, id])
+
+  const currentQuestionFilled = useMemo(() => currentQuestion?.filled, [currentQuestion])
 
   const showModal = useCallback(() => {
-    dispatch(openModal({ options: optionsArray, productId, index, length }))
-  }, [])
+    dispatch(openModal({ questions: optionsArray, productId, questionCounter: index, questionLength: length }))
+  }, [index, length])
 
   const titleFormat = `Выбрать ${title.toLowerCase()}`
 
@@ -46,11 +48,11 @@ const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
       <p className="select-property-item--title">{ titleFormat }</p>
 
       <Button
-        variant={selected ? 'success' : 'dark'}
+        variant={currentQuestionFilled ? 'success' : 'dark'}
         size="sm"
         className="text-white"
       >
-        {selected ? 'выбрано' : 'выбрать'}
+        {currentQuestionFilled ? 'выбрано' : 'выбрать'}
       </Button>
     </div>
   )

@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler, useCallback, useState } from 'react'
+import React, { FC, MouseEventHandler, useCallback } from 'react'
 import { ProductItemStore } from '../../../layout/types/catalog/productsDataTypes'
 import BasketProductOptions from './BasketProductOptions'
 import Counter from '../../../components/Counter'
@@ -9,6 +9,8 @@ export type BasketProductCardProps = ProductItemStore
 
 const BasketProductCard: FC<BasketProductCardProps> = (props) => {
   const {
+    id,
+    uniqueId,
     img,
     title,
     description,
@@ -17,24 +19,17 @@ const BasketProductCard: FC<BasketProductCardProps> = (props) => {
     currentOptions
   } = props
 
-  const [quantity, setQuantity] = useState<number>(count)
   const dispatch = useAppDispatch()
-  // const basket = useAppSelector(state => state.basket)
-  // const currentElement = basket.products.find((item) => {
-  //   return item.id === id
-  // })
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = useCallback((event) => {
     const getName = event.currentTarget.name
 
     if (getName === 'increment') {
-      setQuantity(value => value + 1)
-      dispatch(addProduct({ ...props, count: quantity + 1, currentOptions: {} }))
+      dispatch(addProduct(props))
     } else if (getName === 'decrement') {
-      setQuantity(value => value - 1)
-      dispatch(removeProduct({ ...props, count: quantity - 1, currentOptions: {} }))
+      dispatch(removeProduct({ id, uniqueId }))
     }
-  }, [quantity])
+  }, [count])
 
   return (
     <div className="basket-product-card">

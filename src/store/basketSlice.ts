@@ -4,12 +4,14 @@ import { ProductItemStore } from '../layout/types/catalog/productsDataTypes'
 
 export type BasketState = {
   products: Record<string, ProductItemStore>,
+  commonProductCounter: Record<number, number>,
   amount: number,
   quantity: number
 }
 
 const initialState: BasketState = {
   products: {},
+  commonProductCounter: {},
   amount: 0,
   quantity: 0
 }
@@ -18,35 +20,74 @@ const basketSlice = createSlice({
   name: 'basket',
   initialState,
   reducers: {
-    addProduct (state, action: PayloadAction<ProductItemStore>) {
-      const currentProduct = state.products[action.payload.id]
+    addProduct (state, action: PayloadAction<Omit<ProductItemStore, 'uniqueId' | 'totalPrice' | 'count'>>) {
+      const { id, currentOptions = {}, price } = action.payload
+
+      const uniqueId = _.entries(currentOptions).length > 0
+        ? _.reduce(_.entries(currentOptions), (accum, [title, values]) => {
+          return accum += `${id}-${title}:[${_.map(values, (item) => item.id).join()}]-`
+        }, '')
+        : id.toString()
+
+      const currentProduct = state.products[uniqueId]
 
       if (currentProduct?.count) {
         currentProduct.count++
         currentProduct.totalPrice = currentProduct.count * currentProduct.price
       } else {
-        state.products[action.payload.id] = action.payload
+        state.products[uniqueId] = { ...action.payload, count: 1, uniqueId, totalPrice: price }
+      }
+
+      if (state.commonProductCounter[id]) {
+        state.commonProductCounter[id]++
+      } else {
+        state.commonProductCounter = { ...state.commonProductCounter, [id]: 1 }
       }
 
       const productsValues = _.values(state.products)
       state.quantity = _.reduce(productsValues, (accum, item) => accum += (item.count ? item.count : 0), 0)
       state.amount = _.reduce(productsValues, (accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
     },
-    removeProduct (state, action: PayloadAction<ProductItemStore>) {
-      const currentProduct = state.products[action.payload.id]
+    removeProduct (state, action: PayloadAction<{id: number, uniqueId?: string}>) {
+      const { id, uniqueId } = action.payload
 
-      if (!(currentProduct.count)) {
-        throw new Error("product or count doesn't exist")
+      if (uniqueId) {
+        const currentProduct = state.products[uniqueId]
+
+        if (currentProduct.count > 1) {
+          currentProduct.count--
+        } else if (currentProduct.count === 1) {
+          delete state.products[uniqueId]
+        }
+
+        currentProduct.totalPrice = currentProduct.count * currentProduct.price
+        currentProduct.totalPrice = currentProduct.count * currentProduct.price
+      } else {
+        const pattern = '\\b' + id + '\\b'
+        const findItems = _.filter(_.keys(state.products), (item) => new RegExp(pattern, 'g').test(item))
+        const getLastFoundItem = findItems ? findItems[findItems.length - 1] : undefined
+
+        if (getLastFoundItem) {
+          const currentProduct = state.products[getLastFoundItem]
+
+          if (currentProduct.count > 1) {
+            currentProduct.count--
+          } else if (currentProduct.count === 1) {
+            delete state.products[getLastFoundItem]
+          }
+
+          currentProduct.totalPrice = currentProduct.count * currentProduct.price
+          currentProduct.totalPrice = currentProduct.count * currentProduct.price
+        }
       }
 
-      if (currentProduct.count > 0) {
-        currentProduct.count--
-      } else if (currentProduct.count === 0) {
-        delete state.products[action.payload.id]
+      if (state.commonProductCounter[id] > 1) {
+        state.commonProductCounter[id]--
+      } else if (state.commonProductCounter[id] === 1) {
+        delete state.commonProductCounter[id]
       }
 
       const productsValues = _.values(state.products)
-      currentProduct.totalPrice = currentProduct.count * currentProduct.price
       state.quantity = _.reduce(productsValues, (accum, item) => accum += (item.count ? item.count : 0), 0)
       state.amount = _.reduce(productsValues, (accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
     },
@@ -54,13 +95,7 @@ const basketSlice = createSlice({
       const { productId, checkList, questionTitle = 'Свойства' } = action.payload
       const currentProduct = state.products[productId]
 
-      if (!currentProduct) {
-        return
-      }
-
-      if (currentProduct.currentOptions?.[questionTitle]) {
-        currentProduct.currentOptions[questionTitle] = [...currentProduct.currentOptions[questionTitle], ...checkList]
-      } else if (currentProduct.currentOptions) {
+      if (currentProduct.currentOptions) {
         currentProduct.currentOptions[questionTitle] = checkList
       }
     },

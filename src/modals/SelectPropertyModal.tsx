@@ -1,9 +1,9 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { FC, useCallback, useMemo, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { ReactComponent as CloseIcon } from '../assets/images/pages/catalog/close.svg'
 import BottomPopup from '../components/bottomPopup/BottomPopup'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
-import { setFilled, visibleHandle } from '../store/propertyQuizSlice'
+import { setCounter, visibleHandle } from '../store/optionsQuizSlice'
 import SelectPropertyQuiz from '../components/selectProperty/SelectPropertyQuiz'
 import _ from 'lodash'
 
@@ -11,49 +11,32 @@ export type SelectPropertyModalProps = unknown
 
 const SelectPropertyModal: FC<SelectPropertyModalProps> = () => {
   const dispatch = useAppDispatch()
-  const store = useAppSelector(state => state.propertyQuizSlice)
+  const store = useAppSelector(state => state.optionsQuizSlice)
 
   const {
     questions,
     visible,
     productId,
-    index,
-    length,
-    filled
+    questionCounter,
+    questionLength
   } = store
 
   const handleClose = () => visibleHandler(false)
 
-  const visibleHandler = useCallback((value: boolean): void => {
-    dispatch(visibleHandle({ value }))
+  const visibleHandler = useCallback((visible: boolean): void => {
+    dispatch(visibleHandle({ visible }))
   }, [])
 
-  useEffect(() => {
-    console.log('questions', questions)
-  }, [questions])
-
-  // const [quizList, setQuizList] = useState<Record<string, ProductItemOptions>>({})
+  const currentQuestion = useMemo(() => questions[questionCounter], [questions, questionCounter])
+  const currentQuestionFilled = useMemo(() => currentQuestion?.filled, [currentQuestion])
 
   const [selected, setSelected] = useState<string[]>(_.keys(questions))
-  const [count, setCount] = useState<number>(index)
-
-  useEffect(() => {
-    setCount(index)
-  }, [index])
-
-  const quizLength = useMemo(() => length, [length])
 
   const selectedHandle = useCallback((id: string | number, action: string): void => {
     const idFormat = id.toString()
     const isPropExist = _.find(selected, (item) => item === id)
 
-    console.log('isPropExist', isPropExist)
-    console.log('action', action)
-    console.log('selected', selected)
-
     if (action === 'push') {
-      dispatch(setFilled({ filled: false }))
-
       if (!isPropExist) {
         setSelected(value => {
           value.push(idFormat)
@@ -61,32 +44,17 @@ const SelectPropertyModal: FC<SelectPropertyModalProps> = () => {
         })
       }
     } else if (action === 'remove') {
-      dispatch(setFilled({ filled: true }))
       setSelected(value => value.filter((item) => item !== idFormat))
     }
   }, [selected])
 
   const nextButtonHandle = useCallback(() => {
-    console.log('count\n' +
-      'quizLength', count,
-    quizLength)
-
-    if (count === quizLength) {
+    if (questionCounter < questionLength - 1) {
+      dispatch(setCounter({ questionCounter: questionCounter + 1 }))
+    } else if (questionCounter === questionLength - 1) {
       handleClose()
-    } else {
-      setCount(value => value + 1)
     }
-  }, [])
-
-  useEffect(() => {
-    console.log('count', count)
-    console.log('filled', filled)
-  }, [count, filled])
-
-  // useEffect(() => {
-  //   console.log('selected', selected)
-  //   dispatch(setFilled({ filled: selected.length > 0 }))
-  // }, [selected])
+  }, [questionCounter, questionLength])
 
   return (
     <BottomPopup
@@ -106,13 +74,13 @@ const SelectPropertyModal: FC<SelectPropertyModalProps> = () => {
             key={item.id}
             {...item}
             productId={productId}
-            show={count === index}
+            show={questionCounter === index}
             selectedHandle={selectedHandle}
           />
         ))}
 
-        {filled
-          ? (
+         {currentQuestionFilled
+           ? (
           <Button
             size="lg"
             variant="success"
@@ -121,8 +89,8 @@ const SelectPropertyModal: FC<SelectPropertyModalProps> = () => {
           >
             Далее
           </Button>
-            )
-          : null }
+             )
+           : null }
       </div>
     </BottomPopup>
   )

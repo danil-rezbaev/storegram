@@ -2,9 +2,9 @@ import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { Fields, ProductItemOptions, ProductItemOptionsValue } from '../../layout/types/catalog/productsDataTypes'
 import SelectPropertyAnswer from './SelectPropertyAnswer'
 import _ from 'lodash'
-import { useAppDispatch } from '../../hooks/redux'
-import { addOptions } from '../../store/basketSlice'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import cs from 'classnames'
+import { addOptions, setFilled } from '../../store/optionsQuizSlice'
 
 export type SelectPropertyQuizProps = ProductItemOptions & {
   productId: number,
@@ -23,15 +23,41 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
     selectedHandle
   } = props
 
+  const dispatch = useAppDispatch()
+  // const basketStore = useAppSelector(state => state.basket)
+  const optionsStore = useAppSelector(state => state.optionsQuizSlice)
+
+  // const { currentOptions } = basketStore
+  const { selectedOptions } = optionsStore
+
+  const selectedOptionsMemo = useMemo(() => selectedOptions ? selectedOptions[productId] : undefined, [selectedOptions])
+  const storeOptions: ProductItemOptionsValue[] | undefined = selectedOptionsMemo ? selectedOptionsMemo[title] : undefined
+
+  console.log('selectedOptionsMemo', selectedOptionsMemo)
+  console.log('storeOptions', storeOptions)
+
   const titleFormat = `Выбрать ${title.toLowerCase()}`
 
-  const [checkList, setCheckList] = useState<ProductItemOptionsValue[]>([])
+  const [checkList, setCheckList] = useState<ProductItemOptionsValue[] | undefined>(undefined)
   const visible = useMemo(() => show, [show])
 
   useEffect(() => {
-    const action = checkList.length > 0 ? 'remove' : 'push'
-    selectedHandle(id, action)
-  }, [checkList])
+    if (storeOptions) {
+      if (storeOptions.length > 0) {
+        dispatch(setFilled({ id, filled: true }))
+        selectedHandle(id, 'remove')
+      } else if (storeOptions.length === 0) {
+        dispatch(setFilled({ id, filled: false }))
+        selectedHandle(id, 'push')
+      }
+    }
+  }, [storeOptions])
+
+  // useEffect(() => {
+  //   dispatch(getOptions({ productId, questionTitle: title }))
+  //
+  //   console.log('currentOptions', currentOptions)
+  // }, [questionCounter])
 
   const isExist = useCallback((value: ProductItemOptionsValue): boolean => (
     Boolean(_.find(checkList, (item) => (item.id === value.id)))
@@ -46,14 +72,12 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
       )))
     } else {
       if (type === 'checkbox') {
-        setCheckList(array => [...array, value])
+        setCheckList(array => array ? [...array, value] : [value])
       } else if (type === 'radio') {
         setCheckList([value])
       }
     }
   }, [isExist, checkList])
-
-  const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(addOptions({ productId, checkList, questionTitle: title }))
@@ -71,7 +95,7 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
             title={item.title}
             type={type}
             priceChange={item.priceChange}
-            checkList={checkList}
+            checkList={storeOptions}
             checkListHandler={checkListHandler}
           />
         ))}

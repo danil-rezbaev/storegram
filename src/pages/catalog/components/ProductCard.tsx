@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler, useCallback, useEffect, useRef, useState } from 'react'
+import React, { FC, MouseEventHandler, useCallback, useRef, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import cs from 'classnames'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
@@ -20,20 +20,14 @@ const ProductCard: FC<ProductCardProps> = (props) => {
   } = props
 
   const dispatch = useAppDispatch()
-  const store = useAppSelector(state => state)
-  const basket = store.basket
+  const basketStore = useAppSelector(state => state.basket)
 
-  const currentElement = basket.products[id]
-  const currentElementCount = currentElement?.count ? currentElement.count : 0
+  const currentElement = basketStore.products[id]
+  const currentElementCount = basketStore.commonProductCounter[id]
 
   const cardRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState<boolean>(false)
-  const [quantity, setQuantity] = useState<number>(currentElementCount)
-  const [totalPrice, setTotalPrice] = useState<number>(price)
-
-  useEffect(() => {
-    setTotalPrice(quantity * price)
-  }, [quantity])
+  const [totalPrice] = useState<number>(price)
 
   const activeAnimation = useCallback(() => {
     setActive(true)
@@ -42,28 +36,24 @@ const ProductCard: FC<ProductCardProps> = (props) => {
 
   const buttonClick: MouseEventHandler<HTMLButtonElement> = useCallback((event) => {
     const getName = event.currentTarget.name
-    const newObject = { ...props, count: quantity, totalPrice, currentOptions: {} }
 
     if (getName === 'increment') {
-      setQuantity(value => ++value)
-      dispatch(addProduct({ ...props, count: quantity + 1, totalPrice, currentOptions: {} }))
+      dispatch(addProduct(props))
     } else if (getName === 'decrement') {
-      setQuantity(value => --value)
-      dispatch(removeProduct({ ...props, count: quantity - 1, totalPrice, currentOptions: {} }))
+      dispatch(removeProduct({ id }))
     }
 
     if ((options && typeof currentElement === 'undefined') ||
       (options && (options?.length !== _.keys((currentElement?.currentOptions))?.length))) {
-      dispatch(openModal(newObject))
+      dispatch(openModal(props))
     }
 
     activeAnimation()
-  }, [quantity, currentElement])
+  }, [currentElementCount, currentElement])
 
   const cardClick: MouseEventHandler<HTMLDivElement> = useCallback(() => {
-    const newObject = { ...props, count: quantity, totalPrice, currentOptions: {} }
-    dispatch(openModal(newObject))
-  }, [quantity])
+    dispatch(openModal(props))
+  }, [currentElementCount])
 
   return (
     <div
@@ -80,11 +70,11 @@ const ProductCard: FC<ProductCardProps> = (props) => {
         </div>
 
         <div className="product-card--button-container">
-          { quantity > 0
+          { currentElementCount > 0
             ? (
                 <>
                   <Counter title={`${totalPrice} ₽`} handler={buttonClick} className='product-card-control' />
-                  <div className="product-card--quantity-hint">{quantity}</div>
+                  <div className="product-card--quantity-hint">{currentElementCount}</div>
                 </>)
             : (<Button
                   variant="secondary"

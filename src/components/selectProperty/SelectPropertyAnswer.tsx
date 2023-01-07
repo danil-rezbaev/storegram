@@ -8,7 +8,7 @@ export type SelectPropertyAnswerProps = {
   title: string,
   priceChange: number,
   type: 'radio' | 'checkbox',
-  checkList: ProductItemOptionsValue[],
+  checkList: ProductItemOptionsValue[] | undefined,
   checkListHandler: (value: ProductItemOptionsValue, type: Fields) => void,
 }
 
@@ -23,7 +23,7 @@ const SelectPropertyAnswer: FC<SelectPropertyAnswerProps> = (props) => {
   } = props
 
   const isActive = useMemo(() => {
-    return checkList.find((item) => {
+    return checkList?.find((item) => {
       return item.id === id
     })
   }, [checkList])

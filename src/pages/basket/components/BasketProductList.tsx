@@ -13,7 +13,7 @@ const BasketProductList: FC<BasketProductListProps> = () => {
     <div className="basket-product-list">
        { basketProducts.map(item => (
           <BasketProductCard
-            key={item.id}
+            key={item.uniqueId}
             {...item}
           />
        )) }

@@ -18,7 +18,8 @@ export type ProductItemOptions = {
   id: number,
   title: string,
   type: Fields,
-  values: ProductItemOptionsValue[]
+  values: ProductItemOptionsValue[],
+  filled?: boolean
 }
 
 export type ProductItem = {
@@ -34,7 +35,8 @@ export type ProductItem = {
 }
 
 export type ProductItemStore = ProductItem & {
-  currentOptions: Record<string, ProductItemOptionsValue[]>,
+  uniqueId: string,
+  currentOptions?: Record<string, ProductItemOptionsValue[]>,
   count: number,
   totalPrice: number,
 }

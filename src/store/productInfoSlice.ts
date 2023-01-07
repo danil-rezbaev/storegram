@@ -21,12 +21,9 @@ const productInfoSlice = createSlice({
   name: 'productInfoSlice',
   initialState,
   reducers: {
-    openModal (state, action: PayloadAction<ProductItemStore>) {
+    openModal (state, action: PayloadAction<Omit<ProductItemStore, 'uniqueId' | 'totalPrice' | 'currentOptions' | 'count'>>) {
       state.product = action.payload
       state.visible = true
-    },
-    product (state, action: PayloadAction<ProductItemStore>) {
-      state.product = action.payload
     },
     visibleHandle: (state, action: PayloadAction<{value:boolean}>): void => {
       state.visible = action.payload.value
@@ -34,6 +31,6 @@ const productInfoSlice = createSlice({
   }
 })
 
-export const { openModal, product, visibleHandle } = productInfoSlice.actions
+export const { openModal, visibleHandle } = productInfoSlice.actions
 
 export default productInfoSlice.reducer
