@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useMemo } from 'react'
-import BottomButton from './BottomButton'
-import { useAppDispatch, useAppSelector } from '../hooks/redux'
-import { addProduct, removeProduct } from '../store/basketSlice'
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
+import { addProduct, removeProduct } from '../../../store/basketSlice'
+import BottomButton from '../../../components/BottomButton'
 
 export type ProductInfoButtonProps = unknown
 

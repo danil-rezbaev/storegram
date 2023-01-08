@@ -10,7 +10,7 @@ import { Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css/pagination'
 import 'swiper/css'
-import ProductInfoButton from '../components/ProductInfoButton'
+import ProductInfoButton from '../pages/catalog/components/ProductInfoButton'
 
 export type ProductInfoProps = unknown
 
