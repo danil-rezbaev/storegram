@@ -1,18 +1,14 @@
 import React, { FC, useCallback, useMemo } from 'react'
 import { Button } from 'react-bootstrap'
-import { Fields, ProductItemOptions, ProductItemOptionsValue } from '../../layout/types/catalog/productsDataTypes'
+import { ProductItemOptions, ProductItemOptionsValue } from '../../layout/types/catalog/productsDataTypes'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { openModal } from '../../store/optionsQuizSlice'
 import _ from 'lodash'
 
-export type SelectPropertyItemProps = {
-  id: number,
-  productId: number,
-  title: string,
+export type SelectPropertyItemProps = Omit<ProductItemOptionsValue, 'price'> & Pick<ProductItemOptions, 'type'> & {
   index: number,
+  productId: number,
   length: number,
-  type: Fields,
-  options: ProductItemOptionsValue[],
   optionsArray: ProductItemOptions[],
 }
 
@@ -30,17 +26,25 @@ const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
   const store = useAppSelector(state => state.optionsQuizSlice)
 
   const {
-    questions
+    questions,
+    selectedOptions
   } = store
 
   const currentQuestion = useMemo(() => _.find(questions, (item) => item.id === id), [questions, id])
+  const currentSelectedOptions = useMemo(() => selectedOptions ? selectedOptions[productId] : undefined, [selectedOptions])
   const currentQuestionFilled = useMemo(() => currentQuestion?.filled, [currentQuestion])
 
   const showModal = useCallback(() => {
     dispatch(openModal({ questions: optionsArray, productId, questionCounter: index, questionLength: length }))
   }, [index, length])
 
-  const titleFormat = `Выбрать ${title.toLowerCase()}`
+  const titleFormat = useMemo(() => {
+    if (currentSelectedOptions?.[title]) {
+      const optionsFormat = currentSelectedOptions[title].map(item => item.title.toLowerCase()).join(', ')
+      return `Выбрано: ${optionsFormat}`
+    }
+    return `Выбрать ${title.toLowerCase()}`
+  }, [selectedOptions])
 
   return (
     <div className="select-property-item" onClick={showModal}>

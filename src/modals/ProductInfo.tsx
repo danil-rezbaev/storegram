@@ -89,12 +89,9 @@ const ProductInfo: FC<ProductInfoProps> = () => {
         {options?.map((item, index) => (
           <SelectPropertyItem
             key={item.id}
-            id={item.id}
+            {...item}
             index={index}
             length={options.length}
-            type={item.type}
-            title={item.title}
-            options={item.values}
             productId={id}
             optionsArray={options}
           />

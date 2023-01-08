@@ -24,9 +24,9 @@ export const productsData: ProductType[] = [
             title: 'Размер',
             type: 'checkbox',
             values: [
-              { id: 1, title: 'Маленькая', priceChange: -200 },
-              { id: 2, title: 'Средняя', priceChange: 0 },
-              { id: 3, title: 'Большая', priceChange: +250 }
+              { id: 1, title: 'Маленькая', price: -200 },
+              { id: 2, title: 'Средняя', price: 0 },
+              { id: 3, title: 'Большая', price: +250 }
             ]
           },
           {
@@ -34,8 +34,8 @@ export const productsData: ProductType[] = [
             title: 'Тесто',
             type: 'radio',
             values: [
-              { id: 1, title: 'Тонкое', priceChange: -100 },
-              { id: 2, title: 'Стандартное', priceChange: 0 }
+              { id: 1, title: 'Тонкое', price: -100 },
+              { id: 2, title: 'Стандартное', price: 0 }
             ]
           }
         ]

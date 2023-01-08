@@ -1,13 +1,9 @@
 import React, { FC, useCallback, useMemo } from 'react'
 import cs from 'classnames'
 import { ReactComponent as CheckIcon } from '../../assets/images/pages/catalog/check.svg'
-import { Fields, ProductItemOptionsValue } from '../../layout/types/catalog/productsDataTypes'
+import { Fields, ProductItemOptions, ProductItemOptionsValue } from '../../layout/types/catalog/productsDataTypes'
 
-export type SelectPropertyAnswerProps = {
-  id: number,
-  title: string,
-  priceChange: number,
-  type: 'radio' | 'checkbox',
+export type SelectPropertyAnswerProps = Omit<ProductItemOptionsValue, 'productId'> & Pick<ProductItemOptions, 'type'> & {
   checkList: ProductItemOptionsValue[] | undefined,
   checkListHandler: (value: ProductItemOptionsValue, type: Fields) => void,
 }
@@ -17,7 +13,7 @@ const SelectPropertyAnswer: FC<SelectPropertyAnswerProps> = (props) => {
     id,
     title,
     type,
-    priceChange = 0,
+    price,
     checkList,
     checkListHandler
   } = props
@@ -29,7 +25,7 @@ const SelectPropertyAnswer: FC<SelectPropertyAnswerProps> = (props) => {
   }, [checkList])
 
   const selectedHandler = useCallback(() => {
-    const newObj = { id, title, priceChange }
+    const newObj = { id, title, price }
     checkListHandler(newObj, type)
   }, [checkList])
 
@@ -46,7 +42,7 @@ const SelectPropertyAnswer: FC<SelectPropertyAnswerProps> = (props) => {
       <p className="select-property-answer--title">{title}</p>
 
       <span className="select-property-item--price">
-        { priceChange }
+        { price }
       </span>
     </button>
   )

@@ -4,7 +4,7 @@ import SelectPropertyAnswer from './SelectPropertyAnswer'
 import _ from 'lodash'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import cs from 'classnames'
-import { addOptions, setFilled } from '../../store/optionsQuizSlice'
+import { addOptions } from '../../store/optionsQuizSlice'
 
 export type SelectPropertyQuizProps = ProductItemOptions & {
   productId: number,
@@ -32,20 +32,14 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
 
   const titleFormat = `Выбрать ${title.toLowerCase()}`
 
-  useEffect(() => {
-    console.log('storeOptions', storeOptions)
-  }, [storeOptions])
-
   const [checkList, setCheckList] = useState<ProductItemOptionsValue[] | undefined>(storeOptions)
   const visible = useMemo(() => show, [show])
 
   useEffect(() => {
     if (storeOptions) {
       if (storeOptions.length > 0) {
-        dispatch(setFilled({ id, filled: true }))
         selectedHandle(id, 'remove')
       } else if (storeOptions.length === 0) {
-        dispatch(setFilled({ id, filled: false }))
         selectedHandle(id, 'push')
       }
     }
@@ -72,7 +66,7 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
   }, [isExist])
 
   useEffect(() => {
-    dispatch(addOptions({ productId, checkList, questionTitle: title }))
+    dispatch(addOptions({ id, productId, checkList, questionTitle: title }))
   }, [checkList])
 
   return (
@@ -83,10 +77,8 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
         {values.map((item) => (
           <SelectPropertyAnswer
             key={item.id}
-            id={item.id}
-            title={item.title}
+            {...item}
             type={type}
-            priceChange={item.priceChange}
             checkList={storeOptions}
             checkListHandler={checkListHandler}
           />

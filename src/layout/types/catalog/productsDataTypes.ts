@@ -9,7 +9,7 @@ export type ProductItemOptionsValue = {
   id: number,
   productId?: number,
   title: string,
-  priceChange: number
+  price: number
 }
 
 export type Fields = 'checkbox' | 'radio'

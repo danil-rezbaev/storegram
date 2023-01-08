@@ -34,33 +34,31 @@ const optionsQuizSlice = createSlice({
 
       state.visible = true
     },
-    questions (state, action: PayloadAction<ProductItemOptions[]>) {
-      state.questions = action.payload
-    },
     visibleHandle: (state, action: PayloadAction<Pick<ProductInfoSlice, 'visible'>>): void => {
       state.visible = action.payload.visible
-    },
-    setFilled (state, action: PayloadAction<{id: number, filled: boolean}>) {
-      const { id, filled } = action.payload
-      const currentOption = _.find(state.questions, (item) => (item.id === id))
-
-      if (currentOption) {
-        currentOption.filled = filled
-      }
     },
     setCounter (state, action: PayloadAction<Pick<ProductInfoSlice, 'questionCounter'>>) {
       state.questionCounter = action.payload.questionCounter
     },
-    addOptions (state, action: PayloadAction<{productId: number, checkList: ProductItemOptionsValue[] | undefined, questionTitle: string}>) {
-      const { productId, checkList, questionTitle } = action.payload
+    addOptions (state, action: PayloadAction<{id: number, productId: number, checkList: ProductItemOptionsValue[] | undefined, questionTitle: string}>) {
+      const { id, productId, checkList, questionTitle } = action.payload
+      const currentOption = _.find(state.questions, (item) => (item.id === id))
 
-      if (checkList) {
+      if (!checkList || !currentOption) {
+        return
+      }
+
+      if (checkList.length > 0) {
         state.selectedOptions[productId] = { ...state.selectedOptions[productId], [questionTitle]: checkList }
+        currentOption.filled = true
+      } else if (checkList.length === 0 && state.selectedOptions[productId][questionTitle]) {
+        currentOption.filled = false
+        delete state.selectedOptions[productId][questionTitle]
       }
     }
   }
 })
 
-export const { openModal, questions, visibleHandle, setFilled, setCounter, addOptions } = optionsQuizSlice.actions
+export const { openModal, visibleHandle, setCounter, addOptions } = optionsQuizSlice.actions
 
 export default optionsQuizSlice.reducer
