@@ -21,10 +21,15 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
 
   const selectedOptionsMemo = useMemo(() => selectedOptions ? selectedOptions[id] : undefined, [selectedOptions])
 
-  const currentElement = basketStore.products[id]
-  const currentElementCount = currentElement?.count ? currentElement.count : 0
+  const productsPropertiesMemo = useMemo(() => {
+    if (basketStore.productsProperties[id]) {
+      return { count: basketStore.productsProperties[id].count, totalPrice: basketStore.productsProperties[id].totalPrice }
+    } else {
+      return { count: 0, totalPrice: 0 }
+    }
+  }, [basketStore])
 
-  console.log('currentElementCount', currentElementCount)
+  console.log('productsPropertiesMemo.count', productsPropertiesMemo.count)
 
   const addProductInBasket = useCallback(() => {
     const currentOptionsFormat = id === productId ? selectedOptionsMemo : {}
@@ -36,12 +41,12 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
   }, [selectedOptionsMemo, productInfoStore])
 
   const titleFormat = useMemo(() => {
-    if (currentElementCount > 0) {
-      return `${currentElementCount} x ${price} р`
+    if (productsPropertiesMemo.count > 0) {
+      return `${productsPropertiesMemo.count} x ${price} р`
     } else {
       return `в корзину за ${price} р`
     }
-  }, [currentElementCount])
+  }, [productsPropertiesMemo.count])
 
   return (
     <div className="product-info-button">
@@ -49,7 +54,7 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
         onClick={addProductInBasket}
         title={titleFormat}
       >
-        {currentElementCount > 0
+        {productsPropertiesMemo.count > 0
           ? (
           <div className="counter-control">
             <button
