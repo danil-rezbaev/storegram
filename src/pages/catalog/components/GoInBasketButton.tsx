@@ -24,9 +24,8 @@ const GoInBasketButton: FC<GoInBasketButtonProps> = (props) => {
       <BottomButton
         className={cs('goInBasketButton', className)}
         onClick={onclick}
-      >
-        В корзине { basketStore.quantity } товар на сумму { basketStore.amount }
-      </BottomButton>
+        title='Перейти в корзину'
+      />
         )
       : null
   )

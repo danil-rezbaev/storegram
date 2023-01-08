@@ -4,14 +4,14 @@ import { ProductItemStore } from '../layout/types/catalog/productsDataTypes'
 
 export type BasketState = {
   products: Record<string, ProductItemStore>,
-  commonProductCounter: Record<number, number>,
+  productsProperties: Record<number, Record<'count' | 'totalPrice', number>>,
   amount: number,
   quantity: number
 }
 
 const initialState: BasketState = {
   products: {},
-  commonProductCounter: {},
+  productsProperties: {},
   amount: 0,
   quantity: 0
 }
@@ -38,10 +38,17 @@ const basketSlice = createSlice({
         state.products[uniqueId] = { ...action.payload, count: 1, uniqueId, totalPrice: price }
       }
 
-      if (state.commonProductCounter[id]) {
-        state.commonProductCounter[id]++
+      if (state.productsProperties[id]) {
+        state.productsProperties[id].count++
+        state.productsProperties[id].totalPrice = state.productsProperties[id].count * price
       } else {
-        state.commonProductCounter = { ...state.commonProductCounter, [id]: 1 }
+        state.productsProperties = {
+          ...state.productsProperties,
+          [id]: {
+            count: 1,
+            totalPrice: price
+          }
+        }
       }
 
       const productsValues = _.values(state.products)
@@ -56,6 +63,8 @@ const basketSlice = createSlice({
 
         if (currentProduct.count > 1) {
           currentProduct.count--
+
+          state.productsProperties[id].totalPrice = state.productsProperties[id].count * currentProduct.price
         } else if (currentProduct.count === 1) {
           delete state.products[uniqueId]
         }
@@ -72,6 +81,7 @@ const basketSlice = createSlice({
 
           if (currentProduct.count > 1) {
             currentProduct.count--
+            state.productsProperties[id].totalPrice = state.productsProperties[id].count * currentProduct.price
           } else if (currentProduct.count === 1) {
             delete state.products[getLastFoundItem]
           }
@@ -81,10 +91,10 @@ const basketSlice = createSlice({
         }
       }
 
-      if (state.commonProductCounter[id] > 1) {
-        state.commonProductCounter[id]--
-      } else if (state.commonProductCounter[id] === 1) {
-        delete state.commonProductCounter[id]
+      if (state.productsProperties[id].count > 1) {
+        state.productsProperties[id].count--
+      } else if (state.productsProperties[id].count === 1) {
+        delete state.productsProperties[id]
       }
 
       const productsValues = _.values(state.products)

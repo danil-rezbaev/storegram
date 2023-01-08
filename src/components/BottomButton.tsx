@@ -6,6 +6,7 @@ export type BottomButtonProps = ButtonProps
 
 const BottomButton: FC<BottomButtonProps> = (props) => {
   const {
+    title,
     children,
     className
   } = props
@@ -18,8 +19,10 @@ const BottomButton: FC<BottomButtonProps> = (props) => {
           className={cs('text-white w-100', className)}
           size="lg"
         >
-          { children }
+          { title }
         </Button>
+
+        {children}
       </div>
   )
 }
