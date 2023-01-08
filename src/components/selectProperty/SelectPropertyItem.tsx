@@ -34,7 +34,6 @@ const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
   } = store
 
   const currentQuestion = useMemo(() => _.find(questions, (item) => item.id === id), [questions, id])
-
   const currentQuestionFilled = useMemo(() => currentQuestion?.filled, [currentQuestion])
 
   const showModal = useCallback(() => {
@@ -52,7 +51,7 @@ const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
         size="sm"
         className="text-white"
       >
-        {currentQuestionFilled ? 'выбрано' : 'выбрать'}
+        {currentQuestionFilled ? 'изменить' : 'выбрать'}
       </Button>
     </div>
   )

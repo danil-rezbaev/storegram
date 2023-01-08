@@ -24,21 +24,19 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
   } = props
 
   const dispatch = useAppDispatch()
-  // const basketStore = useAppSelector(state => state.basket)
   const optionsStore = useAppSelector(state => state.optionsQuizSlice)
-
-  // const { currentOptions } = basketStore
   const { selectedOptions } = optionsStore
 
   const selectedOptionsMemo = useMemo(() => selectedOptions ? selectedOptions[productId] : undefined, [selectedOptions])
   const storeOptions: ProductItemOptionsValue[] | undefined = selectedOptionsMemo ? selectedOptionsMemo[title] : undefined
 
-  console.log('selectedOptionsMemo', selectedOptionsMemo)
-  console.log('storeOptions', storeOptions)
-
   const titleFormat = `Выбрать ${title.toLowerCase()}`
 
-  const [checkList, setCheckList] = useState<ProductItemOptionsValue[] | undefined>(undefined)
+  useEffect(() => {
+    console.log('storeOptions', storeOptions)
+  }, [storeOptions])
+
+  const [checkList, setCheckList] = useState<ProductItemOptionsValue[] | undefined>(storeOptions)
   const visible = useMemo(() => show, [show])
 
   useEffect(() => {
@@ -52,12 +50,6 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
       }
     }
   }, [storeOptions])
-
-  // useEffect(() => {
-  //   dispatch(getOptions({ productId, questionTitle: title }))
-  //
-  //   console.log('currentOptions', currentOptions)
-  // }, [questionCounter])
 
   const isExist = useCallback((value: ProductItemOptionsValue): boolean => (
     Boolean(_.find(checkList, (item) => (item.id === value.id)))
@@ -77,7 +69,7 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
         setCheckList([value])
       }
     }
-  }, [isExist, checkList])
+  }, [isExist])
 
   useEffect(() => {
     dispatch(addOptions({ productId, checkList, questionTitle: title }))
