@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { openModal } from '../../store/optionsQuizSlice'
 import _ from 'lodash'
 
-export type SelectPropertyItemProps = Omit<ProductItemOptionsValue, 'price'> & Pick<ProductItemOptions, 'type'> & {
+export type SelectPropertyItemProps = Omit<ProductItemOptionsValue, 'priceChange'> & Pick<ProductItemOptions, 'type'> & {
   index: number,
   productId: number,
   length: number,

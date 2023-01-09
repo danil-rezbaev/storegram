@@ -79,18 +79,17 @@ const SelectPropertyModal: FC<SelectPropertyModalProps> = () => {
           />
         ))}
 
-         {currentQuestionFilled
-           ? (
-          <Button
-            size="lg"
-            variant="success"
-            className="select-property-quiz--next-btn"
-            onClick={nextButtonHandle}
-          >
-            Далее
-          </Button>
-             )
-           : null }
+       { currentQuestionFilled
+         ? (
+        <Button
+          size="lg"
+          variant="success"
+          className="select-property-quiz--next-btn"
+          onClick={nextButtonHandle}
+        >
+          Далее
+        </Button>)
+         : null }
       </div>
     </BottomPopup>
   )

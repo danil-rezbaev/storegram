@@ -13,7 +13,7 @@ const SelectPropertyAnswer: FC<SelectPropertyAnswerProps> = (props) => {
     id,
     title,
     type,
-    price,
+    priceChange,
     checkList,
     checkListHandler
   } = props
@@ -25,7 +25,7 @@ const SelectPropertyAnswer: FC<SelectPropertyAnswerProps> = (props) => {
   }, [checkList])
 
   const selectedHandler = useCallback(() => {
-    const newObj = { id, title, price }
+    const newObj = { id, title, priceChange }
     checkListHandler(newObj, type)
   }, [checkList])
 
@@ -42,7 +42,7 @@ const SelectPropertyAnswer: FC<SelectPropertyAnswerProps> = (props) => {
       <p className="select-property-answer--title">{title}</p>
 
       <span className="select-property-item--price">
-        { price }
+        { priceChange }
       </span>
     </button>
   )
