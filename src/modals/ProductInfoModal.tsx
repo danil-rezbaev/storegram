@@ -14,7 +14,7 @@ import ProductInfoButton from '../pages/catalog/components/ProductInfoButton'
 
 export type ProductInfoProps = unknown
 
-const ProductInfo: FC<ProductInfoProps> = () => {
+const ProductInfoModal: FC<ProductInfoProps> = () => {
   const dispatch = useAppDispatch()
   const productInfoStore = useAppSelector(state => state.productInfo)
   const productInfo = productInfoStore.product
@@ -103,4 +103,4 @@ const ProductInfo: FC<ProductInfoProps> = () => {
   )
 }
 
-export default ProductInfo
+export default ProductInfoModal

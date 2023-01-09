@@ -3,7 +3,7 @@ import ProductList from './components/ProductList'
 import CategoryList from './components/CategoryList'
 import { Container } from 'react-bootstrap'
 import GoInBasketButton from './components/GoInBasketButton'
-import ProductInfo from '../../modals/ProductInfo'
+import ProductInfoModal from '../../modals/ProductInfoModal'
 import SelectPropertyModal from '../../modals/SelectPropertyModal'
 
 function CatalogPage () {
@@ -49,7 +49,7 @@ function CatalogPage () {
         <GoInBasketButton className="catalog--control"/>
       </Container>
 
-      <ProductInfo />
+      <ProductInfoModal />
       <SelectPropertyModal />
     </div>
   )
