@@ -16,12 +16,12 @@ export type ProductInfoProps = unknown
 
 const ProductInfo: FC<ProductInfoProps> = () => {
   const dispatch = useAppDispatch()
-  const store = useAppSelector(state => state.productInfoSlice)
-  const productInfo = store.product
+  const productInfoStore = useAppSelector(state => state.productInfo)
+  const productInfo = productInfoStore.product
 
   const {
     visible
-  } = store
+  } = productInfoStore
 
   const {
     id,

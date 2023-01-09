@@ -24,8 +24,8 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
   } = props
 
   const dispatch = useAppDispatch()
-  const optionsStore = useAppSelector(state => state.optionsQuizSlice)
-  const { selectedOptions } = optionsStore
+  const optionsQuizStore = useAppSelector(state => state.optionsQuiz)
+  const { selectedOptions } = optionsQuizStore
 
   const selectedOptionsMemo = useMemo(() => selectedOptions ? selectedOptions[productId] : undefined, [selectedOptions])
   const storeOptions: ProductItemOptionsValue[] | undefined = selectedOptionsMemo ? selectedOptionsMemo[title] : undefined

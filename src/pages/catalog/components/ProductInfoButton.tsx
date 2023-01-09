@@ -8,8 +8,8 @@ export type ProductInfoButtonProps = unknown
 const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
   const dispatch = useAppDispatch()
   const store = useAppSelector(state => state)
-  const productInfoStore = store.productInfoSlice.product
-  const optionsStore = store.optionsQuizSlice
+  const productInfoStore = store.productInfo.product
+  const optionsQuizStore = store.optionsQuiz
   const basketStore = store.basket
 
   const {
@@ -17,7 +17,7 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
     price
   } = productInfoStore
 
-  const { selectedOptions, productId } = optionsStore
+  const { selectedOptions, productId } = optionsQuizStore
 
   const selectedOptionsMemo = useMemo(() => selectedOptions ? selectedOptions[id] : undefined, [selectedOptions])
 

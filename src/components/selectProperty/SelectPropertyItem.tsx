@@ -23,12 +23,12 @@ const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
   } = props
 
   const dispatch = useAppDispatch()
-  const store = useAppSelector(state => state.optionsQuizSlice)
+  const optionsQuizStore = useAppSelector(state => state.optionsQuiz)
 
   const {
     questions,
     selectedOptions
-  } = store
+  } = optionsQuizStore
 
   const currentQuestion = useMemo(() => _.find(questions, (item) => item.id === id), [questions, id])
   const currentSelectedOptions = useMemo(() => selectedOptions ? selectedOptions[productId] : undefined, [selectedOptions])

@@ -6,8 +6,8 @@ import propertyQuizReducer from './optionsQuizSlice'
 const store = configureStore({
   reducer: {
     basket: basketReducer,
-    productInfoSlice: productInfoReducer,
-    optionsQuizSlice: propertyQuizReducer
+    productInfo: productInfoReducer,
+    optionsQuiz: propertyQuizReducer
   }
 })
 

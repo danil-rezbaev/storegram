@@ -11,7 +11,7 @@ export type SelectPropertyModalProps = unknown
 
 const SelectPropertyModal: FC<SelectPropertyModalProps> = () => {
   const dispatch = useAppDispatch()
-  const store = useAppSelector(state => state.optionsQuizSlice)
+  const store = useAppSelector(state => state.optionsQuiz)
 
   const {
     questions,
