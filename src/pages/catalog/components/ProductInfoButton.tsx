@@ -1,7 +1,9 @@
-import React, { FC, useCallback, useMemo } from 'react'
+import React, { FC, MouseEventHandler, useCallback, useEffect, useMemo } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
 import { addProduct, removeProduct } from '../../../store/basketSlice'
 import BottomButton from '../../../components/BottomButton'
+import _ from 'lodash'
+import { updatePrice } from '../../../store/productInfoSlice'
 
 export type ProductInfoButtonProps = unknown
 
@@ -18,8 +20,10 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
   } = productInfoStore
 
   const { selectedOptions, productId } = optionsQuizStore
-
   const selectedOptionsMemo = useMemo(() => selectedOptions ? selectedOptions[id] : undefined, [selectedOptions])
+  const priceMemo = useMemo(() => {
+    return price
+  }, [price])
 
   const productsPropertiesMemo = useMemo(() => {
     if (basketStore.productsProperties[id]) {
@@ -29,30 +33,41 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
     }
   }, [basketStore])
 
-  console.log('productsPropertiesMemo.count', productsPropertiesMemo.count)
+  const productBasketHandler: MouseEventHandler<HTMLButtonElement> = useCallback((event) => {
+    const targetName = event.currentTarget.name
 
-  const addProductInBasket = useCallback(() => {
-    const currentOptionsFormat = id === productId ? selectedOptionsMemo : {}
-    dispatch(addProduct({ ...productInfoStore, currentOptions: currentOptionsFormat }))
-  }, [selectedOptionsMemo, productInfoStore])
-
-  const removeProductFromBasket = useCallback(() => {
-    dispatch(removeProduct({ id }))
+    if (targetName === 'increment') {
+      const currentOptionsFormat = id === productId ? selectedOptionsMemo : {}
+      dispatch(addProduct({ ...productInfoStore, currentOptions: currentOptionsFormat }))
+    } else if (targetName === 'decrement') {
+      dispatch(removeProduct({ id }))
+    }
   }, [selectedOptionsMemo, productInfoStore])
 
   const titleFormat = useMemo(() => {
     if (productsPropertiesMemo.count > 0) {
-      return `${productsPropertiesMemo.count} x ${price} р`
+      return `${productsPropertiesMemo.count} x ${priceMemo} р`
     } else {
-      return `в корзину за ${price} р`
+      return `в корзину за ${priceMemo} р`
     }
-  }, [productsPropertiesMemo.count])
+  }, [productsPropertiesMemo.count, priceMemo])
+
+  useEffect(() => {
+    if (selectedOptionsMemo) {
+      const totalPriceChange = _.reduce(_.values(selectedOptionsMemo), (accum, values) => {
+        return accum += _.reduce(values, (accum1, item) => accum1 += item.priceChange, 0)
+      }, 0)
+
+      dispatch(updatePrice({ priceChange: totalPriceChange }))
+    }
+  }, [selectedOptionsMemo])
 
   return (
     <div className="product-info-button">
       <BottomButton
-        onClick={addProductInBasket}
+        onClick={productBasketHandler}
         title={titleFormat}
+        name="increment"
       >
         {productsPropertiesMemo.count > 0
           ? (
@@ -60,7 +75,7 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
             <button
               className="counter-control--btn"
               name="decrement"
-              onClick={removeProductFromBasket}
+              onClick={productBasketHandler}
             >
               -
             </button>
@@ -68,7 +83,7 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
             <button
               className="counter-control--btn"
               name="increment"
-              onClick={addProductInBasket}
+              onClick={productBasketHandler}
             >
               +
             </button>
