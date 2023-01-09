@@ -41,7 +41,7 @@ const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
   const titleFormat = useMemo(() => {
     if (currentSelectedOptions?.[title]) {
       const optionsFormat = currentSelectedOptions[title].map(item => item.title.toLowerCase()).join(', ')
-      return `Выбрано: ${optionsFormat}`
+      return `${title}: ${optionsFormat}`
     }
     return `Выбрать ${title.toLowerCase()}`
   }, [selectedOptions])
