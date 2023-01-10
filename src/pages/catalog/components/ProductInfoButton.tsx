@@ -1,6 +1,6 @@
 import React, { FC, MouseEventHandler, useCallback, useEffect, useMemo } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
-import { addProduct, removeProduct } from '../../../store/basketSlice'
+import { addProduct, removeProduct, updateUniqueId } from '../../../store/basketSlice'
 import BottomButton from '../../../components/BottomButton'
 import _ from 'lodash'
 import { updatePrice } from '../../../store/productInfoSlice'
@@ -15,6 +15,11 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
   const basketStore = store.basket
 
   const {
+    products,
+    uniqueId
+  } = basketStore
+
+  const {
     id,
     price
   } = productInfoStore
@@ -25,13 +30,13 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
     return price
   }, [price])
 
-  const productsPropertiesMemo = useMemo(() => {
-    if (basketStore.productsProperties[id]) {
-      return { count: basketStore.productsProperties[id].count, totalPrice: basketStore.productsProperties[id].totalPrice }
+  const countProducts = useMemo(() => {
+    if (products[uniqueId]) {
+      return products[uniqueId].count
     } else {
-      return { count: 0, totalPrice: 0 }
+      return 0
     }
-  }, [basketStore])
+  }, [selectedOptions, uniqueId, products])
 
   const productBasketHandler: MouseEventHandler<HTMLButtonElement> = useCallback((event) => {
     const targetName = event.currentTarget.name
@@ -45,12 +50,12 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
   }, [selectedOptionsMemo, productInfoStore])
 
   const titleFormat = useMemo(() => {
-    if (productsPropertiesMemo.count > 0) {
-      return `${productsPropertiesMemo.count} x ${priceMemo} р`
+    if (countProducts > 0) {
+      return `${countProducts} x ${priceMemo} р`
     } else {
       return `в корзину за ${priceMemo} р`
     }
-  }, [productsPropertiesMemo.count, priceMemo])
+  }, [countProducts, priceMemo])
 
   useEffect(() => {
     if (selectedOptionsMemo) {
@@ -58,6 +63,7 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
         return accum += _.reduce(values, (accum1, item) => accum1 += item.priceChange, 0)
       }, 0)
 
+      dispatch(updateUniqueId({ id, currentOptions: selectedOptionsMemo }))
       dispatch(updatePrice({ priceChange: totalPriceChange }))
     }
   }, [selectedOptionsMemo])
@@ -69,7 +75,7 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
         title={titleFormat}
         name="increment"
       >
-        {productsPropertiesMemo.count > 0
+        {countProducts > 0
           ? (
           <div className="counter-control">
             <button

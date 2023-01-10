@@ -17,7 +17,7 @@ export type ProductInfoProps = unknown
 const ProductInfoModal: FC<ProductInfoProps> = () => {
   const dispatch = useAppDispatch()
   const productInfoStore = useAppSelector(state => state.productInfo)
-  const productInfo = productInfoStore.product
+  const product = productInfoStore.product
 
   const {
     visible
@@ -30,7 +30,7 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
     title,
     description,
     options
-  } = productInfo
+  } = product
 
   const handleClose = () => visibleHandler(false)
 

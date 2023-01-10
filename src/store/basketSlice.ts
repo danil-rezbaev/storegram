@@ -7,13 +7,15 @@ export type BasketState = {
   productsProperties: Record<number, Record<'count' | 'totalPrice', number>>,
   amount: number,
   quantity: number
+  uniqueId: string,
 }
 
 const initialState: BasketState = {
   products: {},
   productsProperties: {},
   amount: 0,
-  quantity: 0
+  quantity: 0,
+  uniqueId: ''
 }
 
 const basketSlice = createSlice({
@@ -29,10 +31,13 @@ const basketSlice = createSlice({
         }, '')
         : id.toString()
 
+      state.uniqueId = uniqueId
+
       const currentProduct = state.products[uniqueId]
 
       if (currentProduct?.count) {
-        currentProduct.count++
+        currentProduct.count += 1
+        console.log('currentProduct?.count', currentProduct?.count)
         currentProduct.totalPrice = currentProduct.count * currentProduct.price
       } else {
         state.products[uniqueId] = { ...action.payload, count: 1, uniqueId, totalPrice: price }
@@ -109,12 +114,23 @@ const basketSlice = createSlice({
         currentProduct.currentOptions[questionTitle] = checkList
       }
     },
+    updateUniqueId (state, action: PayloadAction<Pick<ProductItemStore, 'currentOptions' | 'id'>>) {
+      const { id, currentOptions } = action.payload
+
+      const uniqueId = _.entries(currentOptions).length > 0
+        ? _.reduce(_.entries(currentOptions), (accum, [title, values]) => {
+          return accum += `${id}-${title}:[${_.map(values, (item) => item.id).join()}]-`
+        }, '')
+        : id.toString()
+
+      state.uniqueId = uniqueId
+    },
     clearBasket (state) {
       state.products = {}
     }
   }
 })
 
-export const { addProduct, removeProduct, clearBasket, addOptions } = basketSlice.actions
+export const { addProduct, removeProduct, clearBasket, addOptions, updateUniqueId } = basketSlice.actions
 
 export default basketSlice.reducer
