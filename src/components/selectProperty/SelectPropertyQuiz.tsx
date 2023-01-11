@@ -72,7 +72,6 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
   }, [isExist])
 
   useEffect(() => {
-    console.log('checkList', checkList)
     dispatch(addOptions({ id, productId, checkList, questionTitle: title }))
     dispatch(updateChecklist({ productId, checkList: checkList || [], questionTitle: title, price }))
   }, [checkList])

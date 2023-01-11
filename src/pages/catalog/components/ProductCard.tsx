@@ -22,8 +22,6 @@ const ProductCard: FC<ProductCardProps> = (props) => {
   const currentProduct = basketStore.totalProductProperties[id]
 
   const totalProductPropertiesMemo = useMemo(() => {
-    console.log('basketStore.totalProductProperties', basketStore.totalProductProperties)
-    console.log('id', id)
     if (currentProduct) {
       return { count: currentProduct.count, price: currentProduct.price, totalPrice: currentProduct.totalPrice }
     } else {
