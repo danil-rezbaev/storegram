@@ -1,15 +1,8 @@
 import React, { FC } from 'react'
 import { productsData } from '../../../layout/data/catalog/productsData'
 import ProductCategory from './ProductCategory'
-// import { useAppSelector } from '../../../hooks/redux'
 
-const ProductList: FC = (props) => {
-  // const basket = useAppSelector(state => state.basket)
-
-  // useEffect(() => {
-  //   console.log(basket)
-  // }, [basket])
-
+const ProductList: FC = () => {
   return (
     <div className="product-list">
       { productsData.map((category) => (
@@ -18,10 +11,6 @@ const ProductList: FC = (props) => {
           {...category}
         />
       ))}
-
-      <div>
-        {/* {basket} */}
-      </div>
     </div>
   )
 }

@@ -5,6 +5,7 @@ import _ from 'lodash'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import cs from 'classnames'
 import { addOptions } from '../../store/optionsQuizSlice'
+import { updateChecklist } from '../../store/basketSlice'
 
 export type SelectPropertyQuizProps = ProductItemOptions & {
   productId: number,
@@ -24,8 +25,13 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
   } = props
 
   const dispatch = useAppDispatch()
+  const store = useAppSelector(state => state)
   const optionsQuizStore = useAppSelector(state => state.optionsQuiz)
+  const productInfoStore = store.productInfo
+
   const { selectedOptions } = optionsQuizStore
+
+  const { price } = productInfoStore.product
 
   const selectedOptionsMemo = useMemo(() => selectedOptions ? selectedOptions[productId] : undefined, [selectedOptions])
   const storeOptions: ProductItemOptionsValue[] | undefined = selectedOptionsMemo ? selectedOptionsMemo[title] : undefined
@@ -66,7 +72,9 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
   }, [isExist])
 
   useEffect(() => {
+    console.log('checkList', checkList)
     dispatch(addOptions({ id, productId, checkList, questionTitle: title }))
+    dispatch(updateChecklist({ productId, checkList: checkList || [], questionTitle: title, price }))
   }, [checkList])
 
   return (

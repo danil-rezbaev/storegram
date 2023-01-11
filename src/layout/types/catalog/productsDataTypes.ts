@@ -46,3 +46,12 @@ export type ProductType = {
   category: ProductCategory,
   items: ProductItem[]
 }
+
+export type TotalProductProperties = {
+  count: number,
+  price: number,
+  basePrice: number,
+  totalPrice: number,
+  uniqueId: string,
+  selectedOptions: Record<string, ProductItemOptionsValue[]>
+}

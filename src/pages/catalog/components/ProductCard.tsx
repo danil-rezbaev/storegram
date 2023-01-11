@@ -19,20 +19,19 @@ const ProductCard: FC<ProductCardProps> = (props) => {
 
   const dispatch = useAppDispatch()
   const basketStore = useAppSelector(state => state.basket)
-  const productsPropertiesMemo = useMemo(() => {
-    if (basketStore.productsProperties[id]) {
-      return { count: basketStore.productsProperties[id].count, totalPrice: basketStore.productsProperties[id].totalPrice }
+  const currentProduct = basketStore.totalProductProperties[id]
+
+  const totalProductPropertiesMemo = useMemo(() => {
+    console.log('basketStore.totalProductProperties', basketStore.totalProductProperties)
+    console.log('id', id)
+    if (currentProduct) {
+      return { count: currentProduct.count, price: currentProduct.price, totalPrice: currentProduct.totalPrice }
     } else {
-      return { count: 0, totalPrice: 0 }
+      return { count: 0, price, totalPrice: 0 }
     }
-  }, [basketStore])
+  }, [currentProduct])
 
   const [active, setActive] = useState<boolean>(false)
-
-  const activeAnimation = useCallback(() => {
-    setActive(true)
-    setTimeout(() => setActive(false), 250)
-  }, [])
 
   const buttonClick: MouseEventHandler<HTMLButtonElement> = useCallback((event) => {
     const targetName = event.currentTarget.name
@@ -43,7 +42,8 @@ const ProductCard: FC<ProductCardProps> = (props) => {
       dispatch(removeProduct({ id }))
     }
 
-    activeAnimation()
+    setActive(true)
+    setTimeout(() => setActive(false), 250)
   }, [])
 
   const openModalClick = () => dispatch(openModal(props))
@@ -62,11 +62,11 @@ const ProductCard: FC<ProductCardProps> = (props) => {
         </div>
 
         <div className="product-card--button-container">
-          { productsPropertiesMemo.count > 0
+          { totalProductPropertiesMemo.count > 0
             ? (
                 <>
-                  <Counter title={`${productsPropertiesMemo.totalPrice} ₽`} handler={buttonClick} className='product-card-control' />
-                  <div className="product-card--quantity-hint">{productsPropertiesMemo.count}</div>
+                  <Counter title={`${totalProductPropertiesMemo.totalPrice} ₽`} handler={buttonClick} className='product-card-control' />
+                  <div className="product-card--quantity-hint">{totalProductPropertiesMemo.count}</div>
                 </>)
             : (
               <Button
@@ -74,7 +74,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
                   className="product-card--button w-100"
                   onClick={openModalClick}
                 >
-                  {price} ₽
+                  {totalProductPropertiesMemo.price} ₽
                 </Button>
               ) }
         </div>

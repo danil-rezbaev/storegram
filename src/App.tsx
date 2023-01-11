@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import './assets/scss/app.scss'
-import MainPage from './pages/main/MainPage'
 import CatalogPage from './pages/catalog/CatalogPage'
 import NotFoundPage from './pages/notFound/NotFoundPage'
 import { Provider } from 'react-redux'
@@ -13,8 +12,7 @@ function App () {
     <Provider store={store}>
       <div className="app">
         <Routes>
-          <Route index element={<MainPage/>} />
-          <Route path={'catalog'} element={<CatalogPage/>} />
+          <Route index path={'catalog'} element={<CatalogPage/>} />
           <Route path={'basket'} element={<BasketPage/>} />
           <Route path={'*'} element={<NotFoundPage/>} />
         </Routes>

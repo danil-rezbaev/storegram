@@ -8,15 +8,16 @@ export type BasketProductListProps = unknown
 const BasketProductList: FC<BasketProductListProps> = () => {
   const basket = useAppSelector(state => state.basket)
   const basketProducts = _.values(basket.products)
+  const basketProductsValid = _.filter(basketProducts, (item) => item.count > 0)
 
   return (
     <div className="basket-product-list">
-       { basketProducts.map(item => (
-          <BasketProductCard
-            key={item.uniqueId}
-            {...item}
-          />
-       )) }
+       { basketProductsValid.map((item) => (
+         <BasketProductCard
+           key={item.uniqueId}
+           {...item}
+         />
+       ))}
     </div>
   )
 }

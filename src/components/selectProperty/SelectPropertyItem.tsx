@@ -14,8 +14,8 @@ export type SelectPropertyItemProps = Omit<ProductItemOptionsValue, 'priceChange
 
 const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
   const {
-    productId,
     id,
+    productId,
     index,
     length,
     title,
@@ -30,7 +30,7 @@ const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
     selectedOptions
   } = optionsQuizStore
 
-  const currentQuestion = useMemo(() => _.find(questions, (item) => item.id === id), [questions, id])
+  const currentQuestion = useMemo(() => _.find(questions, (item) => item.id === id), [questions])
   const currentSelectedOptions = useMemo(() => selectedOptions ? selectedOptions[productId] : undefined, [selectedOptions])
   const currentQuestionFilled = useMemo(() => currentQuestion?.filled, [currentQuestion])
 
@@ -44,7 +44,7 @@ const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
       return `${title}: ${optionsFormat}`
     }
     return `Выбрать ${title.toLowerCase()}`
-  }, [selectedOptions])
+  }, [currentSelectedOptions])
 
   return (
     <div className="select-property-item" onClick={showModal}>

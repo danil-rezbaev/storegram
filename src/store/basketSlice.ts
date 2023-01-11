@@ -1,59 +1,48 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import _ from 'lodash'
-import { ProductItemStore } from '../layout/types/catalog/productsDataTypes'
+import { ProductItemOptionsValue, TotalProductProperties, ProductItemStore } from '../layout/types/catalog/productsDataTypes'
 
 export type BasketState = {
   products: Record<string, ProductItemStore>,
-  productsProperties: Record<number, Record<'count' | 'totalPrice', number>>,
+  totalProductProperties: Record<string, TotalProductProperties>,
   amount: number,
   quantity: number
-  uniqueId: string,
 }
 
 const initialState: BasketState = {
   products: {},
-  productsProperties: {},
+  totalProductProperties: {},
   amount: 0,
-  quantity: 0,
-  uniqueId: ''
+  quantity: 0
 }
 
 const basketSlice = createSlice({
   name: 'basket',
   initialState,
   reducers: {
-    addProduct (state, action: PayloadAction<Omit<ProductItemStore, 'uniqueId' | 'totalPrice' | 'count'>>) {
-      const { id, currentOptions = {}, price } = action.payload
+    addProduct (state, action: PayloadAction<Omit<ProductItemStore, 'uniqueId' | 'totalPrice' | 'count' | 'currentOptions'>>) {
+      const { id, price } = action.payload
 
-      const uniqueId = _.entries(currentOptions).length > 0
-        ? _.reduce(_.entries(currentOptions), (accum, [title, values]) => {
-          return accum += `${id}-${title}:[${_.map(values, (item) => item.id).join()}]-`
-        }, '')
-        : id.toString()
+      const currentProductProperties = state.totalProductProperties[id]
+      const uniqueId = currentProductProperties ? currentProductProperties.uniqueId : id.toString()
+      const productPrice = currentProductProperties ? currentProductProperties.price : price
 
-      state.uniqueId = uniqueId
+      if (currentProductProperties) {
+        currentProductProperties.count += 1
+        currentProductProperties.totalPrice += currentProductProperties.price
+      } else {
+        state.totalProductProperties = {
+          [id]: { ...action.payload, count: 1, uniqueId, basePrice: price, price: productPrice, totalPrice: productPrice, selectedOptions: {} }
+        }
+      }
 
       const currentProduct = state.products[uniqueId]
 
-      if (currentProduct?.count) {
+      if (currentProduct) {
         currentProduct.count += 1
-        console.log('currentProduct?.count', currentProduct?.count)
-        currentProduct.totalPrice = currentProduct.count * currentProduct.price
+        currentProduct.totalPrice += currentProduct.price
       } else {
-        state.products[uniqueId] = { ...action.payload, count: 1, uniqueId, totalPrice: price }
-      }
-
-      if (state.productsProperties[id]) {
-        state.productsProperties[id].count++
-        state.productsProperties[id].totalPrice = state.productsProperties[id].count * price
-      } else {
-        state.productsProperties = {
-          ...state.productsProperties,
-          [id]: {
-            count: 1,
-            totalPrice: price
-          }
-        }
+        state.products[uniqueId] = { ...action.payload, count: 1, uniqueId, price: productPrice, totalPrice: productPrice }
       }
 
       const productsValues = _.values(state.products)
@@ -66,64 +55,76 @@ const basketSlice = createSlice({
       if (uniqueId) {
         const currentProduct = state.products[uniqueId]
 
-        if (currentProduct.count > 1) {
-          currentProduct.count--
-
-          state.productsProperties[id].totalPrice = state.productsProperties[id].count * currentProduct.price
-        } else if (currentProduct.count === 1) {
-          delete state.products[uniqueId]
+        if (currentProduct) {
+          currentProduct.count -= 1
+          currentProduct.totalPrice -= currentProduct.price
         }
-
-        currentProduct.totalPrice = currentProduct.count * currentProduct.price
-        currentProduct.totalPrice = currentProduct.count * currentProduct.price
       } else {
         const pattern = '\\b' + id + '\\b'
         const findItems = _.filter(_.keys(state.products), (item) => new RegExp(pattern, 'g').test(item))
-        const getLastFoundItem = findItems ? findItems[findItems.length - 1] : undefined
+        const findItemsLast = findItems ? _.last(findItems) : undefined
+        const currentProduct = findItemsLast ? state.products[findItemsLast] : undefined
 
-        if (getLastFoundItem) {
-          const currentProduct = state.products[getLastFoundItem]
-
-          if (currentProduct.count > 1) {
-            currentProduct.count--
-            state.productsProperties[id].totalPrice = state.productsProperties[id].count * currentProduct.price
-          } else if (currentProduct.count === 1) {
-            delete state.products[getLastFoundItem]
-          }
-
-          currentProduct.totalPrice = currentProduct.count * currentProduct.price
-          currentProduct.totalPrice = currentProduct.count * currentProduct.price
+        if (findItemsLast && currentProduct) {
+          currentProduct.count -= 1
+          currentProduct.totalPrice -= currentProduct.price
         }
       }
 
-      if (state.productsProperties[id].count > 1) {
-        state.productsProperties[id].count--
-      } else if (state.productsProperties[id].count === 1) {
-        delete state.productsProperties[id]
+      const currentProductProperties = state.totalProductProperties[id]
+
+      if (currentProductProperties) {
+        state.totalProductProperties[id].count -= 1
+        state.totalProductProperties[id].totalPrice -= state.totalProductProperties[id].price
       }
 
       const productsValues = _.values(state.products)
       state.quantity = _.reduce(productsValues, (accum, item) => accum += (item.count ? item.count : 0), 0)
       state.amount = _.reduce(productsValues, (accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
     },
-    addOptions (state, action) {
-      const { productId, checkList, questionTitle = 'Свойства' } = action.payload
-      const currentProduct = state.products[productId]
+    updateChecklist (state, action: PayloadAction<{productId: number, questionTitle: string, checkList: ProductItemOptionsValue[], price: number}>) {
+      const { productId, checkList, questionTitle = 'Свойства', price } = action.payload
 
-      if (currentProduct.currentOptions) {
-        currentProduct.currentOptions[questionTitle] = checkList
+      if (checkList.length === 0) {
+        return
       }
-    },
-    updateUniqueId (state, action: PayloadAction<Pick<ProductItemStore, 'currentOptions' | 'id'>>) {
-      const { id, currentOptions } = action.payload
 
-      const uniqueId = _.entries(currentOptions).length > 0
-        ? _.reduce(_.entries(currentOptions), (accum, [title, values]) => {
-          return accum += `${id}-${title}:[${_.map(values, (item) => item.id).join()}]-`
+      const currentProduct = state.totalProductProperties[productId]
+
+      const currentSelectedOptions = currentProduct
+        ? { ...currentProduct.selectedOptions, [questionTitle]: checkList }
+        : { [questionTitle]: checkList }
+
+      if (currentProduct?.selectedOptions) {
+        currentProduct.selectedOptions[questionTitle] = checkList
+      }
+
+      const uniqueId = _.entries(currentSelectedOptions).length > 0
+        ? _.reduce(_.entries(currentSelectedOptions), (accum, [title, values]) => {
+          return accum += `${productId}-${title}:[${_.map(values, (item) => item.id).join()}]-`
         }, '')
-        : id.toString()
+        : productId.toString()
 
-      state.uniqueId = uniqueId
+      const priceChange = _.reduce(_.values(currentSelectedOptions), (accum, values) => {
+        return accum += _.reduce(values, (accum1, item) => accum1 += item.priceChange, 0)
+      }, 0)
+
+      const finallyPrice = priceChange !== 0 ? price + priceChange : price
+
+      if (currentProduct) {
+        state.totalProductProperties[productId].price = finallyPrice
+        state.totalProductProperties[productId].selectedOptions = currentSelectedOptions
+        state.totalProductProperties[productId].uniqueId = uniqueId
+      } else {
+        state.totalProductProperties[productId] = {
+          count: 0,
+          price: finallyPrice,
+          basePrice: price,
+          totalPrice: 0,
+          selectedOptions: currentSelectedOptions,
+          uniqueId
+        }
+      }
     },
     clearBasket (state) {
       state.products = {}
@@ -131,6 +132,6 @@ const basketSlice = createSlice({
   }
 })
 
-export const { addProduct, removeProduct, clearBasket, addOptions, updateUniqueId } = basketSlice.actions
+export const { addProduct, removeProduct, clearBasket, updateChecklist } = basketSlice.actions
 
 export default basketSlice.reducer

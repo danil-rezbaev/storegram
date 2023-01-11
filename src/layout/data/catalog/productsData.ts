@@ -48,7 +48,27 @@ export const productsData: ProductType[] = [
         price: 399,
         properties: {
           weight: 600
-        }
+        },
+        options: [
+          {
+            id: 201,
+            title: 'Размер',
+            type: 'checkbox',
+            values: [
+              { id: 2, title: 'Средняя', priceChange: 0 },
+              { id: 3, title: 'Большая', priceChange: +150 }
+            ]
+          },
+          {
+            id: 202,
+            title: 'Тесто',
+            type: 'radio',
+            values: [
+              { id: 1, title: 'Тонкое', priceChange: -50 },
+              { id: 2, title: 'Стандартное', priceChange: 0 }
+            ]
+          }
+        ]
       },
       {
         id: 300,
