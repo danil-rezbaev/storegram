@@ -2,32 +2,28 @@
 
 .page--basket {
   .basket--header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    position: relative;
   }
 
   .basket--title {
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 1rem;
     line-height: 1.2;
     margin: 0;
+    text-align: center;
   }
 
   .basket--link-btn {
-    display: grid;
-    align-items: center;
-    grid-template-columns: 15px 1fr;
-    grid-gap: 7.5px;
-    text-align: left;
-    margin: 5px 0;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    color: variables.$gray;
 
     .icon {
-      width: 15px;
-    }
-
-    .text {
-      margin: 0;
+      width: 20px;
+      height: 15px;
+      color: inherit;
     }
   }
 

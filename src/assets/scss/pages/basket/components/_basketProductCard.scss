@@ -49,9 +49,10 @@
   &--footer {
     border-top: 1px solid variables.$light-gray;
     margin-top: 0.75rem;
-    padding-top: 0.35rem;
+    padding-top: 0.75rem;
     display: grid;
     grid-template-columns: 1fr 120px;
+    align-items: center;
   }
 
   &--price {

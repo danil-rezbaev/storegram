@@ -26,13 +26,15 @@ const basketSlice = createSlice({
       const currentProductProperties = state.totalProductProperties[id]
       const uniqueId = currentProductProperties ? currentProductProperties.uniqueId : id.toString()
       const productPrice = currentProductProperties ? currentProductProperties.price : price
+      const selectedOptions = currentProductProperties ? currentProductProperties.selectedOptions : {}
 
       if (currentProductProperties) {
         currentProductProperties.count += 1
         currentProductProperties.totalPrice += currentProductProperties.price
       } else {
         state.totalProductProperties = {
-          [id]: { ...action.payload, count: 1, uniqueId, basePrice: price, price: productPrice, totalPrice: productPrice, selectedOptions: {} }
+          ...state.totalProductProperties,
+          [id]: { ...action.payload, count: 1, uniqueId, basePrice: price, price: productPrice, totalPrice: productPrice, selectedOptions }
         }
       }
 
@@ -41,8 +43,16 @@ const basketSlice = createSlice({
       if (currentProduct) {
         currentProduct.count += 1
         currentProduct.totalPrice += currentProduct.price
+        currentProduct.currentOptions = selectedOptions
       } else {
-        state.products[uniqueId] = { ...action.payload, count: 1, uniqueId, price: productPrice, totalPrice: productPrice }
+        state.products[uniqueId] = {
+          ...action.payload,
+          count: 1,
+          uniqueId,
+          price: productPrice,
+          totalPrice: productPrice,
+          currentOptions: selectedOptions
+        }
       }
 
       const productsValues = _.values(state.products)

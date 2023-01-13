@@ -119,6 +119,11 @@
         .product-card--img {
             height: 170px;
         }
+
+        .product-card--quantity-hint {
+            width: 1.45rem;
+            height: 1.45rem;
+        }
     }
 
     @media (max-width: 420px) {
