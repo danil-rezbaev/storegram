@@ -1,15 +1,18 @@
 import React, { FC, MouseEventHandler } from 'react'
 import { Button } from 'react-bootstrap'
 import cs from 'classnames'
+import RenderPrice from './RenderPrice'
 
 export type CounterProps = {
-  title: string | number,
+  price?: string | number,
+  title?: string | number,
   handler: MouseEventHandler<HTMLButtonElement>,
   className?: string
 }
 
 const Counter: FC<CounterProps> = (props) => {
   const {
+    price,
     title,
     handler,
     className
@@ -26,7 +29,20 @@ const Counter: FC<CounterProps> = (props) => {
         -
       </Button>
 
-      <p className="counter--title">{title}</p>
+      { price
+        ? (
+        <RenderPrice
+          price={price}
+          className="counter--title"
+        />
+          )
+        : null }
+
+      { title
+        ? (
+        <p className="counter--title">{title}</p>
+          )
+        : null }
 
       <Button
         variant="secondary"

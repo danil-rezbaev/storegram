@@ -2,6 +2,7 @@ import React, { FC, useCallback, useMemo } from 'react'
 import cs from 'classnames'
 import { ReactComponent as CheckIcon } from '../../assets/images/pages/catalog/check.svg'
 import { Fields, ProductItemOptions, ProductItemOptionsValue } from '../../layout/types/catalog/productsDataTypes'
+import RenderPrice from '../RenderPrice'
 
 export type SelectPropertyAnswerProps = Omit<ProductItemOptionsValue, 'productId'> & Pick<ProductItemOptions, 'type'> & {
   checkList: ProductItemOptionsValue[] | undefined,
@@ -41,9 +42,7 @@ const SelectPropertyAnswer: FC<SelectPropertyAnswerProps> = (props) => {
 
       <p className="select-property-answer--title">{title}</p>
 
-      <span className="select-property-item--price">
-        { priceChange }
-      </span>
+      <RenderPrice price={priceChange} className="select-property-item--price" />
     </button>
   )
 }

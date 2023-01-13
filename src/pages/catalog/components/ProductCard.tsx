@@ -6,6 +6,7 @@ import { addProduct, removeProduct } from '../../../store/basketSlice'
 import { ProductItem } from '../../../layout/types/catalog/productsDataTypes'
 import Counter from '../../../components/Counter'
 import { openModal } from '../../../store/productInfoSlice'
+import RenderPrice from '../../../components/RenderPrice'
 
 export type ProductCardProps = ProductItem
 
@@ -63,7 +64,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
           { totalProductPropertiesMemo.count > 0
             ? (
                 <>
-                  <Counter title={`${totalProductPropertiesMemo.totalPrice} ₽`} handler={buttonClick} className='product-card-control' />
+                  <Counter price={totalProductPropertiesMemo.totalPrice} handler={buttonClick} className='product-card-control' />
                   <div className="product-card--quantity-hint">{totalProductPropertiesMemo.count}</div>
                 </>)
             : (
@@ -72,7 +73,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
                   className="product-card--button w-100"
                   onClick={openModalClick}
                 >
-                  {totalProductPropertiesMemo.price} ₽
+                  <RenderPrice price={totalProductPropertiesMemo.price}/>
                 </Button>
               ) }
         </div>

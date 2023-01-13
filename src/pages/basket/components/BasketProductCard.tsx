@@ -4,6 +4,7 @@ import BasketProductOptions from './BasketProductOptions'
 import Counter from '../../../components/Counter'
 import { useAppDispatch } from '../../../hooks/redux'
 import { addProduct, removeProduct } from '../../../store/basketSlice'
+import RenderPrice from '../../../components/RenderPrice'
 
 export type BasketProductCardProps = ProductItemStore
 
@@ -47,7 +48,7 @@ const BasketProductCard: FC<BasketProductCardProps> = (props) => {
       </div>
 
       <div className="basket-product-card--footer">
-        <p className="basket-product-card--price">{totalPrice} Р</p>
+        <RenderPrice price={totalPrice} className="basket-product-card--price" />
         <Counter title={`${count} шт`} handler={handleClick} className='basket-product-card--counter' />
       </div>
     </div>

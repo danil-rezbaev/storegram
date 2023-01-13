@@ -10,7 +10,7 @@
   margin: 14px 0;
   display: grid;
   align-items: center;
-  grid-template-columns: 20px 1fr 65px;
+  grid-template-columns: 20px 1fr minmax(65px, 100px);
   grid-gap: 10px;
   transition: color, background-color 0.15s, 0.15s;
 
@@ -72,5 +72,8 @@
     color: variables.$black;
     border-radius: 5px;
     padding: 5px;
+    min-width: 65px;
+    margin-left: auto !important;
+    display: block;
   }
 }
