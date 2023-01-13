@@ -1,4 +1,9 @@
 .page {
   position: relative;
   padding: 1.5rem 0 5rem;
+
+  .page--container {
+    max-width: 768px;
+    margin: 0 auto;
+  }
 }

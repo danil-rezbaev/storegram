@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import ProductList from './components/ProductList'
 import CategoryList from './components/CategoryList'
-import { Container } from 'react-bootstrap'
 import GoInBasketButton from './components/GoInBasketButton'
 import ProductInfoModal from '../../modals/ProductInfoModal'
 import SelectPropertyModal from '../../modals/SelectPropertyModal'
+import Page from '../Page'
 
 function CatalogPage () {
   const [visibleCategory, setVisibleCategory] = useState<string | null>(null)
@@ -34,24 +34,22 @@ function CatalogPage () {
   }, [])
 
   return (
-    <div className="page page--catalog">
-      <Container>
-        <div className="catalog--header">
-          <CategoryList
-            visibleCategory={visibleCategory}
-          />
-        </div>
+    <Page className="page--catalog">
+      <div className="catalog--header">
+        <CategoryList
+          visibleCategory={visibleCategory}
+        />
+      </div>
 
-        <div className="catalog--body">
-          <ProductList />
-        </div>
+      <div className="catalog--body">
+        <ProductList />
+      </div>
 
-        <GoInBasketButton className="catalog--control"/>
-      </Container>
+      <GoInBasketButton className="catalog--control"/>
 
       <ProductInfoModal />
       <SelectPropertyModal />
-    </div>
+    </Page>
   )
 }
 

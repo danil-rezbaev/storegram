@@ -30,6 +30,7 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
 
   const priceMemo = productPropertiesMemo?.price || price
   const uniqueIdMemo = productPropertiesMemo?.uniqueId
+  const currency = useAppSelector(state => state.global.currency)
 
   const countProducts = useMemo(() => {
     if (uniqueIdMemo && products[uniqueIdMemo]) {
@@ -51,9 +52,9 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
 
   const titleFormat = useMemo(() => {
     if (countProducts > 0) {
-      return `${countProducts} x ${priceMemo} р`
+      return `${countProducts} x ${priceMemo} ${currency}`
     } else {
-      return `в корзину за ${priceMemo} р`
+      return `в корзину за ${priceMemo} ${currency}`
     }
   }, [countProducts, priceMemo])
 
