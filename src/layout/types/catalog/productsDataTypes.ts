@@ -55,3 +55,24 @@ export type TotalProductProperties = {
   uniqueId: string,
   selectedOptions: Record<string, ProductItemOptionsValue[]>
 }
+
+export type ReceivingMethods = {
+  id: number,
+  title: string,
+  name: string,
+  price: number
+}
+
+export type PickupAddresses = {
+  id: number,
+  title: string
+}
+
+export type ClientAdresses = {
+  city: string,
+  house: string,
+  flat: string,
+  entrance: string,
+  floor: string,
+  comment?: string,
+}

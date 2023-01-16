@@ -2,19 +2,18 @@
 
 .category-list {
     width: 100vw;
-    margin-left: -4%;
     padding: 10px 0;
     background: variables.$white;
 
     .swiper-slide {
         width: fit-content;
 
-        &:first-of-type {
-            margin-left: 4%;
-        }
-
-        &:last-of-type {
-            margin-right: 4%;
-        }
+        //&:first-of-type {
+        //    margin-left: 4%;
+        //}
+        //
+        //&:last-of-type {
+        //    margin-right: 4%;
+        //}
     }
 }

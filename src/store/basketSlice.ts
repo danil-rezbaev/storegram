@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import _ from 'lodash'
-import { ProductItemOptionsValue, TotalProductProperties, ProductItemStore } from '../layout/types/catalog/productsDataTypes'
+import {
+  ProductItemOptionsValue,
+  TotalProductProperties,
+  ProductItemStore
+} from '../layout/types/catalog/productsDataTypes'
 
 export type BasketState = {
   products: Record<string, ProductItemStore>,

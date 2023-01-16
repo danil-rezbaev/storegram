@@ -3,13 +3,15 @@ import globalReducer from './globalSlice'
 import basketReducer from './basketSlice'
 import productInfoReducer from './productInfoSlice'
 import propertyQuizReducer from './optionsQuizSlice'
+import clientAdrressesReducer from './clientAdrresses'
 
 const store = configureStore({
   reducer: {
     global: globalReducer,
     basket: basketReducer,
     productInfo: productInfoReducer,
-    optionsQuiz: propertyQuizReducer
+    optionsQuiz: propertyQuizReducer,
+    clientAdrresses: clientAdrressesReducer
   }
 })
 

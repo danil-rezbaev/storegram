@@ -5,6 +5,7 @@ import Counter from '../../../components/Counter'
 import { useAppDispatch } from '../../../hooks/redux'
 import { addProduct, removeProduct } from '../../../store/basketSlice'
 import RenderPrice from '../../../components/RenderPrice'
+import CropText from '../../../components/CropText'
 
 export type BasketProductCardProps = ProductItemStore
 
@@ -41,7 +42,7 @@ const BasketProductCard: FC<BasketProductCardProps> = (props) => {
 
         <div className="basket-product-card--content">
           <b className="basket-product-card--title">{title}</b>
-          <p className="basket-product-card--description">{description}</p>
+          <CropText title={description} number={150} className="basket-product-card--description" />
 
           <BasketProductOptions currentOptions={currentOptions} />
         </div>
