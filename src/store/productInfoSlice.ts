@@ -9,6 +9,7 @@ export type ProductInfoSlice = {
 const initialState: ProductInfoSlice = {
   product: {
     id: 0,
+    category: 'any',
     img: [],
     title: 'Без названия',
     description: '',

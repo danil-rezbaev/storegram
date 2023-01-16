@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
-import ProductCard, { ProductCardProps } from './ProductCard'
-import { CategoryItemProps } from './CategoryItem'
+import ProductCard from './ProductCard'
+import { Category, ProductItem } from '../../../layout/types/catalog/productsDataTypes'
 
 export type ProductCategoryProps = {
-  category: CategoryItemProps
-  items: ProductCardProps[],
+  category: Category | undefined,
+  items: ProductItem[],
 }
 
 const ProductCategory: FC<ProductCategoryProps> = (props) => {
@@ -12,6 +12,8 @@ const ProductCategory: FC<ProductCategoryProps> = (props) => {
     category,
     items
   } = props
+
+  if (!category) return null
 
   const {
     title,

@@ -1,6 +1,7 @@
 export type ProductProperties = 'weight'
 
-export type ProductCategory = {
+export type Category = {
+  id: number,
   code: string,
   title: string
 }
@@ -24,6 +25,7 @@ export type ProductItemOptions = {
 
 export type ProductItem = {
   id: number,
+  category: string,
   img: string[],
   info?: string,
   title: string,
@@ -43,7 +45,7 @@ export type ProductItemStore = ProductItem & {
 
 export type ProductType = {
   id: number,
-  category: ProductCategory,
+  category: Category,
   items: ProductItem[]
 }
 

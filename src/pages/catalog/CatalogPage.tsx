@@ -5,6 +5,8 @@ import GoInBasketButton from './components/GoInBasketButton'
 import ProductInfoModal from '../../modals/ProductInfoModal'
 import SelectPropertyModal from '../../modals/SelectPropertyModal'
 import Page from '../Page'
+import { productsData } from '../../layout/data/catalog/productsData'
+import { categoriesData } from '../../layout/data/catalog/categoriesData'
 
 function CatalogPage () {
   const [visibleCategory, setVisibleCategory] = useState<string | null>(null)
@@ -12,9 +14,11 @@ function CatalogPage () {
   useEffect(() => {
     const categories = Array.prototype.slice
       .call(document.querySelectorAll('.product-category'))
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting && entry.target) {
+          console.log('entry.isIntersecting && entry.target', entry.target.getAttribute('id'))
           setVisibleCategory(entry.target.getAttribute('id'))
         }
       })
@@ -33,16 +37,24 @@ function CatalogPage () {
     }
   }, [])
 
+  useEffect(() => {
+    console.log('visibleCategory', visibleCategory)
+  }, [visibleCategory])
+
   return (
     <Page className="page--catalog">
       <div className="catalog--header">
         <CategoryList
           visibleCategory={visibleCategory}
+          categories={categoriesData}
         />
       </div>
 
       <div className="catalog--body">
-        <ProductList />
+        <ProductList
+          products={productsData}
+          categories={categoriesData}
+        />
       </div>
 
       <GoInBasketButton className="catalog--control"/>

@@ -1,14 +1,33 @@
-import React, { FC } from 'react'
-import { productsData } from '../../../layout/data/catalog/productsData'
+import React, { FC, useCallback, useMemo } from 'react'
 import ProductCategory from './ProductCategory'
+import _ from 'lodash'
+import { Category, ProductItem } from '../../../layout/types/catalog/productsDataTypes'
 
-const ProductList: FC = () => {
+export type ProductListProps = {
+  products: ProductItem[],
+  categories: Category[],
+}
+
+const ProductList: FC<ProductListProps> = (props) => {
+  const {
+    products,
+    categories
+  } = props
+
+  const productCategories = useMemo(() => {
+    const group = _.groupBy(products, 'category')
+    return _.entries(group)
+  }, [products])
+
+  const matchCategory = useCallback((category: string) => _.find(categories, (item) => item.code === category), [])
+
   return (
     <div className="product-list">
-      { productsData.map((category) => (
+      { productCategories.map(([key, value]) => (
         <ProductCategory
-          key={category.id}
-          {...category}
+          key={key}
+          category={matchCategory(key)}
+          items={value}
         />
       ))}
     </div>

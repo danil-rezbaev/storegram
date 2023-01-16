@@ -3,14 +3,16 @@ import CategoryItem from './CategoryItem'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/parallax'
-import { productsData } from '../../../layout/data/catalog/productsData'
+import { Category } from '../../../layout/types/catalog/productsDataTypes'
 
 export type CategoryListProps = {
-  visibleCategory?: string | null
+  categories: Category[],
+  visibleCategory?: string | null,
 }
 
 const CategoryList: FC<CategoryListProps> = (props) => {
   const {
+    categories,
     visibleCategory
   } = props
 
@@ -21,13 +23,13 @@ const CategoryList: FC<CategoryListProps> = (props) => {
         parallax={true}
         slidesPerView="auto"
       >
-        { productsData.map((item) => (
+        { categories.map((item) => (
           <SwiperSlide
             key={item.id}
           >
             <CategoryItem
-              {...item.category}
               visibleCategory={visibleCategory}
+              {...item}
             />
           </SwiperSlide>
         )) }
