@@ -18,7 +18,6 @@ function CatalogPage () {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting && entry.target) {
-          console.log('entry.isIntersecting && entry.target', entry.target.getAttribute('id'))
           setVisibleCategory(entry.target.getAttribute('id'))
         }
       })
@@ -36,10 +35,6 @@ function CatalogPage () {
       })
     }
   }, [])
-
-  useEffect(() => {
-    console.log('visibleCategory', visibleCategory)
-  }, [visibleCategory])
 
   return (
     <Page className="page--catalog">

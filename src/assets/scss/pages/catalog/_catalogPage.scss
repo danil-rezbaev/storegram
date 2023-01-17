@@ -1,8 +1,11 @@
 @use "../../variables";
 
 .page--catalog {
+  padding-top: 3rem;
+
   .catalog--header {
-    position: sticky;
+    position: fixed;
+    width: 100%;
     top: 0;
     z-index: 10;
     background-color: variables.$white;
@@ -11,11 +14,10 @@
       content: '';
       background-color: variables.$white;
       width: 120%;
-      height: inherit;
-      margin-left: -10%;
-      position: fixed;
+      height: 100%;
+      position: absolute;
       top: 0;
-      left: 0;
+      left: -50%;
     }
   }
 }
