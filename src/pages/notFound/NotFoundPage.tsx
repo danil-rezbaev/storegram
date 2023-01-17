@@ -1,12 +1,13 @@
 import React from 'react'
+import Page from '../Page'
 
 function NotFoundPage () {
   return (
-    <div className="main-page">
+    <Page className="page--not-found">
       <b>404</b>
       <br/>
       <p>не туда попали</p>
-    </div>
+    </Page>
   )
 }
 

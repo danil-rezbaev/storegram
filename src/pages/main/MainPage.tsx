@@ -1,10 +1,11 @@
 import React from 'react'
+import Page from '../Page'
 
 function MainPage () {
   return (
-    <div className="main-page">
+    <Page className="page--main">
       main page
-    </div>
+    </Page>
   )
 }
 
