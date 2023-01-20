@@ -30,7 +30,7 @@ const SelectField: FC<SelectFieldProps> = (props) => {
       onClick={onClick}
       name={name}
     >
-      <div className={ cs('select-field--checkbox', type) }>
+      <div className={ cs('select-field--mark', type) }>
         <CheckIcon className="icon"/>
       </div>
 

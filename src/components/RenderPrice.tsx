@@ -4,7 +4,7 @@ import { useAppSelector } from '../hooks/redux'
 
 export type RenderPriceProps = {
   title?: string | number,
-  price: string | number,
+  price: string | number | undefined,
   className?: string
 }
 
@@ -16,9 +16,11 @@ const RenderPrice: FC<RenderPriceProps> = (props) => {
   } = props
 
   const currency = useAppSelector(state => state.global.currency)
+
   const priceFormat = useMemo(() => {
+    const priceFormat = price ?? 0
     const titleFormat = title || ''
-    return `${titleFormat} ${price} ${currency}`
+    return `${titleFormat} ${priceFormat} ${currency}`
   }, [price, currency])
 
   return (

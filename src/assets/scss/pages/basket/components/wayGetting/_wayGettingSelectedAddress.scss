@@ -1,12 +1,11 @@
 @use "../../../../variables";
 
-.way-getting-list {
-  list-style: none;
+.way-getting-selected-address {
   text-align: left;
   margin: 5px 0;
   padding: 0;
 
-  .way-getting-list--item {
+  .list--item {
     display: grid;
     align-items: center;
     grid-template-columns: 12px 1fr minmax(25px, 50px);
@@ -20,9 +19,5 @@
     .item--title {
       line-height: 1.2;
     }
-  }
-
-  p {
-    margin: 0;
   }
 }

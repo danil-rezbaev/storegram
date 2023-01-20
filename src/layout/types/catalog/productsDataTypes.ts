@@ -89,3 +89,8 @@ export type DeliveryAddressStore = {
   value: DeliveryAddress,
   selected: boolean
 }
+
+export type WayGettingMethodType = {
+  address: string,
+  filled: boolean
+}
