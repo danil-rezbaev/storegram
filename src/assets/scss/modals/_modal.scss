@@ -1,0 +1,19 @@
+.modal {
+  top: auto !important;
+  bottom: 0 !important;
+  height: 90% !important;
+
+  .modal--close-btn {
+    position: absolute;
+    right: 16px;
+    font-size: 30px;
+    padding: 0;
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+}

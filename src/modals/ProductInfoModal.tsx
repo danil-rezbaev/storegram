@@ -48,10 +48,10 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
     <BottomPopup
       visible={visible}
       visibleHandle={visibleHandler}
-      className="product-info"
+      className="modal product-info"
     >
       <Button
-        className="product-info--close-btn bg-white text-black border-0"
+        className="modal--close-btn bg-white text-black border-0"
         onClick={handleClose}>
         <CloseIcon/>
       </Button>

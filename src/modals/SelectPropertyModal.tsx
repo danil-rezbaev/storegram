@@ -21,11 +21,11 @@ const SelectPropertyModal: FC<SelectPropertyModalProps> = () => {
     questionLength
   } = store
 
-  const handleClose = () => visibleHandler(false)
-
   const visibleHandler = useCallback((visible: boolean): void => {
     dispatch(visibleHandle({ visible }))
   }, [])
+
+  const handleClose = () => visibleHandler(false)
 
   const currentQuestion = useMemo(() => questions[questionCounter], [questions, questionCounter])
   const currentQuestionFilled = useMemo(() => currentQuestion?.filled, [currentQuestion])
@@ -60,11 +60,11 @@ const SelectPropertyModal: FC<SelectPropertyModalProps> = () => {
     <BottomPopup
       visible={visible}
       visibleHandle={visibleHandler}
-      className="select-property-quiz"
+      className="modal select-property-quiz"
     >
       <div className='select-property-quiz--content'>
         <Button
-          className="select-property-quiz--close-btn border-0"
+          className="modal--close-btn select-property-quiz--close-btn border-0"
           onClick={handleClose}>
           <CloseIcon/>
         </Button>

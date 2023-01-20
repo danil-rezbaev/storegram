@@ -3,7 +3,8 @@ import globalReducer from './globalSlice'
 import basketReducer from './basketSlice'
 import productInfoReducer from './productInfoSlice'
 import propertyQuizReducer from './optionsQuizSlice'
-import clientAdrressesReducer from './clientAdrresses'
+import deliveryAddressReducer from './deliveryAddress'
+import pickupAddressReducer from './pickupAddress'
 
 const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ const store = configureStore({
     basket: basketReducer,
     productInfo: productInfoReducer,
     optionsQuiz: propertyQuizReducer,
-    clientAdrresses: clientAdrressesReducer
+    deliveryAddress: deliveryAddressReducer,
+    pickupAddress: pickupAddressReducer
   }
 })
 

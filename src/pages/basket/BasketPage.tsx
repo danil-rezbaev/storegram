@@ -6,12 +6,13 @@ import Page from '../Page'
 
 function BasketPage () {
   const basketStore = useAppSelector(state => state.basket)
+  const isBasketEmpty = basketStore.quantity === 0
 
   return (
     <Page className="page--basket">
-      { basketStore.quantity > 0
-        ? <BasketContent/>
-        : <BasketEmpty/>
+      { isBasketEmpty
+        ? <BasketEmpty/>
+        : <BasketContent/>
       }
     </Page>
   )

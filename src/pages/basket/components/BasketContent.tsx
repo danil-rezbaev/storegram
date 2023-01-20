@@ -5,6 +5,8 @@ import BasketProductList from './BasketProductList'
 import { useAppSelector } from '../../../hooks/redux'
 import BottomButton from '../../../components/BottomButton'
 import RenderPrice from '../../../components/RenderPrice'
+import WayGetting from './WayGetting/WayGetting'
+import { receivingMethodData } from '../../../layout/data/basket/receivingMethodsData'
 
 export type BasketContentProps = unknown
 
@@ -25,7 +27,9 @@ const BasketContent: FC<BasketContentProps> = () => {
 
       <RenderPrice title={`${quantity} товара на сумму`} price={amount} className="h4 d-block mt-4 fw-semibold text-start" />
 
-      <BasketProductList />
+      <BasketProductList basketStore={basketStore} />
+
+      <WayGetting data={receivingMethodData} />
 
       <BottomButton
         title="Оформить заказ"

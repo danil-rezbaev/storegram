@@ -58,9 +58,13 @@ export type TotalProductProperties = {
   selectedOptions: Record<string, ProductItemOptionsValue[]>
 }
 
-export type ReceivingMethods = {
-  id: number,
+export type DeliveryMethods = {
+  id: string | number,
   title: string,
+  price?: number
+}
+
+export type ReceivingMethods = DeliveryMethods & {
   name: string,
   price: number
 }
@@ -70,11 +74,18 @@ export type PickupAddresses = {
   title: string
 }
 
-export type ClientAdresses = {
+export type DeliveryAddress = {
   city: string,
+  street: string,
   house: string,
   flat: string,
   entrance: string,
   floor: string,
   comment?: string,
+}
+
+export type DeliveryAddressStore = {
+  format: string,
+  value: DeliveryAddress,
+  selected: boolean
 }

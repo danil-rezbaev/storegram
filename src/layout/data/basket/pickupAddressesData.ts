@@ -1,6 +1,6 @@
-import { PickupAddresses } from '../../types/catalog/productsDataTypes'
+import { DeliveryMethods } from '../../types/catalog/productsDataTypes'
 
-export const pickupAddressesData: PickupAddresses[] = [
+export const pickupAddressesData: DeliveryMethods[] = [
   {
     id: 1,
     title: 'ул. Восточно кругликовская 30/2'

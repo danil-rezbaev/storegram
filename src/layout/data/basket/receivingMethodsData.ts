@@ -5,7 +5,7 @@ export const receivingMethodData: ReceivingMethods[] = [
     id: 1,
     name: 'delivery',
     title: 'Доставка',
-    price: 200
+    price: 49
   },
   {
     id: 2,
