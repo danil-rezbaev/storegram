@@ -91,6 +91,8 @@ export type DeliveryAddressStore = {
 }
 
 export type WayGettingMethodType = {
-  address: string,
+  type: string,
+  address: string | null,
+  price: number | null,
   filled: boolean
 }
