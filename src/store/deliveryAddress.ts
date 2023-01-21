@@ -6,6 +6,7 @@ export type DeliveryAddressState = {
   addresses: Record<string, DeliveryAddressStore>,
   selectedItemId: string,
   filled: boolean,
+  price: number,
   modal: {
     visible: boolean,
     stage: number
@@ -16,6 +17,7 @@ const initialState: DeliveryAddressState = {
   addresses: {},
   selectedItemId: '',
   filled: false,
+  price: 0,
   modal: {
     visible: false,
     stage: 1
@@ -90,10 +92,14 @@ const DeliveryAddressSlice = createSlice({
     updateStage: (state, action: PayloadAction<{stage: number}>): void => {
       const { stage } = action.payload
       state.modal.stage = stage
+    },
+    updateDeliveryPrice: (state, action: PayloadAction<{price: number}>): void => {
+      const { price } = action.payload
+      state.price = price
     }
   }
 })
 
-export const { addAddress, removeAddress, visibleHandle, updateAddressSelected, openModal, updateStage } = DeliveryAddressSlice.actions
+export const { addAddress, removeAddress, visibleHandle, updateAddressSelected, openModal, updateStage, updateDeliveryPrice } = DeliveryAddressSlice.actions
 
 export default DeliveryAddressSlice.reducer
