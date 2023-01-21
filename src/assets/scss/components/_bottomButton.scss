@@ -2,9 +2,11 @@
 
 .bottom-button {
   position: fixed;
-  width: 100vw;
+  width: 100%;
+  max-width: 768px;
   bottom: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 20px;
   background: rgba(variables.$white, 0.9);
   padding: 10px 0;
