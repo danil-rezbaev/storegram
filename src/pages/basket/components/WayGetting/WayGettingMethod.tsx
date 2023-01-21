@@ -1,17 +1,17 @@
 import React, { FC, MouseEventHandler, useCallback, useMemo } from 'react'
 import cs from 'classnames'
 import WayGettingSelectedAddress from './WayGettingSelectedAddress'
-import { ReactComponent as EditIcon } from '../../../../assets/images/pages/basket/edit.svg'
-import { openModal } from '../../../../store/deliveryAddress'
-import { ReactComponent as PlusIcon } from '../../../../assets/images/pages/basket/plus.svg'
-import { visibleHandle } from '../../../../store/pickupAddress'
+import { openModal, updateDeliveryPrice } from '../../../../store/deliveryAddress'
+import { updatePickupPrice, visibleHandle } from '../../../../store/pickupAddress'
 import { useAppDispatch } from '../../../../hooks/redux'
 import { WayGettingMethodType } from '../../../../layout/types/catalog/productsDataTypes'
+import { ReactComponent as PlusIcon } from '../../../../assets/images/pages/basket/plus.svg'
+import { ReactComponent as EditIcon } from '../../../../assets/images/pages/basket/edit.svg'
 
 export type WayGettingMethodProps = {
   active: boolean,
   data: WayGettingMethodType | undefined,
-  price?: number,
+  price: number,
   name: string,
   className?: string
 }
@@ -40,8 +40,10 @@ const WayGettingMethod: FC<WayGettingMethodProps> = (props) => {
     if (name === 'delivery') {
       const defineStage = filled ? 2 : 1
       dispatch(openModal({ stage: defineStage }))
+      dispatch(updateDeliveryPrice({ price }))
     } else if (name === 'pickup') {
       dispatch(visibleHandle({ value: true }))
+      dispatch(updatePickupPrice({ price }))
     }
   }, [filled, name])
 

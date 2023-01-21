@@ -7,6 +7,7 @@ import { pickupAddressesData } from '../../../../layout/data/basket/pickupAddres
 import WayGettingMethod from './WayGettingMethod'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux'
 import { addAddress } from '../../../../store/pickupAddress'
+import { updateWayGetting } from '../../../../store/globalSlice'
 
 export type WayGettingProps = {
   data: ReceivingMethods[],
@@ -26,6 +27,8 @@ const WayGetting: FC<WayGettingProps> = (props) => {
     return null
   }, [data])
 
+  const dispatch = useAppDispatch()
+
   const [activeTab, setActiveTab] = useState<string | null>(defaultActive)
   const [methodData, setMethodData] = useState<Record<string, WayGettingMethodType>>({})
 
@@ -37,10 +40,8 @@ const WayGetting: FC<WayGettingProps> = (props) => {
   const pickupStore = useAppSelector(store => store.pickupAddress)
   const deliveryStore = useAppSelector(store => store.deliveryAddress)
 
-  const dispatch = useAppDispatch()
-
   useEffect(() => {
-    const { selectedAddress, filled } = pickupStore
+    const { selectedAddress, price, filled } = pickupStore
 
     if (!selectedAddress) {
       if (pickupAddressesData[0].title) {
@@ -51,24 +52,38 @@ const WayGetting: FC<WayGettingProps> = (props) => {
     setMethodData(value => ({
       ...value,
       pickup: {
+        type: 'pickup',
         address: selectedAddress,
+        price,
         filled
       }
     }))
   }, [pickupStore])
 
   useEffect(() => {
-    const { addresses, filled, selectedItemId } = deliveryStore
+    const { addresses, price, filled, selectedItemId } = deliveryStore
     const selectedAddress = addresses[selectedItemId]?.format
 
     setMethodData(value => ({
       ...value,
       delivery: {
+        type: 'delivery',
         address: selectedAddress,
+        price,
         filled
       }
     }))
   }, [deliveryStore])
+
+  useEffect(() => {
+    const activeMethod = activeTab ? methodData[activeTab] : null
+
+    if (activeMethod) {
+      dispatch(updateWayGetting({
+        wayGetting: activeMethod
+      }))
+    }
+  }, [activeTab, methodData])
 
   return (
     <div className={cs('way-getting', className)}>
