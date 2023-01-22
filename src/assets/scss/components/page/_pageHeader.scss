@@ -1,0 +1,27 @@
+@use "../../variables";
+
+.page-header {
+  position: relative;
+
+  .page-header--title {
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+    margin: 0;
+    text-align: center;
+  }
+
+  .page-header--link-btn {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    color: variables.$gray;
+  }
+
+  .page-header--icon {
+    width: 20px;
+    height: 15px;
+    color: inherit;
+  }
+}
