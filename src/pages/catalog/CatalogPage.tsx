@@ -4,9 +4,9 @@ import CategoryList from './components/CategoryList'
 import GoInBasketButton from './components/GoInBasketButton'
 import ProductInfoModal from '../../modals/ProductInfoModal'
 import SelectPropertyModal from '../../modals/SelectPropertyModal'
-import Page from '../Page'
 import { productsData } from '../../layout/data/catalog/productsData'
 import { categoriesData } from '../../layout/data/catalog/categoriesData'
+import Page from '../../components/page/Page'
 
 function CatalogPage () {
   const [visibleCategory, setVisibleCategory] = useState<string | null>(null)

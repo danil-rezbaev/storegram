@@ -1,32 +1,6 @@
 @use "../../variables";
 
 .page--basket {
-  .basket--header {
-    position: relative;
-  }
-
-  .basket--title {
-    font-weight: 600;
-    font-size: 1rem;
-    line-height: 1.2;
-    margin: 0;
-    text-align: center;
-  }
-
-  .basket--link-btn {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    color: variables.$gray;
-
-    .icon {
-      width: 20px;
-      height: 15px;
-      color: inherit;
-    }
-  }
-
   .basket--delete-btn {
     background: transparent;
   }
