@@ -1,0 +1,13 @@
+@use "../../../variables";
+
+.basket-price-calc {
+  margin: 1.5rem 0;
+  list-style: none;
+  padding: 0;
+
+  .list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
