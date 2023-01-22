@@ -69,7 +69,7 @@ const WayGettingMethod: FC<WayGettingMethodProps> = (props) => {
       <WayGettingSelectedAddress
         address={address}
         filled={filled}
-        hint="Пока нет адресов для доставки"
+        hint="Укажите адрес доставки"
         price={price}
       />
 
