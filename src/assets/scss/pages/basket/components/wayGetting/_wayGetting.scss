@@ -7,15 +7,16 @@
   border-radius: 10px;
 
   .way-getting--header {
-    display: flex;
+    display: grid;
     align-items: center;
+    grid-template-columns: repeat(2, 1fr);
     gap: 5px;
     flex-wrap: wrap;
   }
 
   .way-getting--control-btn {
     padding: 5px 10px;
-    border-radius: 100rem;
+    border-radius: 11px;
     font-weight: 500;
     font-size: 1rem;
     line-height: 1.25;
