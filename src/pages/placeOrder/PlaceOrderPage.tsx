@@ -2,7 +2,6 @@ import React, { FC, FormEventHandler, useCallback, useState } from 'react'
 import Page from '../../components/page/Page'
 import PageHeader from '../../components/page/PageHeader'
 import { Button, Form } from 'react-bootstrap'
-import 'react-phone-number-input/style.css'
 
 export type PlaceOrderPageProps = unknown
 
