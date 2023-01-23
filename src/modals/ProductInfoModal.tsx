@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react'
+import React, { FC, useCallback, useMemo } from 'react'
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { ReactComponent as CloseIcon } from '../assets/images/pages/catalog/close.svg'
 import { ReactComponent as InfoIcon } from '../assets/images/pages/catalog/info.svg'
@@ -11,6 +11,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css/pagination'
 import 'swiper/css'
 import ProductInfoButton from '../pages/catalog/components/ProductInfoButton'
+import ProductProperties from '../pages/catalog/components/ProductProperties'
 
 export type ProductInfoProps = unknown
 
@@ -26,9 +27,9 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
   const {
     id,
     img,
-    info,
     title,
     description,
+    properties,
     options
   } = product
 
@@ -38,11 +39,15 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
     dispatch(visibleHandle({ value }))
   }, [])
 
-  const renderTooltip = (props: Record<string, any>) => (
-    <Tooltip id="tooltip" {...props}>
-      { info }
-    </Tooltip>
-  )
+  const renderTooltip = useMemo(() => {
+    return (
+      <Tooltip className="tooltip">
+        {properties
+          ? <ProductProperties data={properties} />
+          : <p>Свойства не найдены</p>}
+      </Tooltip>
+    )
+  }, [properties])
 
   return (
     <BottomPopup
@@ -77,7 +82,7 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
         <div className="product-info--header">
           <h1 className="product-info--title">{title}</h1>
 
-          { info
+          { properties
             ? (<OverlayTrigger placement="left" overlay={renderTooltip}>
               <InfoIcon/>
             </OverlayTrigger>)

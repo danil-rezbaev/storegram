@@ -1,0 +1,31 @@
+@use "../../../variables";
+
+.product-properties {
+  text-align: left !important;
+  list-style: none;
+  padding: 7.5px;
+
+  .product-properties--title {
+    font-size: 1.075rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .product-properties--description {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: variables.$light-gray;
+  }
+
+  .product-properties--table {
+    margin: 0.5rem 0 0 0;
+    padding: 0;
+
+    .table--item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+}

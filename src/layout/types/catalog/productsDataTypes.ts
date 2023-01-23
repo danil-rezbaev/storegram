@@ -23,6 +23,12 @@ export type ProductItemOptions = {
   filled?: boolean
 }
 
+export type ProductItemProperties = {
+  title: string,
+  description?: string,
+  table?: Record<string, string>[]
+}
+
 export type ProductItem = {
   id: number,
   category: string,
@@ -33,7 +39,7 @@ export type ProductItem = {
   price: number,
   count?: number,
   options?: ProductItemOptions[],
-  properties?: Record<ProductProperties, number>
+  properties?: ProductItemProperties
 }
 
 export type ProductItemStore = ProductItem & {

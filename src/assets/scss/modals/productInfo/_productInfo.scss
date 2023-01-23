@@ -1,5 +1,5 @@
 .product-info {
-  padding-bottom: 75px;
+  padding-bottom: 65px;
 
   .product-info--img-container {
     max-width: calc(100% + 32px);
@@ -21,7 +21,7 @@
 
   .product-info--header {
     display: grid;
-    grid-template-columns: 1fr 30px;
+    grid-template-columns: 1fr 25px;
     align-items: center;
   }
 
@@ -49,8 +49,4 @@
   }
 
   .product-info--options {}
-
-  .offcanvas-body {
-    overflow-x: hidden;
-  }
 }

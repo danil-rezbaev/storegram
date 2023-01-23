@@ -1,0 +1,14 @@
+@use "../../../variables";
+
+.tooltip {
+  --bs-tooltip-opacity: 0.99 !important;
+  width: 100%;
+  text-align: left !important;
+
+  .tooltip-inner {
+    max-width: 350px;
+    width: calc(100% - 70px);
+    margin-left: auto;
+    background: rgba(variables.$dark-gray, 0.99);
+  }
+}
