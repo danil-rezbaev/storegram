@@ -13,12 +13,26 @@ export type BasketState = {
   quantity: number
 }
 
-const initialState: BasketState = {
+const defaultState: BasketState = {
   products: {},
   totalProductProperties: {},
   amount: 0,
   quantity: 0
 }
+
+function isBasketState (obj: any): obj is BasketState {
+  if (!obj) return false
+
+  const objAsBasketState = obj as BasketState
+  return ((objAsBasketState).products !== undefined &&
+          (objAsBasketState).totalProductProperties !== undefined &&
+          (objAsBasketState).amount !== undefined &&
+          (objAsBasketState).quantity !== undefined)
+}
+
+const initialState = isBasketState(JSON.parse(localStorage.getItem('basket') as string))
+  ? JSON.parse(localStorage.getItem('basket') as string)
+  : defaultState
 
 const basketSlice = createSlice({
   name: 'basket',
@@ -26,6 +40,8 @@ const basketSlice = createSlice({
   reducers: {
     addProduct (state, action: PayloadAction<Omit<ProductItemStore, 'uniqueId' | 'totalPrice' | 'count' | 'currentOptions'>>) {
       const { id, price } = action.payload
+
+      console.log('initialState', initialState)
 
       const currentProductProperties = state.totalProductProperties[id]
       const uniqueId = currentProductProperties ? currentProductProperties.uniqueId : id.toString()
@@ -62,6 +78,8 @@ const basketSlice = createSlice({
       const productsValues = _.values(state.products)
       state.quantity = _.reduce(productsValues, (accum, item) => accum += (item.count ? item.count : 0), 0)
       state.amount = _.reduce(productsValues, (accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
+
+      localStorage.setItem('basket', JSON.stringify(state))
     },
     removeProduct (state, action: PayloadAction<{id: number, uniqueId?: string}>) {
       const { id, uniqueId } = action.payload
@@ -95,6 +113,8 @@ const basketSlice = createSlice({
       const productsValues = _.values(state.products)
       state.quantity = _.reduce(productsValues, (accum, item) => accum += (item.count ? item.count : 0), 0)
       state.amount = _.reduce(productsValues, (accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
+
+      localStorage.setItem('basket', JSON.stringify(state))
     },
     updateChecklist (state, action: PayloadAction<{productId: number, questionTitle: string, checkList: ProductItemOptionsValue[], price: number}>) {
       const { productId, checkList, questionTitle = 'Свойства', price } = action.payload
@@ -105,7 +125,7 @@ const basketSlice = createSlice({
 
       const currentProduct = state.totalProductProperties[productId]
 
-      const currentSelectedOptions = currentProduct
+      const currentSelectedOptions: Record<string, ProductItemOptionsValue[]> = currentProduct
         ? { ...currentProduct.selectedOptions, [questionTitle]: checkList }
         : { [questionTitle]: checkList }
 
@@ -139,9 +159,12 @@ const basketSlice = createSlice({
           uniqueId
         }
       }
+
+      localStorage.setItem('basket', JSON.stringify(state))
     },
     clearBasket (state) {
       state.products = {}
+      localStorage.setItem('basket', JSON.stringify(state))
     }
   }
 })
