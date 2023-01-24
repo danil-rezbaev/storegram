@@ -143,7 +143,7 @@ const WayGettingDeliveryForm: FC<WayGettingDeliveryFormProps> = (props) => {
         />
       </Form.Group>
 
-      <Button type="submit" variant="success" className="w-100 text-white">Сохранить данные</Button>
+      <Button type="submit" size="lg" variant="success" className="w-100 text-white">Сохранить данные</Button>
     </Form>
   )
 }
