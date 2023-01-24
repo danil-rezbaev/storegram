@@ -24,15 +24,17 @@ function isBasketState (obj: any): obj is BasketState {
   if (!obj) return false
 
   const objAsBasketState = obj as BasketState
-  return ((objAsBasketState).products !== undefined &&
-          (objAsBasketState).totalProductProperties !== undefined &&
-          (objAsBasketState).amount !== undefined &&
-          (objAsBasketState).quantity !== undefined)
+  return (objAsBasketState.products !== undefined &&
+          objAsBasketState.totalProductProperties !== undefined &&
+          objAsBasketState.amount !== undefined &&
+          objAsBasketState.quantity !== undefined)
 }
 
 const initialState = isBasketState(JSON.parse(localStorage.getItem('basket') as string))
   ? JSON.parse(localStorage.getItem('basket') as string)
   : defaultState
+
+const saveStore = (state: BasketState) => localStorage.setItem('basket', JSON.stringify(state))
 
 const basketSlice = createSlice({
   name: 'basket',
@@ -79,7 +81,7 @@ const basketSlice = createSlice({
       state.quantity = _.reduce(productsValues, (accum, item) => accum += (item.count ? item.count : 0), 0)
       state.amount = _.reduce(productsValues, (accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
 
-      localStorage.setItem('basket', JSON.stringify(state))
+      saveStore(state)
     },
     removeProduct (state, action: PayloadAction<{id: number, uniqueId?: string}>) {
       const { id, uniqueId } = action.payload
@@ -114,7 +116,7 @@ const basketSlice = createSlice({
       state.quantity = _.reduce(productsValues, (accum, item) => accum += (item.count ? item.count : 0), 0)
       state.amount = _.reduce(productsValues, (accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
 
-      localStorage.setItem('basket', JSON.stringify(state))
+      saveStore(state)
     },
     updateChecklist (state, action: PayloadAction<{productId: number, questionTitle: string, checkList: ProductItemOptionsValue[], price: number}>) {
       const { productId, checkList, questionTitle = 'Свойства', price } = action.payload
@@ -160,11 +162,11 @@ const basketSlice = createSlice({
         }
       }
 
-      localStorage.setItem('basket', JSON.stringify(state))
+      saveStore(state)
     },
     clearBasket (state) {
       state.products = {}
-      localStorage.setItem('basket', JSON.stringify(state))
+      saveStore(state)
     }
   }
 })

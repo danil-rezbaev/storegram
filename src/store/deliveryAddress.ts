@@ -13,7 +13,7 @@ export type DeliveryAddressState = {
   }
 }
 
-const initialState: DeliveryAddressState = {
+const defaultState: DeliveryAddressState = {
   addresses: {},
   selectedItemId: '',
   filled: false,
@@ -23,6 +23,23 @@ const initialState: DeliveryAddressState = {
     stage: 1
   }
 }
+
+function isDeliveryAddressState (obj: any): obj is DeliveryAddressState {
+  if (!obj) return false
+
+  const objAsDeliveryAddressState = obj as DeliveryAddressState
+  return (objAsDeliveryAddressState.addresses !== undefined &&
+    objAsDeliveryAddressState.selectedItemId !== undefined &&
+    objAsDeliveryAddressState.filled !== undefined &&
+    objAsDeliveryAddressState.price !== undefined &&
+    objAsDeliveryAddressState.modal !== undefined)
+}
+
+const initialState = isDeliveryAddressState(JSON.parse(localStorage.getItem('delivery') as string))
+  ? JSON.parse(localStorage.getItem('delivery') as string)
+  : defaultState
+
+const saveStore = (state: DeliveryAddressState) => localStorage.setItem('delivery', JSON.stringify(state))
 
 const DeliveryAddressSlice = createSlice({
   name: 'deliveryAddress',
@@ -54,6 +71,8 @@ const DeliveryAddressSlice = createSlice({
       } else {
         state.filled = true
       }
+
+      saveStore(state)
     },
     removeAddress (state, action: PayloadAction<{uniqueId: string}>) {
       const { uniqueId } = action.payload
@@ -68,6 +87,8 @@ const DeliveryAddressSlice = createSlice({
       } else {
         state.filled = true
       }
+
+      saveStore(state)
     },
     updateAddressSelected: (state, action: PayloadAction<{uniqueId: string}>): void => {
       const { uniqueId } = action.payload
@@ -77,9 +98,13 @@ const DeliveryAddressSlice = createSlice({
         _.forEach(_.values(state.addresses), (item) => { item.selected = false })
         state.addresses[uniqueId].selected = true
       }
+
+      saveStore(state)
     },
     visibleHandle: (state, action: PayloadAction<{value: boolean}>): void => {
       state.modal.visible = action.payload.value
+
+      saveStore(state)
     },
     openModal: (state, action: PayloadAction<{stage: number}>): void => {
       const { stage } = action.payload
@@ -88,14 +113,20 @@ const DeliveryAddressSlice = createSlice({
         stage,
         visible: true
       }
+
+      saveStore(state)
     },
     updateStage: (state, action: PayloadAction<{stage: number}>): void => {
       const { stage } = action.payload
       state.modal.stage = stage
+
+      saveStore(state)
     },
     updateDeliveryPrice: (state, action: PayloadAction<{price: number}>): void => {
       const { price } = action.payload
       state.price = price
+
+      saveStore(state)
     }
   }
 })
