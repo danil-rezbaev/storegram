@@ -6,6 +6,7 @@ import { updateAddressSelected, updateStage, visibleHandle } from '../../../../s
 import SelectField from '../../../../components/SelectField'
 import { Button } from 'react-bootstrap'
 import { ReactComponent as PlusIcon } from '../../../../assets/images/pages/basket/plus.svg'
+import { useTranslation } from 'react-i18next'
 
 export type WayGettingDeliverySelectProps = {
   className?: string
@@ -17,6 +18,8 @@ const WayGettingDeliverySelect: FC<WayGettingDeliverySelectProps> = (props) => {
   } = props
 
   const dispatch = useAppDispatch()
+  const { t } = useTranslation()
+
   const deliveryAddressStore = useAppSelector(state => state.deliveryAddress)
   const { addresses, selectedItemId } = deliveryAddressStore
   const addressesKeys = _.keys(addresses)
@@ -50,7 +53,7 @@ const WayGettingDeliverySelect: FC<WayGettingDeliverySelectProps> = (props) => {
         onClick={addNewAddress}
       >
         <PlusIcon className="btn--icon"/>
-        <p>Добавить адрес</p>
+        <p>{t('basket:content.wayGetting.buttons.addAddress')}</p>
       </Button>
     </div>
   )

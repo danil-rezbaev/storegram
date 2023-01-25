@@ -2,6 +2,7 @@ import React, { FC, MouseEventHandler, useCallback, useMemo } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
 import { addProduct, removeProduct } from '../../../store/basketSlice'
 import BottomButton from '../../../components/BottomButton'
+import { useTranslation } from 'react-i18next'
 
 export type ProductInfoButtonProps = unknown
 
@@ -20,6 +21,8 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
     id,
     price
   } = productInfoStore
+
+  const { t } = useTranslation()
 
   const productPropertiesMemo = useMemo(() => {
     if (totalProductProperties[id]) {
@@ -51,11 +54,12 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
   }, [productInfoStore])
 
   const titleFormat = useMemo(() => {
+    const priceFormat = `${priceMemo} ${currency}`
+
     if (countProducts > 0) {
-      return `${countProducts} x ${priceMemo} ${currency}`
-    } else {
-      return `в корзину за ${priceMemo} ${currency}`
+      return t('catalog:productInfoButton.changeProduct', { counter: countProducts, price: priceFormat })
     }
+    return t('catalog:productInfoButton.addProduct', { price: priceFormat })
   }, [countProducts, priceMemo])
 
   return (
@@ -73,7 +77,7 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
               name="decrement"
               onClick={productBasketHandler}
             >
-              -
+              {t('counter:minus')}
             </button>
 
             <button
@@ -81,14 +85,13 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
               name="increment"
               onClick={productBasketHandler}
             >
-              +
+              {t('counter:plus')}
             </button>
           </div>
             )
           : null}
       </BottomButton>
     </div>
-
   )
 }
 

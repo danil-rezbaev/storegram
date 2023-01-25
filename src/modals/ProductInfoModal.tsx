@@ -12,6 +12,7 @@ import 'swiper/css/pagination'
 import 'swiper/css'
 import ProductInfoButton from '../pages/catalog/components/ProductInfoButton'
 import ProductProperties from '../pages/catalog/components/ProductProperties'
+import { useTranslation } from 'react-i18next'
 
 export type ProductInfoProps = unknown
 
@@ -33,6 +34,7 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
     options
   } = product
 
+  const { t } = useTranslation()
   const handleClose = () => visibleHandler(false)
 
   const visibleHandler = useCallback((value: boolean): void => {
@@ -44,7 +46,7 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
       <Tooltip className="tooltip">
         {properties
           ? <ProductProperties data={properties} />
-          : <p>Свойства не найдены</p>}
+          : <p>{t('catalog:productInfoModal.propertiesNotFound')}</p>}
       </Tooltip>
     )
   }, [properties])

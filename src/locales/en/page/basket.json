@@ -1,0 +1,93 @@
+{
+  "empty": {
+    "title": "Shopping cart is empty",
+
+    "buttons": {
+      "goInCatalog": "Go to shopping"
+    }
+  },
+
+  "content": {
+    "title": "Shopping cart",
+
+    "productsQuantity": "{{count}} product",
+    "productsQuantity_other": "{{count}} products",
+
+    "wayGetting": {
+      "title": "Getting method",
+      "hint": "Please add an address",
+
+      "delivery": {
+        "title": "Delivery",
+
+        "modal": {
+          "title": "Add address"
+        },
+
+        "form": {
+          "city": {
+            "title": "City",
+            "placeholder": "New York",
+            "hint": "Please specify the city"
+          },
+
+          "street": {
+            "title": "Street",
+            "placeholder": "Time Square",
+            "hint": "Please specify the street"
+          },
+
+          "house": {
+            "title": "House or building",
+            "placeholder": "30/2",
+            "hint": "Please specify the house"
+          },
+
+          "flat": {
+            "title": "Apartment",
+            "placeholder": "102",
+            "hint": "Please specify an apartment or office"
+          },
+
+          "entrance": {
+            "title": "Entrance",
+            "placeholder": "3",
+            "hint": "Please specify the entrance"
+          },
+
+          "floor": {
+            "title": "Floor",
+            "placeholder": "3",
+            "hint": "Please specify the floor"
+          },
+
+          "comment": {
+            "title": "Comment",
+            "placeholder": "For example, remove the onion"
+          },
+
+          "buttons": {
+            "saveData": "Save data"
+          }
+        }
+      },
+
+      "pickup": {
+        "title": "Pickup"
+      },
+
+      "buttons": {
+        "addAddress": "Add address",
+        "editAddress": "Change address"
+      }
+    },
+
+    "totalPrice": {
+      "title": "Total"
+    },
+
+    "buttons": {
+      "placeOrder": "Checkout"
+    }
+  }
+}

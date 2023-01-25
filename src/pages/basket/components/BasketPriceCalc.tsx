@@ -2,6 +2,7 @@ import React, { FC, useEffect, useMemo } from 'react'
 import RenderPrice from '../../../components/RenderPrice'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
 import { updateTotalPrice } from '../../../store/globalSlice'
+import { useTranslation } from 'react-i18next'
 
 export type BasketAmountProps = unknown
 
@@ -13,30 +14,29 @@ const BasketPriceCalc: FC<BasketAmountProps> = () => {
   const { wayGetting, totalPrice } = globalStore
 
   const dispatch = useAppDispatch()
+  const { t } = useTranslation()
 
   useEffect(() => {
     const price = wayGetting?.price ?? 0
-    dispatch(updateTotalPrice({ totalPrice: (price + amount) }))
-  }, [amount, wayGetting])
+    const calcPrice = price + amount
+    dispatch(updateTotalPrice({ totalPrice: calcPrice }))
+  }, [amount, wayGetting.type])
 
   const productsAmountView = useMemo(() => {
-    const titleFormat = `${quantity} товара`
     return (
       <li className="list-item">
-        <span>{titleFormat}</span>
+        <span>{t('basket:content.productsQuantity', { count: quantity })}</span>
         <RenderPrice price={amount}/>
       </li>
     )
   }, [quantity, amount])
 
   const wayGettingView = useMemo(() => {
-    if (!wayGetting) return null
-
     const { type, price } = wayGetting
 
     return (
       <li className="list-item">
-        <span>{type}</span>
+        <span>{t(`basket:content.wayGetting.${type}.title`)}</span>
         <RenderPrice price={price ?? 0}/>
       </li>
     )
@@ -45,16 +45,16 @@ const BasketPriceCalc: FC<BasketAmountProps> = () => {
   const totalPriceView = useMemo(() => {
     return (
       <li className="list-item">
-        <span>Итого</span>
+        <span>{t('basket:content.totalPrice.title')}</span>
         <RenderPrice price={totalPrice}/>
       </li>
     )
-  }, [wayGetting])
+  }, [totalPrice])
 
   return (
     <ul className="basket-price-calc">
       {productsAmountView}
-      {wayGettingView}
+      {wayGetting ? wayGettingView : null}
       {totalPriceView}
     </ul>
   )

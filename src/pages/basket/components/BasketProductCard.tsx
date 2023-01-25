@@ -6,6 +6,7 @@ import { useAppDispatch } from '../../../hooks/redux'
 import { addProduct, removeProduct } from '../../../store/basketSlice'
 import RenderPrice from '../../../components/RenderPrice'
 import CropText from '../../../components/CropText'
+import { useTranslation } from 'react-i18next'
 
 export type BasketProductCardProps = ProductItemStore
 
@@ -20,6 +21,8 @@ const BasketProductCard: FC<BasketProductCardProps> = (props) => {
     count,
     currentOptions
   } = props
+
+  const { t } = useTranslation()
 
   const dispatch = useAppDispatch()
 
@@ -50,7 +53,10 @@ const BasketProductCard: FC<BasketProductCardProps> = (props) => {
 
       <div className="basket-product-card--footer">
         <RenderPrice price={totalPrice} className="basket-product-card--price" />
-        <Counter title={`${count} шт`} handler={handleClick} className='basket-product-card--counter' />
+        <Counter
+          title={t('counter:pieces', { count })}
+          handler={handleClick}
+          className='basket-product-card--counter' />
       </div>
     </div>
   )

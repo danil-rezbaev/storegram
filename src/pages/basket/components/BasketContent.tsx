@@ -8,6 +8,7 @@ import PageHeader from '../../../components/page/PageHeader'
 import WayGetting from './WayGetting/WayGetting'
 import { receivingMethodData } from '../../../layout/data/basket/receivingMethodsData'
 import BasketPriceCalc from './BasketPriceCalc'
+import { useTranslation } from 'react-i18next'
 
 export type BasketContentProps = unknown
 
@@ -18,6 +19,7 @@ const BasketContent: FC<BasketContentProps> = () => {
   const { wayGetting } = globalStore
 
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const placeOrderLink = () => {
     navigate('/place-order')
@@ -29,9 +31,12 @@ const BasketContent: FC<BasketContentProps> = () => {
 
   return (
     <main>
-      <PageHeader title="Корзина" backLink="/catalog" />
+      <PageHeader title={t('basket:content.title')} backLink="/catalog" />
 
-      <RenderPrice title={`${quantity} товара на сумму`} price={amount} className="h4 d-block mt-4 fw-semibold text-start" />
+      <RenderPrice
+        title={t('basket:content.productsQuantity', { count: quantity })}
+        price={amount}
+        className="h4 d-block mt-4 fw-semibold text-start" />
 
       <BasketProductList basketStore={basketStore} />
 
@@ -40,7 +45,7 @@ const BasketContent: FC<BasketContentProps> = () => {
       <BasketPriceCalc />
 
       <BottomButton
-        title="Оформить заказ"
+        title={t('basket:content.buttons.placeOrder')}
         onClick={placeOrderLink}
         disabled={!buttonAvailability}
       />

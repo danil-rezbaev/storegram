@@ -4,6 +4,7 @@ import { ProductItemOptions, ProductItemOptionsValue } from '../../layout/types/
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { openModal } from '../../store/optionsQuizSlice'
 import _ from 'lodash'
+import { useTranslation } from 'react-i18next'
 
 export type SelectPropertyItemProps = Omit<ProductItemOptionsValue, 'priceChange'> & Pick<ProductItemOptions, 'type'> & {
   index: number,
@@ -23,6 +24,7 @@ const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
   } = props
 
   const dispatch = useAppDispatch()
+  const { t } = useTranslation()
   const optionsQuizStore = useAppSelector(state => state.optionsQuiz)
 
   const {
@@ -43,7 +45,7 @@ const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
       const optionsFormat = currentSelectedOptions[title].map(item => item.title.toLowerCase()).join(', ')
       return `${title}: ${optionsFormat}`
     }
-    return `Выбрать ${title.toLowerCase()}`
+    return t('catalog:selectPropertyModal.selectProduct', { title: title.toLowerCase() })
   }, [currentSelectedOptions])
 
   return (
@@ -55,7 +57,10 @@ const SelectPropertyItem: FC<SelectPropertyItemProps> = (props) => {
         size="sm"
         className="text-white"
       >
-        {currentQuestionFilled ? 'изменить' : 'выбрать'}
+        { currentQuestionFilled
+          ? t('catalog:selectPropertyModal.buttons.change')
+          : t('catalog:selectPropertyModal.buttons.select')
+        }
       </Button>
     </div>
   )

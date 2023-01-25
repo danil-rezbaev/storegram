@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import { setCounter, visibleHandle } from '../store/optionsQuizSlice'
 import SelectPropertyQuiz from '../components/selectProperty/SelectPropertyQuiz'
 import _ from 'lodash'
+import { useTranslation } from 'react-i18next'
 
 export type SelectPropertyModalProps = unknown
 
@@ -21,6 +22,7 @@ const SelectPropertyModal: FC<SelectPropertyModalProps> = () => {
     questionLength
   } = store
 
+  const { t } = useTranslation()
   const visibleHandler = useCallback((visible: boolean): void => {
     dispatch(visibleHandle({ visible }))
   }, [])
@@ -87,7 +89,7 @@ const SelectPropertyModal: FC<SelectPropertyModalProps> = () => {
           className="select-property-quiz--next-btn"
           onClick={nextButtonHandle}
         >
-          Далее
+          {t('catalog:selectPropertyModal.buttons.next')}
         </Button>)
          : null }
       </div>

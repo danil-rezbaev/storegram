@@ -2,7 +2,9 @@ import React, { FC } from 'react'
 import { Button, ButtonProps } from 'react-bootstrap'
 import cs from 'classnames'
 
-export type BottomButtonProps = ButtonProps
+export type BottomButtonProps = ButtonProps & {
+  title: string | null
+}
 
 const BottomButton: FC<BottomButtonProps> = (props) => {
   const {

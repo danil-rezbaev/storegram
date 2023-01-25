@@ -1,0 +1,94 @@
+{
+  "empty": {
+    "title": "Корзина пуста",
+
+    "buttons": {
+      "goInCatalog": "Перейти к покупкам"
+    }
+  },
+
+  "content": {
+    "title": "Корзина",
+
+    "productsQuantity": "{{count}} товар",
+    "productsQuantity_few": "{{count}} товара",
+    "productsQuantity_many": "{{count}} товаров",
+
+    "wayGetting": {
+      "title": "Способ получения",
+      "hint": "Пожалуйста добавьте адрес",
+
+      "delivery": {
+        "title": "Доставка",
+
+        "modal": {
+          "title": "Добавить адрес"
+        },
+
+        "form": {
+          "city": {
+            "title": "Город",
+            "placeholder": "Москва",
+            "hint": "Пожалуйста укажите город"
+          },
+
+          "street": {
+            "title": "Улица",
+            "placeholder": "Красная площадь",
+            "hint": "Пожалуйста укажите улицу"
+          },
+
+          "house": {
+            "title": "Дом или строение",
+            "placeholder": "30/2",
+            "hint": "Пожалуйста укажите дом"
+          },
+
+          "flat": {
+            "title": "Квартира",
+            "placeholder": "102",
+            "hint": "Пожалуйста укажите квартиру или офис"
+          },
+
+          "entrance": {
+            "title": "Подъезд",
+            "placeholder": "3",
+            "hint": "Пожалуйста укажите подъезд"
+          },
+
+          "floor": {
+            "title": "Этаж",
+            "placeholder": "3",
+            "hint": "Пожалуйста укажите этаж"
+          },
+
+          "comment": {
+            "title": "Комментарий",
+            "placeholder": "Например убрать лук"
+          },
+
+          "buttons": {
+            "saveData": "Сохранить данные"
+          }
+        }
+      },
+
+      "pickup": {
+        "title": "Самовывоз"
+      },
+
+      "buttons": {
+        "addAddress": "Добавить адрес",
+        "editAddress": "Изменить адрес"
+      }
+    },
+
+    "totalPrice": {
+      "title": "Итого"
+    },
+
+    "buttons": {
+      "placeOrder": "Оформить заказ"
+    }
+  }
+}

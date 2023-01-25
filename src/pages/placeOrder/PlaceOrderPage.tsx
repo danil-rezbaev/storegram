@@ -2,10 +2,13 @@ import React, { FC, FormEventHandler, useCallback, useState } from 'react'
 import Page from '../../components/page/Page'
 import PageHeader from '../../components/page/PageHeader'
 import { Button, Form } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 
 export type PlaceOrderPageProps = unknown
 
 const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
+  const { t } = useTranslation()
+
   const [validated, setValidated] = useState<boolean>(false)
 
   const defaultValue = {
@@ -50,7 +53,7 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
 
   return (
     <Page className="page--place-order">
-      <PageHeader title="Оформить заказ" backLink="/basket" />
+      <PageHeader title={t('placeOrder:title')} backLink="/basket" />
 
       <Form
         className="mt-4 text-start"
@@ -59,7 +62,7 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
         onSubmit={handleSubmit}
       >
         <Form.Group className="mb-3" controlId="formComment">
-          <Form.Label>Способ оплаты</Form.Label>
+          <Form.Label>{t('placeOrder:paymentMethod.title')}</Form.Label>
           <Form.Select
             name="payment"
             aria-label="payment"
@@ -67,25 +70,28 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
             value={formData.payment}
             required
           >
-            <option value="card-payment">Оплата картой</option>
-            <option value="cash-payment">Оплата наличными</option>
+            <option value="card-payment">{t('placeOrder:paymentMethod.cardPayment')}</option>
+            <option value="cash-payment">{t('placeOrder:paymentMethod.cashPayment')}</option>
           </Form.Select>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formComment">
-          <Form.Label>Номер телефона</Form.Label>
+          <Form.Label>{t('placeOrder:phoneNumber.title')}</Form.Label>
           <Form.Control
             type="tel"
             name="phone"
             onChange={onChangeField}
             value={formData.phone}
+            minLength={10}
           />
           <Form.Control.Feedback type="invalid">
-            Введите корректный номер телефона
+            {t('placeOrder:phoneNumber.hint')}
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Button type="submit" size="lg" variant="success" className="w-100 text-white">Сохранить данные</Button>
+        <Button type="submit" size="lg" variant="success" className="w-100 text-white">
+          {t('placeOrder:buttons.saveData')}
+        </Button>
       </Form>
     </Page>
   )

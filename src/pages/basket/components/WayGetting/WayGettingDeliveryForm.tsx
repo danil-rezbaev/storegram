@@ -4,6 +4,7 @@ import { DeliveryAddress } from '../../../../layout/types/catalog/productsDataTy
 import { useAppDispatch } from '../../../../hooks/redux'
 import { addAddress, visibleHandle } from '../../../../store/deliveryAddress'
 import _ from 'lodash'
+import { useTranslation } from 'react-i18next'
 
 export type WayGettingDeliveryFormProps = {
   className?: string
@@ -15,6 +16,8 @@ const WayGettingDeliveryForm: FC<WayGettingDeliveryFormProps> = (props) => {
   } = props
 
   const dispatch = useAppDispatch()
+  const { t } = useTranslation()
+
   const [validated, setValidated] = useState<boolean>(false)
 
   const [formData, setFormData] = useState<Record<string, string> | null>(null)
@@ -53,97 +56,62 @@ const WayGettingDeliveryForm: FC<WayGettingDeliveryFormProps> = (props) => {
     setValidated(true)
   }, [formData])
 
+  const fieldsData = [
+    {
+      name: 'city',
+      type: 'text',
+      required: true
+    },
+    {
+      name: 'street',
+      type: 'text',
+      required: true
+    },
+    {
+      name: 'house',
+      type: 'text',
+      required: true
+    },
+    {
+      name: 'flat',
+      type: 'text',
+      required: true
+    },
+    {
+      name: 'entrance',
+      type: 'text',
+      required: true
+    },
+    {
+      name: 'floor',
+      type: 'text',
+      required: true
+    }
+  ]
+
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit} className={className}>
-      <Form.Group className="mb-3" controlId="formCity">
-        <Form.Label>Город</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Москва"
-          name="city"
-          onChange={onChangeField}
-          required
-        />
-        <Form.Control.Feedback type="invalid">
-          Пожалуйста укажите город
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formStreet">
-        <Form.Label>Улица</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Красная площадь"
-          name="street"
-          onChange={onChangeField}
-          required
-        />
-        <Form.Control.Feedback type="invalid">
-          Пожалуйста укажите улицу
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formHouse">
-        <Form.Label>Дом или строение</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="30/2"
-          name="house"
-          onChange={onChangeField}
-          required
-        />
-        <Form.Control.Feedback type="invalid">
-          Пожалуйста укажите дом
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formFlat">
-        <Form.Label>Квартира</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="102"
-          name="flat"
-          onChange={onChangeField}
-          required
-        />
-        <Form.Control.Feedback type="invalid">
-          Пожалуйста укажите квартиру или офис
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formEntrance">
-        <Form.Label>Подъезд</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="3"
-          name="entrance"
-          onChange={onChangeField}
-        />
-        <Form.Control.Feedback type="invalid">
-          Пожалуйста укажите подъезд
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formFloor">
-        <Form.Label>Этаж</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="3"
-          name="floor"
-          onChange={onChangeField}
-          required
-        />
-        <Form.Control.Feedback type="invalid">
-          Пожалуйста укажите этаж
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formComment">
-        <Form.Label>Комментарий</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Например убрать лук"
-          as="textarea"
-          name="comment"
-          onChange={onChangeField}
-        />
-      </Form.Group>
+      {fieldsData.map(item => (
+        <Form.Group className="mb-3" controlId={`formCity${item.name}`} key={item.name}>
+          <Form.Label>
+            {t(`basket:content.wayGetting.delivery.form.${item.name}.title`)}
+          </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder={t(`basket:content.wayGetting.delivery.form.${item.name}.placeholder`) ?? undefined}
+            name={item.name}
+            onChange={onChangeField}
+            required={item.required}
+          />
+          <Form.Control.Feedback type="invalid">
+            {t(`basket:content.wayGetting.delivery.form.${item.name}.hint`)}
+          </Form.Control.Feedback>
+        </Form.Group>
+      ))}
 
-      <Button type="submit" size="lg" variant="success" className="w-100 text-white">Сохранить данные</Button>
+      <Button type="submit" size="lg" variant="success" className="w-100 text-white">
+        {t('basket:content.wayGetting.delivery.form.buttons.saveData')}
+      </Button>
     </Form>
   )
 }

@@ -33,7 +33,7 @@ const WayGettingSelectedAddress: FC<TabBlockListProps> = (props) => {
         <LocationIcon className="item--icon"/>
         <span className="item--title">{address}</span>
 
-        <RenderPrice price={price}/>
+        <RenderPrice price={price} className="text-end" />
       </p>
     </div>
   )

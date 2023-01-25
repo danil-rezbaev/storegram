@@ -1,0 +1,13 @@
+{
+  "empty": {
+    "title": "Basket is empty",
+
+    "buttons": {
+      "goInCatalog": "Go to shopping"
+    }
+  },
+
+  "content": {
+    "title": "Basket is empty"
+  }
+}

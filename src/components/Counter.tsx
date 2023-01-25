@@ -2,10 +2,11 @@ import React, { FC, MouseEventHandler } from 'react'
 import { Button } from 'react-bootstrap'
 import cs from 'classnames'
 import RenderPrice from './RenderPrice'
+import { useTranslation } from 'react-i18next'
 
 export type CounterProps = {
   price?: string | number,
-  title?: string | number,
+  title?: string | number | null,
   handler: MouseEventHandler<HTMLButtonElement>,
   className?: string
 }
@@ -18,6 +19,8 @@ const Counter: FC<CounterProps> = (props) => {
     className
   } = props
 
+  const { t } = useTranslation()
+
   return (
     <div className={cs('counter', className)}>
       <Button
@@ -26,7 +29,7 @@ const Counter: FC<CounterProps> = (props) => {
         name="decrement"
         onClick={handler}
       >
-        -
+        {t('counter:minus')}
       </Button>
 
       { price
@@ -50,7 +53,7 @@ const Counter: FC<CounterProps> = (props) => {
         name="increment"
         onClick={handler}
       >
-        +
+        {t('counter:plus')}
       </Button>
     </div>
   )

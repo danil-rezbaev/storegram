@@ -3,7 +3,7 @@ import cs from 'classnames'
 import { useAppSelector } from '../hooks/redux'
 
 export type RenderPriceProps = {
-  title?: string | number,
+  title?: string | number | null,
   price: string | number | undefined,
   className?: string
 }
@@ -24,7 +24,7 @@ const RenderPrice: FC<RenderPriceProps> = (props) => {
   }, [price, currency])
 
   return (
-    <p className={cs('price-render m-0', className)}>
+    <p className={cs('price-render', className)}>
       {priceFormat}
     </p>
   )

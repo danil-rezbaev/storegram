@@ -1,0 +1,24 @@
+{
+  "productInfoModal": {
+    "propertiesNotFound": "Свойства не найдены"
+  },
+
+  "productInfoButton": {
+    "addProduct": "в корзину за {{price}}",
+    "changeProduct": "{{counter}} x {{price}}"
+  },
+
+  "selectPropertyModal": {
+    "selectProduct": "Выбрать {{title}}",
+
+    "buttons": {
+      "next": "Далее",
+      "select": "Выбрать",
+      "change": "Изменить"
+    }
+  },
+
+  "goInBasketButton": {
+    "title": "Перейти в корзину"
+  }
+}

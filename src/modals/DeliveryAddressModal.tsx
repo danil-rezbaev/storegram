@@ -6,11 +6,14 @@ import WayGettingDeliveryForm from '../pages/basket/components/WayGetting/WayGet
 import BottomPopup from '../components/bottomPopup/BottomPopup'
 import { ReactComponent as CloseIcon } from '../assets/images/pages/catalog/close.svg'
 import WayGettingDeliverySelect from '../pages/basket/components/WayGetting/WayGettingDeliverySelect'
+import { useTranslation } from 'react-i18next'
 
 export type DeliveryAddressProps = unknown
 
 const DeliveryAddressModal: FC<DeliveryAddressProps> = () => {
   const dispatch = useAppDispatch()
+  const { t } = useTranslation()
+
   const deliveryAddressStore = useAppSelector(store => store.deliveryAddress)
   const { modal } = deliveryAddressStore
   const { visible, stage } = modal
@@ -46,7 +49,9 @@ const DeliveryAddressModal: FC<DeliveryAddressProps> = () => {
           <CloseIcon/>
         </Button>
 
-        <h4 className="mb-4">Добавить адрес</h4>
+        <h4 className="mb-4">
+          {t('basket:content.wayGetting.delivery.modal.title')}
+        </h4>
 
         {view}
       </div>

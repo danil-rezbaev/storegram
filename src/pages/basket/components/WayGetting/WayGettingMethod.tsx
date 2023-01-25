@@ -7,6 +7,7 @@ import { useAppDispatch } from '../../../../hooks/redux'
 import { WayGettingMethodType } from '../../../../layout/types/catalog/productsDataTypes'
 import { ReactComponent as PlusIcon } from '../../../../assets/images/pages/basket/plus.svg'
 import { ReactComponent as EditIcon } from '../../../../assets/images/pages/basket/edit.svg'
+import { useTranslation } from 'react-i18next'
 
 export type WayGettingMethodProps = {
   active: boolean,
@@ -35,6 +36,7 @@ const WayGettingMethod: FC<WayGettingMethodProps> = (props) => {
   } = data
 
   const dispatch = useAppDispatch()
+  const { t } = useTranslation()
 
   const buttonClick: MouseEventHandler<HTMLButtonElement> = useCallback(() => {
     if (name === 'delivery') {
@@ -52,14 +54,18 @@ const WayGettingMethod: FC<WayGettingMethodProps> = (props) => {
       return (
         <>
           <EditIcon className="button--icon"/>
-          <p className="button--title">Изменить адрес</p>
+          <p className="button--title">
+            {t('basket:content.wayGetting.buttons.editAddress')}
+          </p>
         </>
       )
     }
     return (
       <>
         <PlusIcon className="button--icon" />
-        <p className="button--title">Указать адрес</p>
+        <p className="button--title">
+          {t('basket:content.wayGetting.buttons.addAddress')}
+        </p>
       </>
     )
   }, [filled])
@@ -69,7 +75,7 @@ const WayGettingMethod: FC<WayGettingMethodProps> = (props) => {
       <WayGettingSelectedAddress
         address={address}
         filled={filled}
-        hint="Укажите адрес доставки"
+        hint={t('basket:content.wayGetting.hint')}
         price={price}
       />
 

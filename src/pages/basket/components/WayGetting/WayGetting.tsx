@@ -20,14 +20,14 @@ const WayGetting: FC<WayGettingProps> = (props) => {
     className
   } = props
 
+  const dispatch = useAppDispatch()
+
   const defaultActive = useMemo(() => {
     if (data && data[0].name) {
       return data[0].name
     }
     return null
   }, [data])
-
-  const dispatch = useAppDispatch()
 
   const [activeTab, setActiveTab] = useState<string | null>(defaultActive)
   const [methodData, setMethodData] = useState<Record<string, WayGettingMethodType>>({})

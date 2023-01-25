@@ -4,7 +4,7 @@ import _ from 'lodash'
 
 export type DeliveryAddressState = {
   addresses: Record<string, DeliveryAddressStore>,
-  selectedItemId: string,
+  selectedItemId: string | null,
   filled: boolean,
   price: number,
   modal: {
@@ -15,7 +15,7 @@ export type DeliveryAddressState = {
 
 const defaultState: DeliveryAddressState = {
   addresses: {},
-  selectedItemId: '',
+  selectedItemId: null,
   filled: false,
   price: 0,
   modal: {
@@ -51,7 +51,7 @@ const DeliveryAddressSlice = createSlice({
       const currentAddress = state.addresses[uniqueId]
 
       if (!currentAddress) {
-        const addressFormat = `${city} ${street}, ${house} кв. ${flat} под. ${entrance} этаж ${floor}`
+        const addressFormat = `${city} ${street} ${house}, кв. ${flat} под. ${entrance} этаж ${floor}`
         state.selectedItemId = uniqueId
 
         _.forEach(_.values(state.addresses), (item) => { item.selected = false })

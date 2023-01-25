@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import cs from 'classnames'
 import { addOptions } from '../../store/optionsQuizSlice'
 import { updateChecklist } from '../../store/basketSlice'
+import { useTranslation } from 'react-i18next'
 
 export type SelectPropertyQuizProps = ProductItemOptions & {
   productId: number,
@@ -25,18 +26,19 @@ const SelectPropertyQuiz: FC<SelectPropertyQuizProps> = (props) => {
   } = props
 
   const dispatch = useAppDispatch()
+  const { t } = useTranslation()
+
   const store = useAppSelector(state => state)
   const optionsQuizStore = useAppSelector(state => state.optionsQuiz)
   const productInfoStore = store.productInfo
 
   const { selectedOptions } = optionsQuizStore
-
   const { price } = productInfoStore.product
 
   const selectedOptionsMemo = useMemo(() => selectedOptions ? selectedOptions[productId] : undefined, [selectedOptions])
   const storeOptions: ProductItemOptionsValue[] | undefined = selectedOptionsMemo ? selectedOptionsMemo[title] : undefined
 
-  const titleFormat = `Выбрать ${title.toLowerCase()}`
+  const titleFormat = t('catalog:selectPropertyModal.selectProduct', { title: title.toLowerCase() })
 
   const [checkList, setCheckList] = useState<ProductItemOptionsValue[] | undefined>(storeOptions)
   const visible = useMemo(() => show, [show])

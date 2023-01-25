@@ -1,0 +1,19 @@
+{
+  "title": "Checkout",
+
+  "paymentMethod": {
+    "title": "Payment method",
+
+    "cardPayment": "Card payment",
+    "cashPayment": "Cash payment"
+  },
+
+  "phoneNumber": {
+    "title": "Phone number",
+    "hint": "Make sure the entered data is correct"
+  },
+
+  "buttons": {
+    "saveData": "Save data"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "productInfoModal": {
+    "propertiesNotFound": "Properties not found"
+  },
+
+  "productInfoButton": {
+    "addProduct": "to cart for {{price}}",
+    "changeProduct": "{{counter}} x {{price}}"
+  },
+
+  "selectPropertyModal": {
+    "selectProduct": "Select {{title}}",
+
+    "buttons": {
+      "next": "Next",
+      "select": "Select",
+      "change": "Change"
+    }
+  },
+
+  "goInBasketButton": {
+    "title": "Go to cart"
+  }
+}
