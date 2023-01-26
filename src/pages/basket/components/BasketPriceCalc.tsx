@@ -17,10 +17,10 @@ const BasketPriceCalc: FC<BasketAmountProps> = () => {
   const { t } = useTranslation()
 
   useEffect(() => {
-    const price = wayGetting?.price ?? 0
+    const price = wayGetting ? wayGetting.price : 0
     const calcPrice = price + amount
     dispatch(updateTotalPrice({ totalPrice: calcPrice }))
-  }, [amount, wayGetting.type])
+  }, [amount, wayGetting])
 
   const productsAmountView = useMemo(() => {
     return (
@@ -32,6 +32,8 @@ const BasketPriceCalc: FC<BasketAmountProps> = () => {
   }, [quantity, amount])
 
   const wayGettingView = useMemo(() => {
+    if (!wayGetting) return null
+
     const { type, price } = wayGetting
 
     return (
@@ -54,7 +56,7 @@ const BasketPriceCalc: FC<BasketAmountProps> = () => {
   return (
     <ul className="basket-price-calc">
       {productsAmountView}
-      {wayGetting ? wayGettingView : null}
+      {wayGettingView}
       {totalPriceView}
     </ul>
   )

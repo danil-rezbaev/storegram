@@ -34,6 +34,16 @@ const DeliveryAddressModal: FC<DeliveryAddressProps> = () => {
     return null
   }, [stage])
 
+  const titleFormat = useMemo(() => {
+    if (stage === 1) {
+      return t('basket:content.wayGetting.modal.addAddress.title')
+    } else if (stage === 2) {
+      return t('basket:content.wayGetting.modal.changeAddress.title')
+    }
+
+    return null
+  }, [stage])
+
   return (
     <BottomPopup
       visible={visible}
@@ -49,9 +59,7 @@ const DeliveryAddressModal: FC<DeliveryAddressProps> = () => {
           <CloseIcon/>
         </Button>
 
-        <h4 className="mb-4">
-          {t('basket:content.wayGetting.delivery.modal.title')}
-        </h4>
+        <h4 className="mb-4">{titleFormat}</h4>
 
         {view}
       </div>

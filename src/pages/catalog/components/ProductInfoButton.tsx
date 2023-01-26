@@ -24,24 +24,17 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
 
   const { t } = useTranslation()
 
-  const productPropertiesMemo = useMemo(() => {
-    if (totalProductProperties[id]) {
-      return totalProductProperties[id]
-    }
-    return undefined
-  }, [totalProductProperties])
+  const productPropertiesMemo = useMemo(() => totalProductProperties[id], [totalProductProperties])
 
   const priceMemo = productPropertiesMemo?.price || price
   const uniqueIdMemo = productPropertiesMemo?.uniqueId
   const currency = useAppSelector(state => state.global.currency)
 
-  const countProducts = useMemo(() => {
-    if (uniqueIdMemo && products[uniqueIdMemo]) {
-      return products[uniqueIdMemo].count
-    } else {
-      return 0
-    }
-  }, [id, uniqueIdMemo, products])
+  const countProducts = useMemo(() => (
+    uniqueIdMemo && products[uniqueIdMemo]
+      ? products[uniqueIdMemo].count
+      : 0
+  ), [id, uniqueIdMemo, products])
 
   const productBasketHandler: MouseEventHandler<HTMLButtonElement> = useCallback((event) => {
     const targetName = event.currentTarget.name
@@ -56,10 +49,9 @@ const ProductInfoButton: FC<ProductInfoButtonProps> = () => {
   const titleFormat = useMemo(() => {
     const priceFormat = `${priceMemo} ${currency}`
 
-    if (countProducts > 0) {
-      return t('catalog:productInfoButton.changeProduct', { counter: countProducts, price: priceFormat })
-    }
-    return t('catalog:productInfoButton.addProduct', { price: priceFormat })
+    return countProducts > 0
+      ? t('catalog:productInfoButton.changeProduct', { counter: countProducts, price: priceFormat })
+      : t('catalog:productInfoButton.addProduct', { price: priceFormat })
   }, [countProducts, priceMemo])
 
   return (

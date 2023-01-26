@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
-import { useAppSelector } from '../../../hooks/redux'
 import BottomButton from '../../../components/BottomButton'
 import cs from 'classnames'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useAppSelector } from '../../../hooks/redux'
 
 export type GoInBasketButtonProps = {
   className?: string
@@ -12,9 +12,7 @@ export type GoInBasketButtonProps = {
 const GoInBasketButton: FC<GoInBasketButtonProps> = (props) => {
   const { className } = props
 
-  const basketStore = useAppSelector(state => state.basket)
-  if (basketStore.quantity <= 0) return null
-
+  const basketQuantity = useAppSelector(state => state.basket.quantity)
   const navigate = useNavigate()
   const { t } = useTranslation()
 
@@ -24,7 +22,7 @@ const GoInBasketButton: FC<GoInBasketButtonProps> = (props) => {
 
   return (
     <BottomButton
-      className={cs('goInBasketButton', className)}
+      className={cs('goInBasketButton', className, basketQuantity <= 0 ? 'd-none' : null)}
       onClick={onclick}
       title={ t('catalog:goInBasketButton.title') }
     />

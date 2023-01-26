@@ -20,10 +20,6 @@
       "delivery": {
         "title": "Delivery",
 
-        "modal": {
-          "title": "Add address"
-        },
-
         "form": {
           "city": {
             "title": "City",
@@ -74,6 +70,15 @@
 
       "pickup": {
         "title": "Pickup"
+      },
+
+      "modal": {
+        "addAddress": {
+          "title": "Add address"
+        },
+        "changeAddress": {
+          "title": "Change address"
+        }
       },
 
       "buttons": {

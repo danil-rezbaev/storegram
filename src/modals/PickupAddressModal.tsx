@@ -6,6 +6,7 @@ import BottomPopup from '../components/bottomPopup/BottomPopup'
 import { ReactComponent as CloseIcon } from '../assets/images/pages/catalog/close.svg'
 import { DeliveryMethods } from '../layout/types/catalog/productsDataTypes'
 import WayGettingPickupSelect from '../pages/basket/components/WayGetting/WayGettingPickupSelect'
+import { useTranslation } from 'react-i18next'
 
 export type PickupAddressProps = {
   data: DeliveryMethods[]
@@ -17,6 +18,8 @@ const PickupAddressModal: FC<PickupAddressProps> = (props) => {
   } = props
 
   const dispatch = useAppDispatch()
+  const { t } = useTranslation()
+
   const pickupAddressStore = useAppSelector(store => store.pickupAddress)
   const { modal } = pickupAddressStore
   const { visible } = modal
@@ -42,7 +45,9 @@ const PickupAddressModal: FC<PickupAddressProps> = (props) => {
           <CloseIcon/>
         </Button>
 
-        <h4 className="mb-4">Добавить адрес</h4>
+        <h4 className="mb-4">
+          {t('basket:content.wayGetting.modal.changeAddress.title')}
+        </h4>
 
         <WayGettingPickupSelect data={data} />
       </div>

@@ -43,8 +43,6 @@ const basketSlice = createSlice({
     addProduct (state, action: PayloadAction<Omit<ProductItemStore, 'uniqueId' | 'totalPrice' | 'count' | 'currentOptions'>>) {
       const { id, price } = action.payload
 
-      console.log('initialState', initialState)
-
       const currentProductProperties = state.totalProductProperties[id]
       const uniqueId = currentProductProperties ? currentProductProperties.uniqueId : id.toString()
       const productPrice = currentProductProperties ? currentProductProperties.price : price

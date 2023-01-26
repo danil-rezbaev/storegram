@@ -21,10 +21,6 @@
       "delivery": {
         "title": "Доставка",
 
-        "modal": {
-          "title": "Добавить адрес"
-        },
-
         "form": {
           "city": {
             "title": "Город",
@@ -75,6 +71,16 @@
 
       "pickup": {
         "title": "Самовывоз"
+      },
+
+      "modal": {
+        "addAddress": {
+          "title": "Добавить адрес"
+        },
+
+        "changeAddress": {
+          "title": "Изменить адрес"
+        }
       },
 
       "buttons": {
