@@ -10,7 +10,7 @@ const BasketEmpty: FC<BasketEmptyProps> = () => {
   return (
     <main>
       <h2 className="m-auto">{ t('basket:empty.title') }</h2>
-      <Link to='/catalog' className="d-block mt-3">
+      <Link to='/' className="d-block mt-3">
         {t('basket:empty.buttons.goInCatalog')}
       </Link>
     </main>

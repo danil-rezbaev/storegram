@@ -3,8 +3,8 @@
     "propertiesNotFound": "Свойства не найдены"
   },
 
-  "productInfoButton": {
-    "addProduct": "в корзину за {{price}}",
+  "productInfoControl": {
+    "addProduct": "Добавить {{price}}",
     "changeProduct": "{{counter}} x {{price}}"
   },
 

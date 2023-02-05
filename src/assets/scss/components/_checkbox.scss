@@ -1,0 +1,25 @@
+@use "../variables";
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  background: variables.$white;
+  border: 1px solid variables.$secondary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.1s;
+  color: variables.$white;
+  border-radius: 5px !important;
+
+  &.radio {
+    border-radius: 100px !important;
+  }
+
+  .icon {
+    width: 60%;
+    opacity: 0;
+    transition: opacity 0.1s;
+    color: variables.$white;
+  }
+}

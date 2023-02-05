@@ -3,8 +3,8 @@
     "propertiesNotFound": "Properties not found"
   },
 
-  "productInfoButton": {
-    "addProduct": "to cart for {{price}}",
+  "productInfoControl": {
+    "addProduct": "Add {{price}}",
     "changeProduct": "{{counter}} x {{price}}"
   },
 

@@ -41,7 +41,7 @@ const initialState = isDeliveryAddressState(JSON.parse(localStorage.getItem('del
 
 const saveStore = (state: DeliveryAddressState) => localStorage.setItem('delivery', JSON.stringify(state))
 
-const DeliveryAddressSlice = createSlice({
+const deliveryAddressSlice = createSlice({
   name: 'deliveryAddress',
   initialState,
   reducers: {
@@ -131,6 +131,6 @@ const DeliveryAddressSlice = createSlice({
   }
 })
 
-export const { addAddress, removeAddress, visibleHandle, updateAddressSelected, openModal, updateStage, updateDeliveryPrice } = DeliveryAddressSlice.actions
+export const { addAddress, removeAddress, visibleHandle, updateAddressSelected, openModal, updateStage, updateDeliveryPrice } = deliveryAddressSlice.actions
 
-export default DeliveryAddressSlice.reducer
+export default deliveryAddressSlice.reducer

@@ -29,6 +29,8 @@ export type ProductItemProperties = {
   table?: Record<string, string>[]
 }
 
+export type UniqueId = string
+
 export type ProductItem = {
   id: number,
   category: string,
@@ -42,9 +44,13 @@ export type ProductItem = {
   properties?: ProductItemProperties
 }
 
+export type CurrentOptions = Record<string, {values: ProductItemOptionsValue[], filled: boolean}>
+
+export type ProductCurrentOptions = Record<string, CurrentOptions>
+
 export type ProductItemStore = ProductItem & {
-  uniqueId: string,
-  currentOptions?: Record<string, ProductItemOptionsValue[]>,
+  uniqueId: UniqueId,
+  currentOptions?: CurrentOptions,
   count: number,
   totalPrice: number,
 }
@@ -60,8 +66,7 @@ export type TotalProductProperties = {
   price: number,
   basePrice: number,
   totalPrice: number,
-  uniqueId: string,
-  selectedOptions: Record<string, ProductItemOptionsValue[]>
+  uniqueId: UniqueId,
 }
 
 export type DeliveryMethods = {

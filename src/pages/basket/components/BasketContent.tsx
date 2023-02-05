@@ -31,7 +31,7 @@ const BasketContent: FC<BasketContentProps> = () => {
 
   return (
     <main>
-      <PageHeader title={t('basket:content.title')} backLink="/catalog" />
+      <PageHeader title={t('basket:content.title')} backLink="/" />
 
       <RenderPrice
         title={t('basket:content.productsQuantity', { count: quantity })}

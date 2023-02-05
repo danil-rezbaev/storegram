@@ -1,0 +1,14 @@
+@use "../../variables";
+
+.select-options-quiz {
+  margin-top: 25px;
+
+  .select-options-quiz--title {
+    font-size: 1.075rem;
+    font-weight: 500;
+  }
+
+  .select-options-quiz--content {
+    margin-top: 5px;
+  }
+}

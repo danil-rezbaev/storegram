@@ -3,7 +3,6 @@ import ProductList from './components/ProductList'
 import CategoryList from './components/CategoryList'
 import GoInBasketButton from './components/GoInBasketButton'
 import ProductInfoModal from '../../modals/ProductInfoModal'
-import SelectPropertyModal from '../../modals/SelectPropertyModal'
 import { productsData } from '../../layout/data/catalog/productsData'
 import { categoriesData } from '../../layout/data/catalog/categoriesData'
 import Page from '../../components/page/Page'
@@ -55,7 +54,6 @@ function CatalogPage () {
       <GoInBasketButton className="catalog--control"/>
 
       <ProductInfoModal />
-      <SelectPropertyModal />
     </Page>
   )
 }

@@ -115,6 +115,13 @@
         }
     }
 
+    @media (max-width: 768px) {
+        .product-card--quantity-hint {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+
     @media (max-width: 500px) {
         .product-card--img {
             height: 170px;

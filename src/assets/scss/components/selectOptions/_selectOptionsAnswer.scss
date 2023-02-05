@@ -1,0 +1,10 @@
+@use "../../variables";
+
+.select-options-answer {
+  margin: 10px 0;
+  grid-template-columns: 20px 1fr minmax(40px, 100px);
+
+  .select-options-answer--price {
+    text-align: right;
+  }
+}

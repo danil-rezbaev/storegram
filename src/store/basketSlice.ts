@@ -40,13 +40,12 @@ const basketSlice = createSlice({
   name: 'basket',
   initialState,
   reducers: {
-    addProduct (state, action: PayloadAction<Omit<ProductItemStore, 'uniqueId' | 'totalPrice' | 'count' | 'currentOptions'>>) {
-      const { id, price } = action.payload
+    addProduct (state, action: PayloadAction<Omit<ProductItemStore, 'uniqueId' | 'totalPrice' | 'count'>>) {
+      const { id, price, currentOptions = {} } = action.payload
 
       const currentProductProperties = state.totalProductProperties[id]
       const uniqueId = currentProductProperties ? currentProductProperties.uniqueId : id.toString()
       const productPrice = currentProductProperties ? currentProductProperties.price : price
-      const selectedOptions = currentProductProperties ? currentProductProperties.selectedOptions : {}
 
       if (currentProductProperties) {
         currentProductProperties.count += 1
@@ -54,7 +53,7 @@ const basketSlice = createSlice({
       } else {
         state.totalProductProperties = {
           ...state.totalProductProperties,
-          [id]: { ...action.payload, count: 1, uniqueId, basePrice: price, price: productPrice, totalPrice: productPrice, selectedOptions }
+          [id]: { ...action.payload, count: 1, uniqueId, basePrice: price, price: productPrice, totalPrice: productPrice }
         }
       }
 
@@ -63,7 +62,7 @@ const basketSlice = createSlice({
       if (currentProduct) {
         currentProduct.count += 1
         currentProduct.totalPrice += currentProduct.price
-        currentProduct.currentOptions = selectedOptions
+        currentProduct.currentOptions = currentOptions
       } else {
         state.products[uniqueId] = {
           ...action.payload,
@@ -71,7 +70,7 @@ const basketSlice = createSlice({
           uniqueId,
           price: productPrice,
           totalPrice: productPrice,
-          currentOptions: selectedOptions
+          currentOptions
         }
       }
 
@@ -116,6 +115,19 @@ const basketSlice = createSlice({
 
       saveStore(state)
     },
+    // updateProduct (state, action: PayloadAction<{value: ProductCurrentOptions}>) {
+    //   const { value } = action.payload
+    //
+    //   const valuesArray = _.values(value)
+    //
+    //   valuesArray.forEach(item => {
+    //     for (let i = 0; i < item.count; i++) {
+    //       this.addProduct()
+    //     }
+    //   })
+    //
+    //   saveStore(state)
+    // },
     updateChecklist (state, action: PayloadAction<{productId: number, questionTitle: string, checkList: ProductItemOptionsValue[], price: number}>) {
       const { productId, checkList, questionTitle = 'Свойства', price } = action.payload
 

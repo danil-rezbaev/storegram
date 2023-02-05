@@ -1,0 +1,14 @@
+.product-info-control {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  grid-gap: 10px;
+
+  .product-info-control--submit {
+    padding: 0;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 420px) {
+    grid-template-columns: 140px 1fr;
+  }
+}

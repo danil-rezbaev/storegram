@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from 'react'
 import cs from 'classnames'
-import { ReactComponent as CheckIcon } from '../assets/images/pages/catalog/check.svg'
 import { ProductItemOptions } from '../layout/types/catalog/productsDataTypes'
+import Checkbox from './Checkbox'
 
 export type SelectFieldProps = Pick<ProductItemOptions, 'type'> & {
   title: string,
@@ -30,9 +30,7 @@ const SelectField: FC<SelectFieldProps> = (props) => {
       onClick={onClick}
       name={name}
     >
-      <div className={ cs('select-field--mark', type) }>
-        <CheckIcon className="icon"/>
-      </div>
+      <Checkbox type={type} active={active} className='select-field--mark' />
 
       <p className="select-field--title">{title}</p>
 

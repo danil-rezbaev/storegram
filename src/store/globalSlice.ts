@@ -56,7 +56,6 @@ const globalSlice = createSlice({
     },
     updateTotalPrice (state, action: PayloadAction<{totalPrice: number}>) {
       state.totalPrice = action.payload.totalPrice
-      console.log('totalPrice', state.totalPrice)
       saveStore(state)
     }
   }

@@ -8,6 +8,7 @@ export type CounterProps = {
   price?: string | number,
   title?: string | number | null,
   handler: MouseEventHandler<HTMLButtonElement>,
+  size?: 'lg' | 'sm',
   className?: string
 }
 
@@ -16,13 +17,14 @@ const Counter: FC<CounterProps> = (props) => {
     price,
     title,
     handler,
+    size = 'sm',
     className
   } = props
 
   const { t } = useTranslation()
 
   return (
-    <div className={cs('counter', className)}>
+    <div className={cs('counter', size, className)}>
       <Button
         variant="secondary"
         className="counter--button"

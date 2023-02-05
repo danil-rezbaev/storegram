@@ -1,28 +1,31 @@
-import React, { FC, useCallback, useMemo } from 'react'
+import React, { FC, useCallback, useMemo, useState } from 'react'
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { ReactComponent as CloseIcon } from '../assets/images/pages/catalog/close.svg'
 import { ReactComponent as InfoIcon } from '../assets/images/pages/catalog/info.svg'
 import BottomPopup from '../components/bottomPopup/BottomPopup'
-import SelectPropertyItem from '../components/selectProperty/SelectPropertyItem'
+import SelectOptionsContainer from '../components/selectOptions/SelectOptionsContainer'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import { visibleHandle } from '../store/productInfoSlice'
 import { Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css/pagination'
 import 'swiper/css'
-import ProductInfoButton from '../pages/catalog/components/ProductInfoButton'
 import ProductProperties from '../pages/catalog/components/ProductProperties'
 import { useTranslation } from 'react-i18next'
+import ProductInfoControl from '../pages/catalog/components/ProductInfoControl'
+import {
+  ProductCurrentOptions
+} from '../layout/types/catalog/productsDataTypes'
 
 export type ProductInfoProps = unknown
 
 const ProductInfoModal: FC<ProductInfoProps> = () => {
   const dispatch = useAppDispatch()
   const productInfoStore = useAppSelector(state => state.productInfo)
-  const product = productInfoStore.product
 
   const {
-    visible
+    visible,
+    product
   } = productInfoStore
 
   const {
@@ -37,6 +40,15 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
   const { t } = useTranslation()
   const handleClose = () => visibleHandler(false)
 
+  const [productOptions, setProductOptions] = useState<ProductCurrentOptions>({})
+
+  const productOptionsHandler = useCallback((options: ProductCurrentOptions) => {
+    setProductOptions((value) => ({
+      ...value,
+      [id]: { ...options.values }
+    }))
+  }, [id, title])
+
   const visibleHandler = useCallback((value: boolean): void => {
     dispatch(visibleHandle({ value }))
   }, [])
@@ -44,9 +56,9 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
   const renderTooltip = useMemo(() => {
     return (
       <Tooltip className="tooltip">
-        {properties
+        { properties
           ? <ProductProperties data={properties} />
-          : <p>{t('catalog:productInfoModal.propertiesNotFound')}</p>}
+          : <p>{t('catalog:productInfoModal.propertiesNotFound')}</p> }
       </Tooltip>
     )
   }, [properties])
@@ -85,27 +97,25 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
           <h1 className="product-info--title">{title}</h1>
 
           { properties
-            ? (<OverlayTrigger placement="left" overlay={renderTooltip}>
-              <InfoIcon/>
-            </OverlayTrigger>)
-            : null}
+            ? <OverlayTrigger placement="left" overlay={renderTooltip}>
+                <InfoIcon/>
+              </OverlayTrigger>
+            : null }
         </div>
 
         <p className="product-info--description">{description}</p>
 
-        {options?.map((item, index) => (
-          <SelectPropertyItem
-            key={item.id}
-            {...item}
-            index={index}
-            length={options.length}
-            productId={id}
-            optionsArray={options}
-          />
-        ))}
+        { options
+          ? <SelectOptionsContainer
+              optionsArray={options}
+              optionsHandler={productOptionsHandler}
+            />
+          : null }
       </div>
 
-      <ProductInfoButton/>
+      <ProductInfoControl
+        options={productOptions[id]}
+      />
     </BottomPopup>
   )
 }
