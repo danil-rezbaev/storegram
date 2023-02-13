@@ -42,7 +42,7 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
 
   const [productOptions, setProductOptions] = useState<ProductCurrentOptions>({})
 
-  const productOptionsHandler = useCallback((options: ProductCurrentOptions) => {
+  const productOptionsHandler = useCallback((options: Omit<ProductCurrentOptions, 'count'>) => {
     setProductOptions((value) => ({
       ...value,
       [id]: { ...options.values }

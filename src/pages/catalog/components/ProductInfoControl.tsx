@@ -1,13 +1,12 @@
-import React, { FC, MouseEventHandler, useCallback, useMemo, useState } from 'react'
+import React, { FC, MouseEventHandler, useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
-import { addProduct } from '../../../store/basketSlice'
 import { useTranslation } from 'react-i18next'
 import Counter from '../../../components/Counter'
 import { Button } from 'react-bootstrap'
 import { CurrentOptions } from '../../../layout/types/catalog/productsDataTypes'
-// import _ from 'lodash'
-// import generateUniqueId from '../../../tools/GenerateUniqueId'
-// import { visibleHandle } from '../../../store/productInfoSlice'
+import { addProduct } from '../../../store/basketSlice'
+import { visibleHandle } from '../../../store/productInfoSlice'
+import _ from 'lodash'
 
 export type ProductInfoControlProps = {
   options?: CurrentOptions,
@@ -15,16 +14,16 @@ export type ProductInfoControlProps = {
 
 const ProductInfoControl: FC<ProductInfoControlProps> = (props) => {
   const {
-    options = []
+    options = {}
   } = props
 
   const dispatch = useAppDispatch()
   const store = useAppSelector(state => state)
   const productInfoStore = store.productInfo.product
   const basketStore = store.basket
+  const currency = store.global.currency
 
   const {
-    // products,
     totalProductProperties
   } = basketStore
 
@@ -36,45 +35,33 @@ const ProductInfoControl: FC<ProductInfoControlProps> = (props) => {
   const { t } = useTranslation()
 
   const productPropertiesMemo = useMemo(() => totalProductProperties[id], [totalProductProperties])
-
   const priceMemo = productPropertiesMemo?.price || price
-  // const uniqueIdMemo = productPropertiesMemo?.uniqueId
-  const currency = useAppSelector(state => state.global.currency)
+  const countMemo = _.keys(options).length === 0 ? productPropertiesMemo?.count : 1
+  const countFormat = countMemo ?? 1
 
-  // const storeCountProducts = useMemo(() => {
-  //   if (uniqueIdMemo && products[uniqueIdMemo]) {
-  //     return products[uniqueIdMemo].count > 0 ? products[uniqueIdMemo].count : 0
-  //   }
-  //   return 0
-  // }, [id, uniqueIdMemo, products])
+  console.log('_.keys(options).length', _.keys(options).length)
 
-  const [counter, setCounter] = useState<number>(1)
+  const [counter, setCounter] = useState<number>(countFormat)
 
-  const counterHandler: MouseEventHandler<HTMLButtonElement> = useCallback((event) => {
+  const counterHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
     const targetName = event.currentTarget.name
 
     if (targetName === 'increment') {
       setCounter(value => value + 1)
-    } else if (targetName === 'decrement') {
-      if (counter > 1) {
-        setCounter(value => value - 1)
-      }
+    } else if (targetName === 'decrement' && counter > 1) {
+      setCounter(value => value - 1)
     }
-  }, [productInfoStore, counter, options])
+  }
 
-  const submitHandler = useCallback(() => {
-    if (counter === 1) {
-      dispatch(addProduct(productInfoStore))
-    }
-    // dispatch(addProduct({ ...productInfoStore, currentOptions: options }))
-    // dispatch(removeProduct({ id, uniqueId: generateUniqueId(id, options) }))
+  useEffect(() => {
+    console.log('countMemo', countMemo)
+  }, [])
 
-    // if (storeCountProducts === 0) {
-    //   dispatch(addProduct({ ...productInfoStore, count: counter }))
-    // }
-
-    // dispatch(visibleHandle({ value: false }))
-  }, [counter])
+  const submitHandler = () => {
+    dispatch(addProduct({ ...productInfoStore, currentOptions: options, count: counter }))
+    dispatch(visibleHandle({ value: false }))
+    setCounter(1)
+  }
 
   const titleFormat = useMemo(() => {
     const priceFormat = `${priceMemo} ${currency}`

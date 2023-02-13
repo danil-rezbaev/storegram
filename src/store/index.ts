@@ -5,6 +5,7 @@ import productInfoReducer from './productInfoSlice'
 import propertyQuizReducer from './optionsQuizSlice'
 import deliveryAddressReducer from './deliveryAddress'
 import pickupAddressReducer from './pickupAddress'
+import selectedOptionsReducer from './selectedOptions'
 
 const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ const store = configureStore({
     productInfo: productInfoReducer,
     optionsQuiz: propertyQuizReducer,
     deliveryAddress: deliveryAddressReducer,
-    pickupAddress: pickupAddressReducer
+    pickupAddress: pickupAddressReducer,
+    selectedOptions: selectedOptionsReducer
   }
 })
 

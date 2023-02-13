@@ -10,7 +10,6 @@ const root = ReactDOM.createRoot(
 )
 
 root.render(
-  <React.StrictMode>
     <Suspense
       fallback={
         <TailSpin
@@ -28,5 +27,4 @@ root.render(
         <App />
       </BrowserRouter>
     </Suspense>
-  </React.StrictMode>
 )

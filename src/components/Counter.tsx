@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 
 export type CounterProps = {
   price?: string | number,
-  title?: string | number | null,
+  title?: string | number | null | undefined,
   handler: MouseEventHandler<HTMLButtonElement>,
   size?: 'lg' | 'sm',
   className?: string

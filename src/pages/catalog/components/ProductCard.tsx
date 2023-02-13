@@ -36,7 +36,8 @@ const ProductCard: FC<ProductCardProps> = (props) => {
     const targetName = event.currentTarget.name
 
     if (targetName === 'increment') {
-      dispatch(addProduct(props))
+      const formatObj = { ...props, count: 0 }
+      dispatch(addProduct(formatObj))
     } else if (targetName === 'decrement') {
       dispatch(removeProduct({ id }))
     }

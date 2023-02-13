@@ -20,6 +20,8 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
-    'no-return-assign': 0
+    'no-return-assign': 1,
+    'no-unused-imports': 0,
+    'no-unused-vars': 1
   }
 }

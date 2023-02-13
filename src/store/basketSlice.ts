@@ -2,8 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import _ from 'lodash'
 import {
   ProductItemOptionsValue,
-  TotalProductProperties,
-  ProductItemStore
+  TotalProductProperties, ProductItemStore
 } from '../layout/types/catalog/productsDataTypes'
 
 export type BasketState = {
@@ -40,43 +39,55 @@ const basketSlice = createSlice({
   name: 'basket',
   initialState,
   reducers: {
-    addProduct (state, action: PayloadAction<Omit<ProductItemStore, 'uniqueId' | 'totalPrice' | 'count'>>) {
-      const { id, price, currentOptions = {} } = action.payload
+    addProduct (state, action: PayloadAction<Omit<ProductItemStore, 'uniqueId' | 'totalPrice'>>) {
+      const { id, price, currentOptions = {}, count } = action.payload
 
-      const currentProductProperties = state.totalProductProperties[id]
-      const uniqueId = currentProductProperties ? currentProductProperties.uniqueId : id.toString()
-      const productPrice = currentProductProperties ? currentProductProperties.price : price
+      const fn = () => {
+        const currentProductProperties = state.totalProductProperties[id]
+        const uniqueId = currentProductProperties ? currentProductProperties.uniqueId : id.toString()
+        const productPrice = currentProductProperties ? currentProductProperties.price : price
 
-      if (currentProductProperties) {
-        currentProductProperties.count += 1
-        currentProductProperties.totalPrice += currentProductProperties.price
-      } else {
-        state.totalProductProperties = {
-          ...state.totalProductProperties,
-          [id]: { ...action.payload, count: 1, uniqueId, basePrice: price, price: productPrice, totalPrice: productPrice }
+        if (currentProductProperties) {
+          currentProductProperties.count += 1
+          currentProductProperties.totalPrice += currentProductProperties.price
+        } else {
+          state.totalProductProperties = {
+            ...state.totalProductProperties,
+            [id]: { ...action.payload, count: 1, uniqueId, basePrice: price, price: productPrice, totalPrice: productPrice }
+          }
         }
+
+        const currentProduct = state.products[uniqueId]
+
+        if (currentProduct) {
+          currentProduct.count += 1
+          currentProduct.totalPrice += currentProduct.price
+          currentProduct.currentOptions = currentOptions
+        } else {
+          state.products[uniqueId] = {
+            ...action.payload,
+            count: 1,
+            uniqueId,
+            price: productPrice,
+            totalPrice: productPrice,
+            currentOptions
+          }
+        }
+
+        const productsValues = _.values(state.products)
+        state.quantity = _.reduce(productsValues, (accum, item) => accum += (item.count ? item.count : 0), 0)
+        state.amount = _.reduce(productsValues, (accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
       }
 
-      const currentProduct = state.products[uniqueId]
-
-      if (currentProduct) {
-        currentProduct.count += 1
-        currentProduct.totalPrice += currentProduct.price
-        currentProduct.currentOptions = currentOptions
-      } else {
-        state.products[uniqueId] = {
-          ...action.payload,
-          count: 1,
-          uniqueId,
-          price: productPrice,
-          totalPrice: productPrice,
-          currentOptions
+      if (count) {
+        let counter = count
+        while (counter) {
+          fn()
+          counter--
         }
+      } else {
+        fn()
       }
-
-      const productsValues = _.values(state.products)
-      state.quantity = _.reduce(productsValues, (accum, item) => accum += (item.count ? item.count : 0), 0)
-      state.amount = _.reduce(productsValues, (accum, item) => accum += item.price * (item.count ? item.count : 0), 0)
 
       saveStore(state)
     },
@@ -115,19 +126,6 @@ const basketSlice = createSlice({
 
       saveStore(state)
     },
-    // updateProduct (state, action: PayloadAction<{value: ProductCurrentOptions}>) {
-    //   const { value } = action.payload
-    //
-    //   const valuesArray = _.values(value)
-    //
-    //   valuesArray.forEach(item => {
-    //     for (let i = 0; i < item.count; i++) {
-    //       this.addProduct()
-    //     }
-    //   })
-    //
-    //   saveStore(state)
-    // },
     updateChecklist (state, action: PayloadAction<{productId: number, questionTitle: string, checkList: ProductItemOptionsValue[], price: number}>) {
       const { productId, checkList, questionTitle = 'Свойства', price } = action.payload
 

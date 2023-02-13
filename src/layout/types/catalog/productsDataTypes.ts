@@ -31,6 +31,8 @@ export type ProductItemProperties = {
 
 export type UniqueId = string
 
+export type Count = number
+
 export type ProductItem = {
   id: number,
   category: string,
@@ -39,19 +41,23 @@ export type ProductItem = {
   title: string,
   description: string,
   price: number,
-  count?: number,
+  count?: Count,
   options?: ProductItemOptions[],
   properties?: ProductItemProperties
 }
 
-export type CurrentOptions = Record<string, {values: ProductItemOptionsValue[], filled: boolean}>
+export type CurrentOptionsValue = {values: ProductItemOptionsValue[], filled: boolean}
+
+export type CurrentOptions = Record<string, CurrentOptionsValue>
 
 export type ProductCurrentOptions = Record<string, CurrentOptions>
+
+export type SelectedOptions = Record<string, Record<string, CurrentOptions & {count: number}>>
 
 export type ProductItemStore = ProductItem & {
   uniqueId: UniqueId,
   currentOptions?: CurrentOptions,
-  count: number,
+  count: Count,
   totalPrice: number,
 }
 

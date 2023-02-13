@@ -7,6 +7,9 @@
   border-radius: 10px;
   text-align: left;
 
+  display: grid;
+  grid-template-rows: 1fr 60px;
+
   &--body {
     display: grid;
     grid-template-columns: minmax(100px, 1.5fr) 2.5fr;
