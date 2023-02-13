@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react'
+import React, { FC } from 'react'
 import { Fields, ProductItemOptionsValue } from '../../layout/types/catalog/productsDataTypes'
 import RenderPrice from '../RenderPrice'
 import SelectField from '../SelectField'
@@ -23,9 +23,7 @@ const SelectOptionsAnswer: FC<SelectPropertyAnswerProps> = (props) => {
     priceChange
   } = value
 
-  const selectedHandler = useCallback(() => {
-    handler(value, type)
-  }, [])
+  const selectedHandler = () => handler(value, type)
 
   return (
     <SelectField

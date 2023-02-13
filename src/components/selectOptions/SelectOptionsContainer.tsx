@@ -1,15 +1,15 @@
-import React, { FC, useCallback, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import {
   CurrentOptions, ProductCurrentOptions,
   ProductItemOptions,
   ProductItemOptionsValue
 } from '../../layout/types/catalog/productsDataTypes'
 import _ from 'lodash'
-import SelectOptionsQuiz1 from './SelectOptionsQuiz'
+import SelectOptionsQuiz from './SelectOptionsQuiz'
 
 export type SelectPropertyItemProps = {
   optionsArray: ProductItemOptions[],
-  optionsHandler: (options: ProductCurrentOptions) => void,
+  optionsHandler: (options: Omit<ProductCurrentOptions, 'count'>) => void,
 }
 
 const SelectOptionsContainer: FC<SelectPropertyItemProps> = (props) => {
@@ -20,7 +20,7 @@ const SelectOptionsContainer: FC<SelectPropertyItemProps> = (props) => {
 
   const [questionOptions, setQuestionOptions] = useState<CurrentOptions>({})
 
-  const questionOptionsHandler = useCallback((uniqueId: string, values: ProductItemOptionsValue[]) => {
+  const questionOptionsHandler = (uniqueId: string, values: ProductItemOptionsValue[]) => {
     const isFilled = values.length > 0
 
     if (isFilled) {
@@ -32,7 +32,7 @@ const SelectOptionsContainer: FC<SelectPropertyItemProps> = (props) => {
         }
       }))
     }
-  }, [])
+  }
 
   useEffect(() => {
     optionsHandler({ values: questionOptions })
@@ -41,7 +41,7 @@ const SelectOptionsContainer: FC<SelectPropertyItemProps> = (props) => {
   return (
     <div className="select-options-container">
       {_.map(optionsArray, (item) => (
-        <SelectOptionsQuiz1
+        <SelectOptionsQuiz
           key={item.id}
           options={item}
           optionsHandler={questionOptionsHandler}

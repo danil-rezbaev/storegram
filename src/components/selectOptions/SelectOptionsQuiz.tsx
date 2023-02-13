@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Fields, ProductItemOptions, ProductItemOptionsValue } from '../../layout/types/catalog/productsDataTypes'
 import SelectOptionsAnswer from './SelectOptionsAnswer'
 import _ from 'lodash'
@@ -17,6 +17,7 @@ const SelectOptionsQuiz: FC<SelectPropertyQuizProps> = (props) => {
   } = props
 
   const {
+    id,
     title,
     type,
     values
@@ -28,38 +29,35 @@ const SelectOptionsQuiz: FC<SelectPropertyQuizProps> = (props) => {
 
   const [checkList, setCheckList] = useState<ProductItemOptionsValue[]>([])
 
-  const isExist = useCallback((optionId: number, random: number | undefined): boolean => {
-    console.log('random', random)
+  const isExist = (optionId: number): boolean => {
+    if (checkList.length < 1) return false
+
     const find = _.find(checkList, (item) => (item.id === optionId))
-    return Boolean(find)
-  }, [checkList])
+    return !!find
+  }
 
-  const handler = useCallback((value: ProductItemOptionsValue, type: Fields): void => {
-    const result = isExist(value.id, Math.random())
+  const handler = (value: ProductItemOptionsValue, type: Fields): void => {
+    if (type === 'radio') {
+      setCheckList([value])
+    }
 
-    console.log('checkList handler', checkList)
-    console.log('result', result)
+    if (type === 'checkbox') {
+      const result = isExist(value.id)
 
-    if (result) {
-      setCheckList(array => _.filter(array, (item) => (
-        item.id !== value.id
-      )))
-    } else {
-      if (type === 'checkbox') {
+      if (result) {
+        setCheckList(array => _.filter(array, (item) => (
+          item.id !== value.id
+        )))
+      } else {
         setCheckList(array => array ? [...array, value] : [value])
       }
-      if (type === 'radio') {
-        setCheckList([value])
-      }
     }
-  }, [checkList, isExist])
+  }
 
-  // const uniqueId = `${id}-${title}`
+  const uniqueId = `${id}-${title}`
 
   useEffect(() => {
-    console.log('checkList', checkList)
-    console.log('id 1', isExist(1, undefined))
-    optionsHandler(title, checkList)
+    optionsHandler(uniqueId, checkList)
   }, [checkList])
 
   return (
@@ -72,7 +70,7 @@ const SelectOptionsQuiz: FC<SelectPropertyQuizProps> = (props) => {
             key={ item.id }
             value={item}
             type={ type }
-            active={isExist(item.id, undefined)}
+            active={isExist(item.id)}
             handler={handler}
           />
         )) }
