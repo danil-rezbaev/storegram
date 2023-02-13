@@ -9,12 +9,12 @@ import { visibleHandle } from '../../../store/productInfoSlice'
 import _ from 'lodash'
 
 export type ProductInfoControlProps = {
-  options?: CurrentOptions,
+  selectedOptions?: CurrentOptions,
 }
 
 const ProductInfoControl: FC<ProductInfoControlProps> = (props) => {
   const {
-    options = {}
+    selectedOptions = {}
   } = props
 
   const dispatch = useAppDispatch()
@@ -29,19 +29,25 @@ const ProductInfoControl: FC<ProductInfoControlProps> = (props) => {
 
   const {
     id,
-    price
+    price,
+    options
   } = productInfoStore
 
   const { t } = useTranslation()
 
   const productPropertiesMemo = useMemo(() => totalProductProperties[id], [totalProductProperties])
   const priceMemo = productPropertiesMemo?.price || price
-  const countMemo = _.keys(options).length === 0 ? productPropertiesMemo?.count : 1
-  const countFormat = countMemo ?? 1
 
-  console.log('_.keys(options).length', _.keys(options).length)
+  const [counter, setCounter] = useState<number>(1)
 
-  const [counter, setCounter] = useState<number>(countFormat)
+  useEffect(() => {
+    const optionsLength = _.keys(options).length === 0
+    const countFormat = optionsLength ? productPropertiesMemo?.count : 1
+
+    if (countFormat) {
+      setCounter(countFormat)
+    }
+  }, [options])
 
   const counterHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
     const targetName = event.currentTarget.name
@@ -53,12 +59,8 @@ const ProductInfoControl: FC<ProductInfoControlProps> = (props) => {
     }
   }
 
-  useEffect(() => {
-    console.log('countMemo', countMemo)
-  }, [])
-
   const submitHandler = () => {
-    dispatch(addProduct({ ...productInfoStore, currentOptions: options, count: counter }))
+    dispatch(addProduct({ ...productInfoStore, currentOptions: selectedOptions, count: counter }))
     dispatch(visibleHandle({ value: false }))
     setCounter(1)
   }

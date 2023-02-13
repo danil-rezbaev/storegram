@@ -13,7 +13,8 @@ const initialState: ProductInfoSlice = {
     img: [],
     title: 'Без названия',
     description: '',
-    price: 0
+    price: 0,
+    options: undefined
   },
   visible: false
 }

@@ -114,7 +114,7 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
       </div>
 
       <ProductInfoControl
-        options={productOptions[id]}
+        selectedOptions={productOptions[id]}
       />
     </BottomPopup>
   )

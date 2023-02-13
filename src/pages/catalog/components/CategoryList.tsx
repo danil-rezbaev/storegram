@@ -19,7 +19,7 @@ const CategoryList: FC<CategoryListProps> = (props) => {
   return (
     <div className="category-list">
       <Swiper
-        spaceBetween={10}
+        spaceBetween={7.5}
         parallax={true}
         slidesPerView="auto"
       >
