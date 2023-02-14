@@ -1,0 +1,28 @@
+@use "../../variables";
+
+.catalog-header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10;
+  background-color: variables.$white;
+  margin-left: -12px;
+
+  &:after {
+    content: '';
+    background-color: variables.$white;
+    width: 120%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: -50%;
+  }
+
+  .swiper-slide:first-of-type {
+    margin-left: 12px;
+  }
+
+  .swiper-slide:last-of-type {
+    margin-right: 37px;
+  }
+}

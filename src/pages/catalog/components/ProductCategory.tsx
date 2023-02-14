@@ -21,7 +21,7 @@ const ProductCategory: FC<ProductCategoryProps> = (props) => {
   } = category
 
   return (
-    <div className="product-category" id={ `category-${code}` }>
+    <div className="product-category" id={code}>
       <b className="product-category--title">{title}</b>
       <div className="product-category--container">
         { items.map((product) => (

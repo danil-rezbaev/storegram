@@ -1,34 +1,29 @@
-import React, { FC, useCallback } from 'react'
+import React, { FC } from 'react'
 import cs from 'classnames'
 
 export type CategoryItemProps = {
+  id: number,
   title: string,
   code: string,
-  visibleCategory?: string | null
+  active: boolean,
+  activeHandler: (code: string) => void
 }
 
 const CategoryItem: FC<CategoryItemProps> = (props) => {
   const {
     title,
     code,
-    visibleCategory
+    active,
+    activeHandler
   } = props
 
-  const handleClick = useCallback(() => {
-    const yOffset = -100
-    const element = document.getElementById(`category-${code}`)
-
-    if (element) {
-      const y = element.getBoundingClientRect().top + window.scrollY + yOffset
-      window.scrollTo({ top: y, behavior: 'smooth' })
-    }
-  }, [])
+  const handler = () => activeHandler(code)
 
   return (
     <button
       type="button"
-      className={cs('category-item', visibleCategory === `category-${code}` ? 'active' : null)}
-      onClick={handleClick}
+      className={cs('category-item', active ? 'active' : null)}
+      onClick={handler}
     >
       {title}
     </button>

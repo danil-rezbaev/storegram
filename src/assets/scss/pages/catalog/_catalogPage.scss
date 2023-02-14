@@ -2,22 +2,4 @@
 
 .page--catalog {
   padding-top: 3rem !important;
-
-  .catalog--header {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 10;
-    background-color: variables.$white;
-
-    &:after {
-      content: '';
-      background-color: variables.$white;
-      width: 120%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: -50%;
-    }
-  }
 }
