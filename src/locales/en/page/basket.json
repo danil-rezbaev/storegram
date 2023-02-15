@@ -13,30 +13,18 @@
     "productsQuantity": "{{count}} product",
     "productsQuantity_other": "{{count}} products",
 
-    "wayGetting": {
-      "title": "Getting method",
-      "hint": "Please add an address",
+    "receivingMethod": {
+      "title": "Receiving method",
+      "hint": "Please add receiving method",
 
       "delivery": {
         "title": "Delivery",
 
         "form": {
-          "city": {
-            "title": "City",
-            "placeholder": "New York",
-            "hint": "Please specify the city"
-          },
-
-          "street": {
-            "title": "Street",
-            "placeholder": "Time Square",
-            "hint": "Please specify the street"
-          },
-
-          "house": {
-            "title": "House or building",
-            "placeholder": "30/2",
-            "hint": "Please specify the house"
+          "address": {
+            "title": "Address",
+            "placeholder": "New York, TimeSquare",
+            "hint": "Please specify an address"
           },
 
           "flat": {

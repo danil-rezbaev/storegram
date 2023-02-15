@@ -14,47 +14,35 @@
     "productsQuantity_few": "{{count}} товара",
     "productsQuantity_many": "{{count}} товаров",
 
-    "wayGetting": {
+    "receivingMethod": {
       "title": "Способ получения",
-      "hint": "Пожалуйста добавьте адрес",
+      "hint": "Пожалуйста укажите способ получения",
 
       "delivery": {
         "title": "Доставка",
 
         "form": {
-          "city": {
-            "title": "Город",
-            "placeholder": "Москва",
-            "hint": "Пожалуйста укажите город"
-          },
-
-          "street": {
-            "title": "Улица",
-            "placeholder": "Красная площадь",
-            "hint": "Пожалуйста укажите улицу"
-          },
-
-          "house": {
-            "title": "Дом или строение",
-            "placeholder": "30/2",
-            "hint": "Пожалуйста укажите дом"
+          "address": {
+            "title": "Адрес",
+            "placeholder": "Москва, Красная Площадь 1",
+            "hint": "Пожалуйста укажите адрес"
           },
 
           "flat": {
             "title": "Квартира",
-            "placeholder": "102",
+            "placeholder": "квартира",
             "hint": "Пожалуйста укажите квартиру или офис"
           },
 
           "entrance": {
             "title": "Подъезд",
-            "placeholder": "3",
+            "placeholder": "подъезд",
             "hint": "Пожалуйста укажите подъезд"
           },
 
           "floor": {
             "title": "Этаж",
-            "placeholder": "3",
+            "placeholder": "этаж",
             "hint": "Пожалуйста укажите этаж"
           },
 
@@ -71,16 +59,6 @@
 
       "pickup": {
         "title": "Самовывоз"
-      },
-
-      "modal": {
-        "addAddress": {
-          "title": "Добавить адрес"
-        },
-
-        "changeAddress": {
-          "title": "Изменить адрес"
-        }
       },
 
       "buttons": {

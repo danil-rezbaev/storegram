@@ -30,7 +30,7 @@ const BasketProductCard: FC<BasketProductCardProps> = (props) => {
     const getName = event.currentTarget.name
 
     if (getName === 'increment') {
-      dispatch(addProduct(props))
+      dispatch(addProduct({ ...props, count: 1 }))
     } else if (getName === 'decrement') {
       dispatch(removeProduct({ id, uniqueId }))
     }
@@ -45,7 +45,7 @@ const BasketProductCard: FC<BasketProductCardProps> = (props) => {
 
         <div className="basket-product-card--content">
           <b className="basket-product-card--title">{title}</b>
-          <CropText title={description} number={150} className="basket-product-card--description" />
+          <CropText title={description} number={135} className="basket-product-card--description" />
 
           <BasketProductOptions currentOptions={currentOptions} />
         </div>
