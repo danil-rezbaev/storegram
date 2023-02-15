@@ -46,7 +46,6 @@ const CategoryList: FC<CategoryListProps> = (props) => {
   }
 
   const onHashSet = () => {
-    console.log('onHashSet')
     const hash = window.location.hash
     const hashFormat = hash.slice(12, hash.length)
     setActive(hashFormat)
