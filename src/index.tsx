@@ -2,8 +2,8 @@ import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import { BrowserRouter } from 'react-router-dom'
-import { TailSpin } from 'react-loader-spinner'
 import './i18n'
+import { Spinner } from 'react-bootstrap'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,16 +12,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <Suspense
       fallback={
-        <TailSpin
-          height="80"
-          width="80"
-          color="#4fa94d"
-          ariaLabel="tail-spin-loading"
-          radius="2"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-        />
+        <Spinner animation="border" variant="success" />
     }>
       <BrowserRouter>
         <App />
