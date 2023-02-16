@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import Page from '../../components/page/Page'
 import PageHeader from '../../components/page/PageHeader'
 import { Button, Col, Form, Row } from 'react-bootstrap'
@@ -6,14 +6,21 @@ import { useTranslation } from 'react-i18next'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import cs from 'classnames'
+import SuccessModal from '../../modals/SuccessModal'
 
 export type PlaceOrderPageProps = unknown
 
 const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
   const { t } = useTranslation()
 
+  const [show, setShow] = useState<boolean>(false)
+
+  const showHandler = (visible: boolean) => {
+    setShow(visible)
+  }
+
   const formSubmit = (value: any) => {
-    console.log('value', value)
+    setShow(true)
   }
 
   const phoneRegExp = /^[\\+]?[(]?[0-9]{3}[)]?[-\s\\.]?[0-9]{3}[-\s\\.]?[0-9]{4,6}$/m
@@ -192,6 +199,11 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
           </Form>
         )}
       </Formik>
+
+      <SuccessModal
+        show={show}
+        showHandler={showHandler}
+      />
     </Page>
   )
 }
