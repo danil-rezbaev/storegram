@@ -1,7 +1,7 @@
 @use "../../../variables";
 
 .basket-product-card {
-  padding: 0.85rem 0.85rem 1rem;
+  padding: 0.85rem 0.85rem 0;
   background: variables.$white;
   box-shadow: 0 2px 6px 5px rgba(variables.$black, .03);
   border-radius: 10px;
@@ -9,6 +9,7 @@
 
   display: grid;
   grid-template-rows: 1fr 60px;
+  grid-gap: 0.75em;
 
   &--body {
     display: grid;
@@ -51,8 +52,6 @@
 
   &--footer {
     border-top: 1px solid variables.$light-gray;
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
     display: grid;
     grid-template-columns: 1fr 120px;
     align-items: center;
