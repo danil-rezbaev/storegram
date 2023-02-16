@@ -115,6 +115,7 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
 
       <ProductInfoControl
         selectedOptions={productOptions[id]}
+        optionsExist={!!options}
       />
     </BottomPopup>
   )

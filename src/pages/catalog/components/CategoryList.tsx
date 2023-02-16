@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
+import React, { FC, useRef, useState } from 'react'
 import CategoryItem from './CategoryItem'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { HashNavigation } from 'swiper'
@@ -50,10 +50,6 @@ const CategoryList: FC<CategoryListProps> = (props) => {
     const hashFormat = hash.slice(12, hash.length)
     setActive(hashFormat)
   }
-
-  useEffect(() => {
-    console.log('active', active)
-  }, [active])
 
   return (
     <div className="category-list">

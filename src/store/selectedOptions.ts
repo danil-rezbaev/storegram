@@ -34,8 +34,6 @@ const selectedOptions = createSlice({
       if (state.options[id] && state.options[id][uniqueId]) {
         const currentOptions = state.options[id][uniqueId]
 
-        // console.log('currentOptions', currentOptions)
-
         if (currentOptions?.count === 1) {
           if (type === 'increment') {
             currentOptions.count += 2
@@ -65,8 +63,6 @@ const selectedOptions = createSlice({
           }
         }
       }
-
-      console.log('store', state.options[id])
 
       saveStore(state)
     },

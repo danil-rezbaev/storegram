@@ -7,14 +7,17 @@ import { CurrentOptions } from '../../../layout/types/catalog/productsDataTypes'
 import { addProduct } from '../../../store/basketSlice'
 import { visibleHandle } from '../../../store/productInfoSlice'
 import _ from 'lodash'
+import cs from 'classnames'
 
 export type ProductInfoControlProps = {
   selectedOptions?: CurrentOptions,
+  optionsExist?: boolean
 }
 
 const ProductInfoControl: FC<ProductInfoControlProps> = (props) => {
   const {
-    selectedOptions = {}
+    selectedOptions = {},
+    optionsExist = false
   } = props
 
   const dispatch = useAppDispatch()
@@ -36,7 +39,6 @@ const ProductInfoControl: FC<ProductInfoControlProps> = (props) => {
   const { t } = useTranslation()
 
   const productPropertiesMemo = useMemo(() => totalProductProperties[id], [totalProductProperties])
-  const priceMemo = productPropertiesMemo?.price || price
 
   const [counter, setCounter] = useState<number>(1)
 
@@ -48,6 +50,17 @@ const ProductInfoControl: FC<ProductInfoControlProps> = (props) => {
       setCounter(countFormat)
     }
   }, [options])
+
+  const totalPriceChange = useMemo(() => {
+    const calc = _.reduce(_.values(selectedOptions), (accum, item) => {
+      item.values.forEach(value => {
+        accum += value.priceChange
+      })
+      return accum
+    }, 0)
+
+    return price + calc
+  }, [selectedOptions])
 
   const counterHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
     const targetName = event.currentTarget.name
@@ -66,13 +79,13 @@ const ProductInfoControl: FC<ProductInfoControlProps> = (props) => {
   }
 
   const titleFormat = useMemo(() => {
-    const priceFormat = `${priceMemo} ${currency}`
+    const priceFormat = `${totalPriceChange} ${currency}`
 
     return t('catalog:productInfoControl.addProduct', { price: priceFormat })
-  }, [priceMemo])
+  }, [totalPriceChange])
 
   return (
-    <div className="product-info-control bottom-button">
+    <div className={cs('product-info-control', optionsExist ? 'bottom-button' : 'mt-3')}>
       <Counter title={counter} size="lg" handler={counterHandler} />
 
       <Button

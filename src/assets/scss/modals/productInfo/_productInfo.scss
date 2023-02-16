@@ -1,6 +1,4 @@
 .product-info {
-  padding-bottom: 65px;
-
   .product-info--img-container {
     max-width: calc(100% + 32px);
     width: calc(100% + 32px);
@@ -48,5 +46,7 @@
     margin-bottom: 0;
   }
 
-  .product-info--options {}
+  .offcanvas-body {
+    padding-bottom: 65px;
+  }
 }
