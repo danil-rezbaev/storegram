@@ -17,7 +17,6 @@ const SelectOptionsQuiz: FC<SelectPropertyQuizProps> = (props) => {
   } = props
 
   const {
-    id,
     title,
     type,
     values
@@ -54,10 +53,8 @@ const SelectOptionsQuiz: FC<SelectPropertyQuizProps> = (props) => {
     }
   }
 
-  const uniqueId = `${id}-${title}`
-
   useEffect(() => {
-    optionsHandler(uniqueId, checkList)
+    optionsHandler(title, checkList)
   }, [checkList])
 
   return (
