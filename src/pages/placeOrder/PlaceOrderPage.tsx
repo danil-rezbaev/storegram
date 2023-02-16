@@ -69,7 +69,7 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
                 <option value="cash-payment">{t('placeOrder:paymentMethod.cashPayment')}</option>
               </Form.Select>
               { errors.payment && touched.payment
-                ? <p className="form--error-hint">{ errors.payment && touched.payment }</p>
+                ? <p className="form--error-hint">{ errors.payment }</p>
                 : null }
             </Form.Group>
 
@@ -88,7 +88,7 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
                 value={values.phone}
               />
               { errors.phone && touched.phone
-                ? <p className="form--error-hint">{ errors.phone && touched.phone }</p>
+                ? <p className="form--error-hint">{ errors.phone }</p>
                 : null }
             </Form.Group>
 
@@ -108,7 +108,7 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
                 value={values.address}
               />
               { errors.address && touched.address
-                ? <p className="form--error-hint">{ errors.address && touched.address }</p>
+                ? <p className="form--error-hint">{ errors.address }</p>
                 : null }
             </Form.Group>
 
@@ -130,7 +130,7 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
                     value={values.flat}
                   />
                   { errors.flat && touched.flat
-                    ? <p className="form--error-hint">{ errors.flat && touched.flat }</p>
+                    ? <p className="form--error-hint">{ errors.flat }</p>
                     : null }
                 </Form.Group>
               </Col>
@@ -152,7 +152,7 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
                     value={values.entrance}
                   />
                   { errors.entrance && touched.entrance
-                    ? <p className="form--error-hint">{ errors.entrance && touched.entrance }</p>
+                    ? <p className="form--error-hint">{ errors.entrance }</p>
                     : null }
                 </Form.Group>
               </Col>
@@ -174,7 +174,7 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
                     value={values.floor}
                   />
                   { errors.floor && touched.floor
-                    ? <p className="form--error-hint">{ errors.floor && touched.floor }</p>
+                    ? <p className="form--error-hint">{ errors.floor }</p>
                     : null }
                 </Form.Group>
               </Col>
