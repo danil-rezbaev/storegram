@@ -1,0 +1,18 @@
+@use "../../variables";
+
+.form {
+  margin-top: 2em;
+  text-align: left;
+
+  .form--container {
+    margin-bottom: 1.5em;
+  }
+
+  .form--error-hint {
+    font-size: 13.5px;
+    color: variables.$red;
+    line-height: 1.1;
+    display: block;
+    margin-top: 5px;
+  }
+}

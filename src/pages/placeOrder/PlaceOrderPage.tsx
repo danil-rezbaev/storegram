@@ -5,6 +5,7 @@ import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { Formik } from 'formik'
 import * as yup from 'yup'
+import cs from 'classnames'
 
 export type PlaceOrderPageProps = unknown
 
@@ -15,20 +16,20 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
     console.log('value', value)
   }
 
-  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+  const phoneRegExp = /^[\\+]?[(]?[0-9]{3}[)]?[-\s\\.]?[0-9]{3}[-\s\\.]?[0-9]{4,6}$/m
 
   const validationSchema = yup.object().shape({
-    payment: yup.string().required(),
-    phone: yup.string().matches(phoneRegExp).required(),
-    address: yup.string().required(),
-    flat: yup.string().required(),
-    entrance: yup.string().required(),
-    floor: yup.string().required()
+    payment: yup.string().required(t('basket:content.receivingMethod.delivery.form.payment.hint') ?? undefined),
+    phone: yup.string().matches(phoneRegExp, t('placeOrder:phone.hint') ?? undefined).required(t('placeOrder:phone.hint') ?? undefined),
+    address: yup.string().required(t('basket:content.receivingMethod.delivery.form.address.hint') ?? undefined),
+    flat: yup.string().required(t('basket:content.receivingMethod.delivery.form.flat.hint') ?? undefined),
+    entrance: yup.string().required(t('basket:content.receivingMethod.delivery.form.entrance.hint') ?? undefined),
+    floor: yup.string().required(t('basket:content.receivingMethod.delivery.form.floor.hint') ?? undefined)
   })
 
   const initialValues = {
     payment: 'card-payment',
-    phone: '',
+    phone: '+7',
     address: '',
     flat: '',
     entrance: '',
@@ -36,127 +37,144 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
   }
 
   return (
-    <Page className="page--place-order">
+    <Page className="page place-order">
       <PageHeader title={t('placeOrder:title')} backLink="/basket" />
 
       <Formik
         initialValues={initialValues}
         onSubmit={formSubmit}
         validationSchema={validationSchema}
-        validateOnBlur
-        validateOnMount
       >
-        {({ values, errors, handleChange, handleBlur, isValid = false, handleSubmit }) => (
+        {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
           <Form
-            className="mt-4 text-start"
+            className="form"
             onSubmit={handleSubmit}
+            noValidate={true}
           >
-            <Form.Group className="mb-3">
-              <Form.Label>{t('placeOrder:paymentMethod.title')}</Form.Label>
+            <Form.Group className="form--container">
+              <Form.Label
+                className={cs(errors.payment ? 'text-danger' : null)}
+              >
+                {t('placeOrder:paymentMethod.title')}
+              </Form.Label>
               <Form.Select
                 name="payment"
                 aria-label="payment"
+                isInvalid={!!errors.payment}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.payment}
-                required
               >
                 <option value="card-payment">{t('placeOrder:paymentMethod.cardPayment')}</option>
                 <option value="cash-payment">{t('placeOrder:paymentMethod.cashPayment')}</option>
               </Form.Select>
+              { errors.payment
+                ? <p className="form--error-hint">{ errors.payment }</p>
+                : null }
             </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Label>{t('placeOrder:phoneNumber.title')}</Form.Label>
+            <Form.Group className="form--container">
+              <Form.Label
+                className={cs(errors.phone ? 'text-danger' : null)}
+              >
+                {t('placeOrder:phone.title')}
+              </Form.Label>
               <Form.Control
                 type="tel"
                 name="phone"
+                isInvalid={!!errors.phone}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.phone}
               />
-              <Form.Control.Feedback type="invalid">
-                {t('placeOrder:phoneNumber.hint')}
-              </Form.Control.Feedback>
+              { errors.phone
+                ? <p className="form--error-hint">{ errors.phone }</p>
+                : null }
             </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Label>{t('basket:content.receivingMethod.delivery.form.address.title')}</Form.Label>
+            <Form.Group className="form--container">
+              <Form.Label
+                className={cs(errors.address ? 'text-danger' : null)}
+              >
+                {t('basket:content.receivingMethod.delivery.form.address.title')}
+              </Form.Label>
               <Form.Control
                 type="text"
                 placeholder={t('basket:content.receivingMethod.delivery.form.address.placeholder') ?? undefined}
                 name='address'
+                isInvalid={!!errors.address}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.address}
               />
-              <Form.Control.Feedback type="invalid">
-                {t('basket:content.receivingMethod.delivery.form.address.hint')}
-              </Form.Control.Feedback>
+              { errors.address
+                ? <p className="form--error-hint">{ errors.address }</p>
+                : null }
             </Form.Group>
 
-            <Row className="mb-3">
+            <Row>
               <Col>
-                <Form.Group>
-                  <Form.Label>{t('basket:content.receivingMethod.delivery.form.flat.title')}</Form.Label>
+                <Form.Group className="form--container">
+                  <Form.Label
+                    className={cs(errors.flat ? 'text-danger' : null)}
+                  >
+                    {t('basket:content.receivingMethod.delivery.form.flat.title')}
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     className="m-0"
                     name='flat'
+                    isInvalid={!!errors.flat}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.flat}
-                    required
                   />
                   { errors.flat
-                    ? (
-                      <Form.Control.Feedback type="invalid">
-                        {t('basket:content.receivingMethod.delivery.form.flat.hint')}
-                      </Form.Control.Feedback>
-                      )
+                    ? <p className="form--error-hint">{ errors.flat }</p>
                     : null }
                 </Form.Group>
               </Col>
 
               <Col>
-                <Form.Group>
-                  <Form.Label>{t('basket:content.receivingMethod.delivery.form.entrance.title')}</Form.Label>
+                <Form.Group className="form--container">
+                  <Form.Label
+                    className={cs(errors.entrance ? 'text-danger' : null)}
+                  >
+                    {t('basket:content.receivingMethod.delivery.form.entrance.title')}
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     className="m-0"
                     name='entrance'
+                    isInvalid={!!errors.entrance}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.entrance}
-                    required
                   />
                   { errors.entrance
-                    ? (
-                      <Form.Control.Feedback type="invalid">
-                        {t('basket:content.receivingMethod.delivery.form.entrance.hint')}
-                      </Form.Control.Feedback>
-                      )
+                    ? <p className="form--error-hint">{ errors.entrance }</p>
                     : null }
                 </Form.Group>
               </Col>
 
               <Col>
-                <Form.Group>
-                  <Form.Label>{t('basket:content.receivingMethod.delivery.form.floor.title')}</Form.Label>
+                <Form.Group className="form--container">
+                  <Form.Label
+                    className={cs(errors.floor ? 'text-danger' : null)}
+                  >
+                    {t('basket:content.receivingMethod.delivery.form.floor.title')}
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     className="m-0"
                     name='floor'
+                    isInvalid={!!errors.floor}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.floor}
                   />
                   { errors.floor
-                    ? (
-                    <Form.Control.Feedback type="invalid">
-                      {t('basket:content.receivingMethod.delivery.form.floor.hint')}
-                    </Form.Control.Feedback>
-                      )
+                    ? <p className="form--error-hint">{ errors.floor }</p>
                     : null }
                 </Form.Group>
               </Col>
@@ -166,7 +184,7 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
               type="submit"
               variant="success"
               className="w-100 text-white btn-md"
-              disabled={!isValid}
+              name="submit"
               onClick={handleBlur}
             >
               {t('placeOrder:buttons.saveData')}

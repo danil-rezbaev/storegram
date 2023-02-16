@@ -8,8 +8,8 @@
     "cashPayment": "Cash payment"
   },
 
-  "phoneNumber": {
-    "title": "Phone number",
+  "phone": {
+    "title": "Phone",
     "hint": "Make sure the entered data is correct"
   },
 
