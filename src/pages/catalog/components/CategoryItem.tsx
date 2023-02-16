@@ -22,7 +22,7 @@ const CategoryItem: FC<CategoryItemProps> = (props) => {
   return (
     <button
       type="button"
-      className={cs('category-item', active ? 'active' : null)}
+      className={cs('category-item btn btn-sm', active ? 'btn-secondary' : 'btn-light')}
       onClick={handler}
     >
       {title}

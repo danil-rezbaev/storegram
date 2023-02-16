@@ -17,7 +17,7 @@ const BottomButton: FC<BottomButtonProps> = (props) => {
       <div className="bottom-button">
         <div className="bottom-button--content">
           <Button
-            variant="success"
+            variant="primary"
             {...props}
             className={cs('text-white w-100', className)}
             size="lg"

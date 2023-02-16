@@ -66,7 +66,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
             ? (
                 <>
                   <Counter price={totalProductPropertiesMemo.totalPrice} handler={buttonClick} className='product-card-control' />
-                  <div className="product-card--quantity-hint">{totalProductPropertiesMemo.count}</div>
+                  <div className="product-card--quantity-hint bg-primary text-white">{totalProductPropertiesMemo.count}</div>
                 </>)
             : (
               <Button

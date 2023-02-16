@@ -69,11 +69,12 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
       visibleHandle={visibleHandler}
       className="modal product-info"
     >
-      <Button
+       <Button
         className="modal--close-btn bg-white text-black border-0"
+        variant="light"
         onClick={handleClose}>
         <CloseIcon/>
-      </Button>
+       </Button>
 
       <div className="product-info--img-container">
         <Swiper

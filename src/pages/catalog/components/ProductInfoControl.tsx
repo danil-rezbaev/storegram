@@ -90,7 +90,7 @@ const ProductInfoControl: FC<ProductInfoControlProps> = (props) => {
 
       <Button
         size="lg"
-        variant="success"
+        variant="primary"
         className="product-info-control--submit text-white"
         onClick={submitHandler}
       >

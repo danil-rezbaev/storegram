@@ -1,0 +1,21 @@
+@use 'variables';
+
+.btn {
+  &.btn-primary {
+    color: variables.$white !important;
+  }
+
+  &.btn-secondary {
+    border-color: transparent;
+    background-color: variables.$light-azure !important;
+    color: variables.$blue !important;
+
+    &:hover {
+      background-color: variables.$azure !important;
+    }
+
+    &:focus {
+      border-color: variables.$blue !important;
+    }
+  }
+}

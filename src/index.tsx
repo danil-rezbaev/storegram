@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <Suspense
       fallback={
-        <Spinner animation="border" variant="success" />
+        <Spinner animation="border" variant="primary" />
     }>
       <BrowserRouter>
         <App />

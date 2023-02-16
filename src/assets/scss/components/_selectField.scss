@@ -15,12 +15,12 @@
   transition: color, background-color 0.15s, 0.15s;
 
   &.selected {
-    background: variables.$black;
-    color: variables.$white;
+    background: variables.$azure;
+    color: variables.$blue;
 
     .select-field--mark {
-      background: variables.$green;
-      border-color: variables.$green;
+      background: variables.$blue;
+      border-color: variables.$blue;
 
       .icon {
         opacity: 1;

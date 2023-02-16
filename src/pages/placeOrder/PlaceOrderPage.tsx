@@ -182,8 +182,8 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
 
             <Button
               type="submit"
-              variant="success"
-              className="w-100 text-white btn-md"
+              variant="primary"
+              className="w-100 btn-md"
               name="submit"
               onClick={handleBlur}
             >
