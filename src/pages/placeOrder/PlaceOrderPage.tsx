@@ -45,7 +45,7 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
         onSubmit={formSubmit}
         validationSchema={validationSchema}
       >
-        {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
+        {({ values, errors, handleChange, handleBlur, handleSubmit, touched }) => (
           <Form
             className="form"
             onSubmit={handleSubmit}
@@ -53,14 +53,14 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
           >
             <Form.Group className="form--container">
               <Form.Label
-                className={cs(errors.payment ? 'text-danger' : null)}
+                className={cs(errors.payment && touched.payment ? 'text-danger' : null)}
               >
                 {t('placeOrder:paymentMethod.title')}
               </Form.Label>
               <Form.Select
                 name="payment"
                 aria-label="payment"
-                isInvalid={!!errors.payment}
+                isInvalid={!!errors.payment && touched.payment}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.payment}
@@ -68,33 +68,33 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
                 <option value="card-payment">{t('placeOrder:paymentMethod.cardPayment')}</option>
                 <option value="cash-payment">{t('placeOrder:paymentMethod.cashPayment')}</option>
               </Form.Select>
-              { errors.payment
-                ? <p className="form--error-hint">{ errors.payment }</p>
+              { errors.payment && touched.payment
+                ? <p className="form--error-hint">{ errors.payment && touched.payment }</p>
                 : null }
             </Form.Group>
 
             <Form.Group className="form--container">
               <Form.Label
-                className={cs(errors.phone ? 'text-danger' : null)}
+                className={cs(errors.phone && touched.phone ? 'text-danger' : null)}
               >
                 {t('placeOrder:phone.title')}
               </Form.Label>
               <Form.Control
                 type="tel"
                 name="phone"
-                isInvalid={!!errors.phone}
+                isInvalid={!!errors.phone && touched.phone}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.phone}
               />
-              { errors.phone
-                ? <p className="form--error-hint">{ errors.phone }</p>
+              { errors.phone && touched.phone
+                ? <p className="form--error-hint">{ errors.phone && touched.phone }</p>
                 : null }
             </Form.Group>
 
             <Form.Group className="form--container">
               <Form.Label
-                className={cs(errors.address ? 'text-danger' : null)}
+                className={cs(errors.address && touched.address ? 'text-danger' : null)}
               >
                 {t('basket:content.receivingMethod.delivery.form.address.title')}
               </Form.Label>
@@ -102,13 +102,13 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
                 type="text"
                 placeholder={t('basket:content.receivingMethod.delivery.form.address.placeholder') ?? undefined}
                 name='address'
-                isInvalid={!!errors.address}
+                isInvalid={!!errors.address && touched.address}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.address}
               />
-              { errors.address
-                ? <p className="form--error-hint">{ errors.address }</p>
+              { errors.address && touched.address
+                ? <p className="form--error-hint">{ errors.address && touched.address }</p>
                 : null }
             </Form.Group>
 
@@ -116,7 +116,7 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
               <Col>
                 <Form.Group className="form--container">
                   <Form.Label
-                    className={cs(errors.flat ? 'text-danger' : null)}
+                    className={cs(errors.flat && touched.flat ? 'text-danger' : null)}
                   >
                     {t('basket:content.receivingMethod.delivery.form.flat.title')}
                   </Form.Label>
@@ -124,13 +124,13 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
                     type="text"
                     className="m-0"
                     name='flat'
-                    isInvalid={!!errors.flat}
+                    isInvalid={!!errors.flat && touched.flat}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.flat}
                   />
-                  { errors.flat
-                    ? <p className="form--error-hint">{ errors.flat }</p>
+                  { errors.flat && touched.flat
+                    ? <p className="form--error-hint">{ errors.flat && touched.flat }</p>
                     : null }
                 </Form.Group>
               </Col>
@@ -138,7 +138,7 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
               <Col>
                 <Form.Group className="form--container">
                   <Form.Label
-                    className={cs(errors.entrance ? 'text-danger' : null)}
+                    className={cs(errors.entrance && touched.entrance ? 'text-danger' : null)}
                   >
                     {t('basket:content.receivingMethod.delivery.form.entrance.title')}
                   </Form.Label>
@@ -146,13 +146,13 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
                     type="text"
                     className="m-0"
                     name='entrance'
-                    isInvalid={!!errors.entrance}
+                    isInvalid={!!errors.entrance && touched.entrance}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.entrance}
                   />
-                  { errors.entrance
-                    ? <p className="form--error-hint">{ errors.entrance }</p>
+                  { errors.entrance && touched.entrance
+                    ? <p className="form--error-hint">{ errors.entrance && touched.entrance }</p>
                     : null }
                 </Form.Group>
               </Col>
@@ -160,7 +160,7 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
               <Col>
                 <Form.Group className="form--container">
                   <Form.Label
-                    className={cs(errors.floor ? 'text-danger' : null)}
+                    className={cs(errors.floor && touched.floor ? 'text-danger' : null)}
                   >
                     {t('basket:content.receivingMethod.delivery.form.floor.title')}
                   </Form.Label>
@@ -168,13 +168,13 @@ const PlaceOrderPage: FC<PlaceOrderPageProps> = () => {
                     type="text"
                     className="m-0"
                     name='floor'
-                    isInvalid={!!errors.floor}
+                    isInvalid={!!errors.floor && touched.floor}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.floor}
                   />
-                  { errors.floor
-                    ? <p className="form--error-hint">{ errors.floor }</p>
+                  { errors.floor && touched.floor
+                    ? <p className="form--error-hint">{ errors.floor && touched.floor }</p>
                     : null }
                 </Form.Group>
               </Col>
