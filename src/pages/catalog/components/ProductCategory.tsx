@@ -27,7 +27,7 @@ const ProductCategory: FC<ProductCategoryProps> = (props) => {
         { items.map((product) => (
           <ProductCard
             key={product.id}
-            {...product}
+            product={product}
           />
         ))}
       </div>

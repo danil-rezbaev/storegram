@@ -45,11 +45,11 @@ const basketSlice = createSlice({
       const fn = () => {
         const currentProductProperties = state.totalProductProperties[id]
         const uniqueId = currentProductProperties ? currentProductProperties.uniqueId : id.toString()
-        const productPrice = currentProductProperties ? currentProductProperties.price : price
+        const productPrice = price
 
         if (currentProductProperties) {
           currentProductProperties.count += 1
-          currentProductProperties.totalPrice += currentProductProperties.price
+          currentProductProperties.totalPrice += productPrice
         } else {
           state.totalProductProperties = {
             ...state.totalProductProperties,

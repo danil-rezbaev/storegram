@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler, useCallback, useMemo, useState } from 'react'
+import React, { FC, MouseEventHandler, useMemo, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import cs from 'classnames'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
@@ -8,15 +8,21 @@ import Counter from '../../../components/Counter'
 import { openModal } from '../../../store/productInfoSlice'
 import RenderPrice from '../../../components/RenderPrice'
 
-export type ProductCardProps = ProductItem
+export type ProductCardProps = {
+  product: ProductItem
+}
 
 const ProductCard: FC<ProductCardProps> = (props) => {
+  const {
+    product
+  } = props
+
   const {
     id,
     img,
     title,
     price
-  } = props
+  } = product
 
   const dispatch = useAppDispatch()
   const basketStore = useAppSelector(state => state.basket)
@@ -32,11 +38,11 @@ const ProductCard: FC<ProductCardProps> = (props) => {
 
   const [active, setActive] = useState<boolean>(false)
 
-  const buttonClick: MouseEventHandler<HTMLButtonElement> = useCallback((event) => {
+  const buttonClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     const targetName = event.currentTarget.name
 
     if (targetName === 'increment') {
-      const formatObj = { ...props, count: 0 }
+      const formatObj = { ...product, count: 0 }
       dispatch(addProduct(formatObj))
     } else if (targetName === 'decrement') {
       dispatch(removeProduct({ id }))
@@ -44,9 +50,9 @@ const ProductCard: FC<ProductCardProps> = (props) => {
 
     setActive(true)
     setTimeout(() => setActive(false), 250)
-  }, [])
+  }
 
-  const openModalClick = () => dispatch(openModal(props))
+  const openModalClick = () => dispatch(openModal(product))
 
   return (
     <div

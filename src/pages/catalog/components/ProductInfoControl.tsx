@@ -73,7 +73,7 @@ const ProductInfoControl: FC<ProductInfoControlProps> = (props) => {
   }
 
   const submitHandler = () => {
-    dispatch(addProduct({ ...productInfoStore, currentOptions: selectedOptions, count: counter }))
+    dispatch(addProduct({ ...productInfoStore, price: totalPriceChange, currentOptions: selectedOptions, count: counter }))
     dispatch(visibleHandle({ value: false }))
     setCounter(1)
   }
