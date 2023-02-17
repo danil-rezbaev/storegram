@@ -23,15 +23,13 @@ const SelectOptionsContainer: FC<SelectPropertyItemProps> = (props) => {
   const questionOptionsHandler = (uniqueId: string, values: ProductItemOptionsValue[]) => {
     const isFilled = values.length > 0
 
-    if (isFilled) {
-      setQuestionOptions((value) => ({
-        ...value,
-        [uniqueId]: {
-          values,
-          filled: isFilled
-        }
-      }))
-    }
+    setQuestionOptions((value) => ({
+      ...value,
+      [uniqueId]: {
+        values,
+        filled: isFilled
+      }
+    }))
   }
 
   useEffect(() => {
