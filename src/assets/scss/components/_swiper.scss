@@ -1,13 +1,13 @@
 @use "../variables";
 
 .swiper-pagination-bullet {
-  background: variables.$gray !important;
+  background: variables.$blue !important;
   width: 10px !important;
   height: 10px !important;
-  opacity: 50% !important;
+  opacity: 35% !important;
 
   &.swiper-pagination-bullet-active {
-    background: variables.$primary !important;
+    background: variables.$blue !important;
     opacity: 1!important;
   }
 }

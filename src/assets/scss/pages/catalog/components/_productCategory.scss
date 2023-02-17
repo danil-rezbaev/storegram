@@ -2,7 +2,7 @@
     position: relative;
 
     &:not(:first-of-type) {
-        margin-top: 3rem;
+        margin-top: 2rem;
     }
 
     &--title {
@@ -12,15 +12,19 @@
     }
 
     &--container {
-        display: grid;
-        grid-gap: 2.5%;
-        grid-template-columns: repeat(2, 1fr);
-        margin-top: 0.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2.5%;
+    }
+
+    .product-card {
+        margin-top: 1rem;
     }
 
 
     @media (min-width: 768px) {
         &--container {
+            display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-gap: 2%;
         }
