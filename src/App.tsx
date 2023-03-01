@@ -13,10 +13,10 @@ function App () {
     <Provider store={store}>
       <div className="app">
         <Routes>
-          <Route index path={'/'} element={<CatalogPage/>} />
-          <Route path={'basket'} element={<BasketPage/>} />
-          <Route path={'place-order'} element={<PlaceOrderPage/>} />
-          <Route path={'*'} element={<NotFoundPage/>} />
+          <Route index path='/' element={<CatalogPage/>} />
+          <Route path='basket' element={<BasketPage/>} />
+          <Route path='place-order' element={<PlaceOrderPage/>} />
+          <Route path='*' element={<NotFoundPage/>} />
         </Routes>
       </div>
     </Provider>
