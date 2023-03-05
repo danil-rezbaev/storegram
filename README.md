@@ -2,7 +2,7 @@
 
 > Storegram - это  сервис заказа еды,  с возможностью выбрать опции продукта, добавлением их в корзину и далее оплатой товаров
 
-**[> Live preview <](https://storegram.vercel.app/"> Посмотреть приложение <")**
+**[Live Demo](https://storegram.vercel.app/ "Live Demo")**
 
 ## Инструменты разработки
 
