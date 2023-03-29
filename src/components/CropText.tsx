@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC } from 'react'
 import cs from 'classnames'
 import _ from 'lodash'
 
@@ -15,12 +15,9 @@ const CropText: FC<CropTextProps> = (props) => {
     className
   } = props
 
-  const titleFormat = useMemo(() => {
-    if (title.length < number) {
-      return title
-    }
-    return `${_.slice(title, 0, number).join('')}...`
-  }, [])
+  const titleFormat = title.length < number
+    ? title
+    : `${_.slice(title, 0, number).join('')}...`
 
   return (
     <p className={cs('crop-text m-0', className)}>

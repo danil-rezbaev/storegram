@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC } from 'react'
 import { ProductItemStore } from '../../../layout/types/catalog/productsDataTypes'
 import _ from 'lodash'
 
@@ -9,11 +9,9 @@ const BasketProductOptions: FC<BasketProductOptionsProps> = (props) => {
     currentOptions
   } = props
 
-  const optionsMemo = useMemo(() => {
-    return _.entries(currentOptions).map(([key, value]) => (
-      [key, _.values(value.values).map((item) => item.title).join(', ')]
-    ))
-  }, [currentOptions])
+  const optionsMemo = _.entries(currentOptions).map(([key, value]) => (
+    [key, _.values(value.values).map((item) => item.title).join(', ')]
+  ))
 
   return (
     <ul className="basket-product-options">

@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC } from 'react'
 import ProductCategory from './ProductCategory'
 import _ from 'lodash'
 import { Category, ProductItem } from '../../../layout/types/catalog/productsDataTypes'
@@ -14,11 +14,8 @@ const ProductList: FC<ProductListProps> = (props) => {
     categories
   } = props
 
-  const productCategories = useMemo(() => {
-    const group = _.groupBy(products, 'category')
-    return _.entries(group)
-  }, [products])
-
+  const group = _.groupBy(products, 'category')
+  const productCategories = _.entries(group)
   const matchCategory = (category: string) => _.find(categories, (item) => item.code === category)
 
   return (

@@ -15,7 +15,7 @@ const RenderPrice: FC<RenderPriceProps> = (props) => {
     className
   } = props
 
-  const currency = useAppSelector(state => state.global.currency)
+  const { currency } = useAppSelector(state => state.global)
 
   const priceFormat = useMemo(() => {
     const priceFormat = price ?? 0

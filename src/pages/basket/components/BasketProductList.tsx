@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC } from 'react'
 import BasketProductCard from './BasketProductCard'
 import _ from 'lodash'
 import { BasketState } from '../../../store/basketSlice'
@@ -13,8 +13,8 @@ const BasketProductList: FC<BasketProductListProps> = (props) => {
   } = props
 
   const basketProducts = basketStore.products
-  const basketProductsMemo = useMemo(() => _.values(basketProducts), [basketProducts])
-  const basketProductsValid = _.filter(basketProductsMemo, (item) => item.count > 0)
+  const values = _.values(basketProducts)
+  const basketProductsValid = _.filter(values, (item) => item.count > 0)
 
   return (
     <div className="basket-product-list">

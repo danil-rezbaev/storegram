@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo, useState } from 'react'
+import React, { FC, useCallback, useState } from 'react'
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { ReactComponent as CloseIcon } from '../assets/images/pages/catalog/close.svg'
 import { ReactComponent as InfoIcon } from '../assets/images/pages/catalog/info.svg'
@@ -49,19 +49,17 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
     }))
   }, [id, title])
 
-  const visibleHandler = useCallback((value: boolean): void => {
+  const visibleHandler = (value: boolean): void => {
     dispatch(visibleHandle({ value }))
-  }, [])
+  }
 
-  const renderTooltip = useMemo(() => {
-    return (
-      <Tooltip className="tooltip">
-        { properties
-          ? <ProductProperties data={properties} />
-          : <p>{t('catalog:productInfoModal.propertiesNotFound')}</p> }
-      </Tooltip>
-    )
-  }, [properties])
+  const renderTooltip = (
+    <Tooltip className="tooltip">
+      { properties
+        ? <ProductProperties data={properties} />
+        : <p>{t('catalog:productInfoModal.propertiesNotFound')}</p> }
+    </Tooltip>
+  )
 
   return (
     <BottomPopup

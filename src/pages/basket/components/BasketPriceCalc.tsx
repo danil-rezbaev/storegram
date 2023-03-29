@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC } from 'react'
 import RenderPrice from '../../../components/RenderPrice'
 import { useAppSelector } from '../../../hooks/redux'
 import { useTranslation } from 'react-i18next'
@@ -10,18 +10,12 @@ const BasketPriceCalc: FC<BasketAmountProps> = () => {
 
   const { t } = useTranslation()
 
-  const totalPriceView = useMemo(() => {
-    return (
+  return (
+    <ul className="basket-price-calc">
       <li className="list-item">
         <span>{t('basket:content.totalPrice.title')}</span>
         <RenderPrice price={totalPrice}/>
       </li>
-    )
-  }, [totalPrice])
-
-  return (
-    <ul className="basket-price-calc">
-      {totalPriceView}
     </ul>
   )
 }

@@ -38,13 +38,11 @@ const ProductInfoControl: FC<ProductInfoControlProps> = (props) => {
 
   const { t } = useTranslation()
 
-  const productPropertiesMemo = useMemo(() => totalProductProperties[id], [totalProductProperties])
-
   const [counter, setCounter] = useState<number>(1)
 
   useEffect(() => {
     const optionsLength = _.keys(options).length === 0
-    const countFormat = optionsLength ? productPropertiesMemo?.count : 1
+    const countFormat = optionsLength ? totalProductProperties[id]?.count : 1
 
     if (countFormat) {
       setCounter(countFormat)
@@ -78,11 +76,8 @@ const ProductInfoControl: FC<ProductInfoControlProps> = (props) => {
     setCounter(1)
   }
 
-  const titleFormat = useMemo(() => {
-    const priceFormat = `${totalPriceChange} ${currency}`
-
-    return t('catalog:productInfoControl.addProduct', { price: priceFormat })
-  }, [totalPriceChange])
+  const priceFormat = `${totalPriceChange} ${currency}`
+  const titleFormat = t('catalog:productInfoControl.addProduct', { price: priceFormat })
 
   return (
     <div className={cs('product-info-control', optionsExist ? 'bottom-button' : 'mt-3')}>

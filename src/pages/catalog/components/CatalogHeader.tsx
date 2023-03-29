@@ -1,17 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CategoryList from './CategoryList'
 import { categoriesData } from '../../../layout/data/catalog/categoriesData'
 
 const CatalogHeader = () => {
-  const initialCategory = useMemo(() => {
-    try {
-      return categoriesData[0].code
-    } catch (e) {
-      console.log(e)
-      return null
-    }
-  }, [])
-
+  const initialCategory = categoriesData[0].code ?? null
   const [visibleCategory, setVisibleCategory] = useState<string | null>(initialCategory)
 
   useEffect(() => {
