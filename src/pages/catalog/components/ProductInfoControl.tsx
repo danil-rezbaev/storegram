@@ -31,7 +31,7 @@ const ProductInfoControl: FC<ProductInfoControlProps> = (props) => {
   } = basketStore
 
   const {
-    id,
+    _id,
     price,
     options
   } = productInfoStore
@@ -42,7 +42,7 @@ const ProductInfoControl: FC<ProductInfoControlProps> = (props) => {
 
   useEffect(() => {
     const optionsLength = _.keys(options).length === 0
-    const countFormat = optionsLength ? totalProductProperties[id]?.count : 1
+    const countFormat = optionsLength ? totalProductProperties[_id]?.count : 1
 
     if (countFormat) {
       setCounter(countFormat)
@@ -52,7 +52,7 @@ const ProductInfoControl: FC<ProductInfoControlProps> = (props) => {
   const totalPriceChange = useMemo(() => {
     const calc = _.reduce(_.values(selectedOptions), (accum, item) => {
       item.values.forEach(value => {
-        accum += value.priceChange
+        accum += +value.priceChange
       })
       return accum
     }, 0)

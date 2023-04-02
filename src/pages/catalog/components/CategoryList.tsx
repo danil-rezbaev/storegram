@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { HashNavigation } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/parallax'
-import { Category } from '../../../layout/types/catalog/productsDataTypes'
+import { Category } from '../../../layout/types/Category'
 
 export type CategoryListProps = {
   categories: Category[],

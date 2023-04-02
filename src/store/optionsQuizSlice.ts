@@ -40,7 +40,7 @@ const optionsQuizSlice = createSlice({
     setCounter (state, action: PayloadAction<Pick<ProductInfoSlice, 'questionCounter'>>) {
       state.questionCounter = action.payload.questionCounter
     },
-    addOptions (state, action: PayloadAction<{id: number, productId: number, checkList: ProductItemOptionsValue[] | undefined, questionTitle: string}>) {
+    addOptions (state, action: PayloadAction<{id: string, productId: number, checkList: ProductItemOptionsValue[] | undefined, questionTitle: string}>) {
       const { id, productId, checkList, questionTitle } = action.payload
       const currentOption = _.find(state.questions, (item) => (item.id === id))
 

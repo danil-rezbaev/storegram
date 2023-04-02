@@ -2,7 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import _ from 'lodash'
 import {
   ProductItemOptionsValue,
-  TotalProductProperties, ProductItemStore
+  ProductItemStore,
+  TotalProductProperties
 } from '../layout/types/catalog/productsDataTypes'
 
 export type BasketState = {
@@ -40,20 +41,19 @@ const basketSlice = createSlice({
   initialState,
   reducers: {
     addProduct (state, action: PayloadAction<Omit<ProductItemStore, 'uniqueId' | 'totalPrice'>>) {
-      const { id, price, currentOptions = {}, count } = action.payload
+      const { _id, price, currentOptions = {}, count } = action.payload
 
       const fn = () => {
-        const currentProductProperties = state.totalProductProperties[id]
-        const uniqueId = currentProductProperties ? currentProductProperties.uniqueId : id.toString()
-        const productPrice = price
+        const currentProductProperties = state.totalProductProperties[_id]
+        const uniqueId = currentProductProperties ? currentProductProperties.uniqueId : _id.toString()
 
         if (currentProductProperties) {
           currentProductProperties.count += 1
-          currentProductProperties.totalPrice += productPrice
+          currentProductProperties.totalPrice += price
         } else {
           state.totalProductProperties = {
             ...state.totalProductProperties,
-            [id]: { ...action.payload, count: 1, uniqueId, basePrice: price, price: productPrice, totalPrice: productPrice }
+            [_id]: { ...action.payload, count: 1, uniqueId, basePrice: price, price, totalPrice: price }
           }
         }
 
@@ -61,15 +61,15 @@ const basketSlice = createSlice({
 
         if (currentProduct) {
           currentProduct.count += 1
-          currentProduct.totalPrice += currentProduct.price
+          currentProduct.totalPrice += +currentProduct.price
           currentProduct.currentOptions = currentOptions
         } else {
           state.products[uniqueId] = {
             ...action.payload,
             count: 1,
             uniqueId,
-            price: productPrice,
-            totalPrice: productPrice,
+            price,
+            totalPrice: price,
             currentOptions
           }
         }
@@ -91,7 +91,7 @@ const basketSlice = createSlice({
 
       saveStore(state)
     },
-    removeProduct (state, action: PayloadAction<{id: number, uniqueId?: string}>) {
+    removeProduct (state, action: PayloadAction<{id: string, uniqueId?: string}>) {
       const { id, uniqueId } = action.payload
 
       if (uniqueId) {

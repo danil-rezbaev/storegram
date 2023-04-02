@@ -23,6 +23,8 @@ const SelectOptionsAnswer: FC<SelectPropertyAnswerProps> = (props) => {
     priceChange
   } = value
 
+  console.log({ priceChange })
+
   const selectedHandler = () => handler(value, type)
 
   return (

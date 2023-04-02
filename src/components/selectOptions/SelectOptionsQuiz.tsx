@@ -18,7 +18,7 @@ const SelectOptionsQuiz: FC<SelectPropertyQuizProps> = (props) => {
 
   const {
     title,
-    type,
+    optionType,
     values
   } = options
 
@@ -28,19 +28,19 @@ const SelectOptionsQuiz: FC<SelectPropertyQuizProps> = (props) => {
 
   const [checkList, setCheckList] = useState<ProductItemOptionsValue[]>([])
 
-  const isExist = (optionId: number): boolean => {
+  const isExist = (optionId: string): boolean => {
     if (checkList.length < 1) return false
 
     const find = _.find(checkList, (item) => (item.id === optionId))
     return !!find
   }
 
-  const handler = (value: ProductItemOptionsValue, type: Fields): void => {
-    if (type === 'radio') {
+  const handler = (value: ProductItemOptionsValue): void => {
+    if (optionType === 'radio') {
       setCheckList([value])
     }
 
-    if (type === 'checkbox') {
+    if (optionType === 'checkbox') {
       const result = isExist(value.id)
 
       if (result) {
@@ -66,7 +66,7 @@ const SelectOptionsQuiz: FC<SelectPropertyQuizProps> = (props) => {
           <SelectOptionsAnswer
             key={ item.id }
             value={item}
-            type={ type }
+            type={ optionType }
             active={isExist(item.id)}
             handler={handler}
           />

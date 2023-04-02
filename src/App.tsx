@@ -7,6 +7,7 @@ import store from './store'
 import BasketPage from './pages/basket/BasketPage'
 import PlaceOrderPage from './pages/placeOrder/PlaceOrderPage'
 import './assets/scss/app.scss'
+import Identification from './pages/identification'
 
 function App () {
   return (
@@ -16,6 +17,7 @@ function App () {
           <Route index path='/' element={<CatalogPage/>} />
           <Route path='basket' element={<BasketPage/>} />
           <Route path='place-order' element={<PlaceOrderPage/>} />
+          <Route path='/id/:id' element={<Identification/>} />
           <Route path='*' element={<NotFoundPage/>} />
         </Routes>
       </div>

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type GlobalState = {
+  id: string,
   language: string,
   currency: string,
   theme: string,
@@ -8,6 +9,7 @@ export type GlobalState = {
 }
 
 const defaultState: GlobalState = {
+  id: '',
   language: 'ru',
   currency: '₽',
   theme: 'white',
@@ -34,6 +36,10 @@ const globalSlice = createSlice({
   name: 'global',
   initialState,
   reducers: {
+    updateId (state, action: PayloadAction<Pick<GlobalState, 'id'>>) {
+      state.id = action.payload.id
+      saveStore(state)
+    },
     updateLanguage (state, action: PayloadAction<Pick<GlobalState, 'language'>>) {
       state.language = action.payload.language
       saveStore(state)
@@ -53,6 +59,6 @@ const globalSlice = createSlice({
   }
 })
 
-export const { updateLanguage, updateCurrency, updateTheme, updateTotalPrice } = globalSlice.actions
+export const { updateId, updateLanguage, updateCurrency, updateTheme, updateTotalPrice } = globalSlice.actions
 
 export default globalSlice.reducer

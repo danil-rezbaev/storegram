@@ -1,25 +1,13 @@
-export type ProductProperties = 'weight'
-
-export type Category = {
-  id: number,
-  code: string,
-  title: string
-}
-
-export type ProductItemOptionsValue = {
-  id: number,
-  productId?: number,
-  title: string,
-  priceChange: number
-}
+import { Product, ProductOptionItem, ProductOptionType } from '../../../pages/basket/BasketTypes'
+import { Category } from '../Category'
 
 export type Fields = 'checkbox' | 'radio'
 
-export type ProductItemOptions = {
-  id: number,
-  title: string,
-  type: Fields,
-  values: ProductItemOptionsValue[],
+export type ProductItemOptionsValue = ProductOptionItem & {
+  productId?: string,
+}
+
+export type ProductItemOptions = ProductOptionType & {
   filled?: boolean
 }
 
@@ -34,7 +22,7 @@ export type UniqueId = string
 export type Count = number
 
 export type ProductItem = {
-  id: number,
+  id: string,
   category: string,
   img: string[],
   info?: string,
@@ -54,7 +42,7 @@ export type ProductCurrentOptions = Record<string, CurrentOptions>
 
 export type SelectedOptions = Record<string, Record<string, CurrentOptions & {count: number}>>
 
-export type ProductItemStore = ProductItem & {
+export type ProductItemStore = Product & {
   uniqueId: UniqueId,
   currentOptions?: CurrentOptions,
   count: Count,
@@ -62,7 +50,7 @@ export type ProductItemStore = ProductItem & {
 }
 
 export type ProductType = {
-  id: number,
+  id: string,
   category: Category,
   items: ProductItem[]
 }
@@ -87,7 +75,7 @@ export type ReceivingMethods = DeliveryMethods & {
 }
 
 export type PickupAddresses = {
-  id: number,
+  id: string,
   title: string
 }
 

@@ -1,23 +1,23 @@
-import { Category } from '../../types/catalog/productsDataTypes'
+import { Category } from '../../types/Category'
 
 export const categoriesData: Category[] = [
   {
-    id: 1,
+    id: '1',
     code: 'pizza',
     title: 'Пицца'
   },
   {
-    id: 2,
+    id: '2',
     code: 'burger',
     title: 'Бургеры'
   },
   {
-    id: 4,
+    id: '4',
     code: 'desert',
     title: 'Десерты'
   },
   {
-    id: 5,
+    id: '5',
     code: 'drinks',
     title: 'Напитки'
   }

@@ -1,9 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import CategoryList from './CategoryList'
-import { categoriesData } from '../../../layout/data/catalog/categoriesData'
+import { Category } from '../../../layout/types/Category'
 
-const CatalogHeader = () => {
-  const initialCategory = categoriesData[0].code ?? null
+export type CatalogHeaderProps = {
+  categories: Category[]
+}
+
+const CatalogHeader: FC<CatalogHeaderProps> = (props) => {
+  const {
+    categories
+  } = props
+
+  const initialCategory = categories[0]?.code ?? null
   const [visibleCategory, setVisibleCategory] = useState<string | null>(initialCategory)
 
   useEffect(() => {
@@ -40,7 +48,7 @@ const CatalogHeader = () => {
     <div className="catalog-header">
       <CategoryList
         visibleCategory={visibleCategory}
-        categories={categoriesData}
+        categories={categories}
       />
     </div>
   )

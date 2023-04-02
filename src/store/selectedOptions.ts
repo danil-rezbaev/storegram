@@ -25,7 +25,7 @@ const initialState: SelectedOptionsType = {
 const saveStore = (state: SelectedOptionsType) => localStorage.setItem('basket', JSON.stringify(state))
 
 const selectedOptions = createSlice({
-  name: 'basket',
+  name: 'selectedOptions',
   initialState,
   reducers: {
     updateOptions (state, action: PayloadAction<{id: number, uniqueId: string, options: CurrentOptions, type: 'increment' | 'decrement'}>) {

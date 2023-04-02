@@ -1,11 +1,12 @@
 import React, { FC, ReactNode } from 'react'
 import cs from 'classnames'
-import { ProductItemOptions } from '../layout/types/catalog/productsDataTypes'
+import { Fields } from '../layout/types/catalog/productsDataTypes'
 import Checkbox from './Checkbox'
 
-export type SelectFieldProps = Pick<ProductItemOptions, 'type'> & {
+export type SelectFieldProps = {
   title: string,
   active: boolean,
+  type: Fields,
   name?: string,
   children?: ReactNode,
   onClick?: (arg: any) => any,

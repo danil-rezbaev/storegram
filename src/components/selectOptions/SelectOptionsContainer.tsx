@@ -1,14 +1,15 @@
 import React, { FC, useEffect, useState } from 'react'
 import {
-  CurrentOptions, ProductCurrentOptions,
-  ProductItemOptions,
+  CurrentOptions,
+  ProductCurrentOptions,
   ProductItemOptionsValue
 } from '../../layout/types/catalog/productsDataTypes'
 import _ from 'lodash'
 import SelectOptionsQuiz from './SelectOptionsQuiz'
+import { ProductOptionType } from '../../pages/basket/BasketTypes'
 
 export type SelectPropertyItemProps = {
-  optionsArray: ProductItemOptions[],
+  optionsArray: ProductOptionType[],
   optionsHandler: (options: Omit<ProductCurrentOptions, 'count'>) => void,
 }
 

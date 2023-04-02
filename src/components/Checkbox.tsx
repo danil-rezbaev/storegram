@@ -1,10 +1,11 @@
 import React, { FC } from 'react'
 import cs from 'classnames'
 import { ReactComponent as CheckIcon } from '../assets/images/pages/catalog/check.svg'
+import { Fields } from '../layout/types/catalog/productsDataTypes'
 
 export type CheckboxProps = {
   active: boolean,
-  type: 'checkbox' | 'radio',
+  type: Fields,
   className?: string
 }
 

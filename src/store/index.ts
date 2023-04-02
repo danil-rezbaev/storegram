@@ -4,11 +4,13 @@ import basketReducer from './basketSlice'
 import productInfoReducer from './productInfoSlice'
 import propertyQuizReducer from './optionsQuizSlice'
 import selectedOptionsReducer from './selectedOptions'
+import storeReducer from './storeSlice'
 
 const store = configureStore({
   reducer: {
     global: globalReducer,
     basket: basketReducer,
+    storeInfo: storeReducer,
     productInfo: productInfoReducer,
     optionsQuiz: propertyQuizReducer,
     selectedOptions: selectedOptionsReducer

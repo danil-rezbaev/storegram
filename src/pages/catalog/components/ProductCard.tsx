@@ -3,13 +3,14 @@ import { Button } from 'react-bootstrap'
 import cs from 'classnames'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
 import { addProduct, removeProduct } from '../../../store/basketSlice'
-import { ProductItem } from '../../../layout/types/catalog/productsDataTypes'
 import Counter from '../../../components/Counter'
 import { openModal } from '../../../store/productInfoSlice'
 import RenderPrice from '../../../components/RenderPrice'
+import { Product } from '../../basket/BasketTypes'
+import templateImage from '../../../assets/images/pages/catalog/noImage.png'
 
 export type ProductCardProps = {
-  product: ProductItem
+  product: Product
 }
 
 const ProductCard: FC<ProductCardProps> = (props) => {
@@ -18,15 +19,15 @@ const ProductCard: FC<ProductCardProps> = (props) => {
   } = props
 
   const {
-    id,
-    img,
+    _id,
+    images,
     title,
     price
   } = product
 
   const dispatch = useAppDispatch()
   const basketStore = useAppSelector(state => state.basket)
-  const currentProduct = basketStore.totalProductProperties[id]
+  const currentProduct = basketStore.totalProductProperties[_id]
 
   const totalProductPropertiesMemo = useMemo(() => {
     if (currentProduct) {
@@ -45,7 +46,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
       const formatObj = { ...product, count: 0 }
       dispatch(addProduct(formatObj))
     } else if (targetName === 'decrement') {
-      dispatch(removeProduct({ id }))
+      dispatch(removeProduct({ id: _id }))
     }
 
     setActive(true)
@@ -54,12 +55,16 @@ const ProductCard: FC<ProductCardProps> = (props) => {
 
   const openModalClick = () => dispatch(openModal(product))
 
+  const imageFormat = images.length
+    ? `https://typper.online/${images[0]}`
+    : templateImage
+
   return (
     <div
       className={cs('product-card', { active })}
     >
       <div className="product-card--img" onClick={openModalClick}>
-        <img src={img[0]} alt=""/>
+        <img src={imageFormat} alt=""/>
       </div>
 
       <div className="product-card--info">
@@ -82,7 +87,8 @@ const ProductCard: FC<ProductCardProps> = (props) => {
                 >
                   <RenderPrice price={totalProductPropertiesMemo.price}/>
                 </Button>
-              ) }
+              )
+          }
         </div>
       </div>
     </div>

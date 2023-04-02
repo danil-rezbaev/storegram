@@ -1,10 +1,11 @@
 import React, { FC } from 'react'
 import ProductCard from './ProductCard'
-import { Category, ProductItem } from '../../../layout/types/catalog/productsDataTypes'
+import { Product } from '../../basket/BasketTypes'
+import { Category } from '../../../layout/types/Category'
 
 export type ProductCategoryProps = {
-  category: Category | undefined,
-  items: ProductItem[],
+  category?: Category,
+  items: Product[],
 }
 
 const ProductCategory: FC<ProductCategoryProps> = (props) => {
@@ -26,7 +27,7 @@ const ProductCategory: FC<ProductCategoryProps> = (props) => {
       <div className="product-category--container">
         { items.map((product) => (
           <ProductCard
-            key={product.id}
+            key={product._id}
             product={product}
           />
         ))}

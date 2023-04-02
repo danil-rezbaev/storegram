@@ -1,10 +1,8 @@
 import React, { FC } from 'react'
 import cs from 'classnames'
+import { Category } from '../../../layout/types/Category'
 
-export type CategoryItemProps = {
-  id: number,
-  title: string,
-  code: string,
+export type CategoryItemProps = Category & {
   active: boolean,
   activeHandler: (code: string) => void
 }

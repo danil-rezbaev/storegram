@@ -7,14 +7,15 @@ import { addProduct, removeProduct } from '../../../store/basketSlice'
 import RenderPrice from '../../../components/RenderPrice'
 import CropText from '../../../components/CropText'
 import { useTranslation } from 'react-i18next'
+import templateImage from '../../../assets/images/pages/catalog/noImage.png'
 
 export type BasketProductCardProps = ProductItemStore
 
 const BasketProductCard: FC<BasketProductCardProps> = (props) => {
   const {
-    id,
+    _id,
     uniqueId,
-    img,
+    images,
     title,
     description,
     totalPrice,
@@ -32,15 +33,19 @@ const BasketProductCard: FC<BasketProductCardProps> = (props) => {
     if (getName === 'increment') {
       dispatch(addProduct({ ...props, count: 1 }))
     } else if (getName === 'decrement') {
-      dispatch(removeProduct({ id, uniqueId }))
+      dispatch(removeProduct({ id: _id, uniqueId }))
     }
   }, [count])
+
+  const imageFormat = images.length
+    ? `https://typper.online/${images[0]}`
+    : templateImage
 
   return (
     <div className="basket-product-card">
       <div className="basket-product-card--body">
         <div className="basket-product-card--img-container">
-          <img src={img[0]} alt="" className="basket-product-card--img"/>
+          <img src={imageFormat} alt="" className="basket-product-card--img"/>
         </div>
 
         <div className="basket-product-card--content">
