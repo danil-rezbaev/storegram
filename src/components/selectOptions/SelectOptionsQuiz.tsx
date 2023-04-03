@@ -35,7 +35,7 @@ const SelectOptionsQuiz: FC<SelectPropertyQuizProps> = (props) => {
     return !!find
   }
 
-  const handler = (value: ProductItemOptionsValue): void => {
+  const handler = (value: ProductItemOptionsValue, type: Fields): void => {
     if (optionType === 'radio') {
       setCheckList([value])
     }

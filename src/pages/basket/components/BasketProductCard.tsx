@@ -37,7 +37,7 @@ const BasketProductCard: FC<BasketProductCardProps> = (props) => {
     }
   }, [count])
 
-  const imageFormat = images.length
+  const imageFormat = images?.length
     ? `https://typper.online/${images[0]}`
     : templateImage
 
