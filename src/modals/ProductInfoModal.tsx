@@ -11,6 +11,7 @@ import 'swiper/css/pagination'
 import 'swiper/css'
 import ProductInfoControl from '../pages/catalog/components/ProductInfoControl'
 import { ProductCurrentOptions } from '../layout/types/catalog/productsDataTypes'
+import { SERVER_URL } from '../const'
 
 export type ProductInfoProps = unknown
 
@@ -75,11 +76,11 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
           pagination={{ clickable: true }}
           modules={[Pagination]}
         >
-          {images.map((item, index) => (
+          {images?.map((item, index) => (
             <SwiperSlide
               key={index}
             >
-              <img src={`https://typper.online/${item}`} alt="" className="product-info--img"/>
+              <img src={`${SERVER_URL}${item}`} alt="" className="product-info--img"/>
             </SwiperSlide>
           ))}
         </Swiper>

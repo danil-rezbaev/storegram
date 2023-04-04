@@ -8,6 +8,7 @@ import RenderPrice from '../../../components/RenderPrice'
 import CropText from '../../../components/CropText'
 import { useTranslation } from 'react-i18next'
 import templateImage from '../../../assets/images/pages/catalog/noImage.png'
+import { SERVER_URL } from '../../../const'
 
 export type BasketProductCardProps = ProductItemStore
 
@@ -38,7 +39,7 @@ const BasketProductCard: FC<BasketProductCardProps> = (props) => {
   }, [count])
 
   const imageFormat = images?.length
-    ? `https://typper.online/${images[0]}`
+    ? `${SERVER_URL}${images[0]}`
     : templateImage
 
   return (

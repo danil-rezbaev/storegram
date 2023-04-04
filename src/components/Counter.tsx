@@ -23,6 +23,8 @@ const Counter: FC<CounterProps> = (props) => {
 
   const { t } = useTranslation()
 
+  const priceIsValid = typeof price !== 'undefined'
+
   return (
     <div className={cs('counter', size, className)}>
       <Button
@@ -34,19 +36,15 @@ const Counter: FC<CounterProps> = (props) => {
         {t('counter:minus')}
       </Button>
 
-      { price
-        ? (
-        <RenderPrice
-          price={price}
-          className="counter--title"
-        />
-          )
+      { priceIsValid
+        ? <RenderPrice
+            price={price}
+            className="counter--title"
+          />
         : null }
 
       { title
-        ? (
-        <p className="counter--title">{title}</p>
-          )
+        ? <p className="counter--title">{title}</p>
         : null }
 
       <Button

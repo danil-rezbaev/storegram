@@ -16,7 +16,7 @@ export type StoreState = {
 const initialState: StoreState = {
   status: false,
   data: {
-    _id: localStorage.getItem('storeId') ?? '',
+    _id: localStorage.getItem('storeid') ?? '',
     title: '',
     products: [],
     currency: 'rub',
@@ -32,7 +32,7 @@ const storeSlice = createSlice({
     updateStore: (state, action: PayloadAction<Store>): void => {
       state.data = action.payload
       state.status = true
-      localStorage.setItem('storeId', action.payload._id)
+      localStorage.setItem('storeid', action.payload._id)
     }
   },
   extraReducers: {
@@ -48,7 +48,7 @@ const storeSlice = createSlice({
     [fetchGetStore.fulfilled]: (state: typeof initialState, action: PayloadAction<Store>) => {
       state.data = action.payload
       state.status = true
-      localStorage.setItem('storeId', action.payload._id)
+      localStorage.setItem('storeid', action.payload._id)
     }
   }
 })

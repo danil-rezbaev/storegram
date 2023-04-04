@@ -8,6 +8,7 @@ import { openModal } from '../../../store/productInfoSlice'
 import RenderPrice from '../../../components/RenderPrice'
 import { Product } from '../../basket/BasketTypes'
 import templateImage from '../../../assets/images/pages/catalog/noImage.png'
+import { SERVER_URL } from '../../../const'
 
 export type ProductCardProps = {
   product: Product
@@ -55,8 +56,8 @@ const ProductCard: FC<ProductCardProps> = (props) => {
 
   const openModalClick = () => dispatch(openModal(product))
 
-  const imageFormat = images.length
-    ? `https://typper.online/${images[0]}`
+  const imageFormat = images?.length
+    ? `${SERVER_URL}${images[0]}`
     : templateImage
 
   return (

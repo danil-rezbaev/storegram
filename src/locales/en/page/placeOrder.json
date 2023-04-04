@@ -8,6 +8,11 @@
     "cashPayment": "Cash payment"
   },
 
+  "name": {
+    "title": "Name",
+    "hint": "Make sure the entered data is correct"
+  },
+
   "phone": {
     "title": "Phone",
     "hint": "Make sure the entered data is correct"

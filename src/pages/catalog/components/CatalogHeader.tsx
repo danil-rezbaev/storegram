@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useLayoutEffect, useState } from 'react'
 import CategoryList from './CategoryList'
 import { Category } from '../../../layout/types/Category'
 
@@ -12,14 +12,21 @@ const CatalogHeader: FC<CatalogHeaderProps> = (props) => {
   } = props
 
   const initialCategory = categories[0]?.code ?? null
+  const [categoriesArray, setCategoriesArray] = useState<Array<any>>([])
   const [visibleCategory, setVisibleCategory] = useState<string | null>(initialCategory)
 
-  useEffect(() => {
-    const categories = Array.prototype.slice
-      .call(document.querySelectorAll('.product-category'))
+  useLayoutEffect(() => {
+    setTimeout(() => {
+      const categoriesList = Array.prototype.slice
+        .call(document.querySelectorAll('.product-category'))
+      setCategoriesArray(categoriesList)
+    }, 2000)
+  }, [])
 
+  useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
+        console.log(entry.isIntersecting, entry.target)
         if (entry.isIntersecting && entry.target) {
           const code = entry.target.getAttribute('id')
 
@@ -30,19 +37,19 @@ const CatalogHeader: FC<CatalogHeaderProps> = (props) => {
         }
       })
     }, {
-      threshold: 0.75
+      threshold: 0.9
     })
 
-    categories?.forEach((element) => {
+    categoriesArray?.forEach((element) => {
       observer.observe(element)
     })
 
     return () => {
-      categories?.forEach((element) => {
+      categoriesArray?.forEach((element) => {
         observer.unobserve(element)
       })
     }
-  }, [])
+  }, [categoriesArray])
 
   return (
     <div className="catalog-header">

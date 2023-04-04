@@ -8,7 +8,7 @@ import { Category } from '../../../layout/types/Category'
 
 export type CategoryListProps = {
   categories: Category[],
-  visibleCategory?: string | null,
+  visibleCategory: string | null,
 }
 
 const CategoryList: FC<CategoryListProps> = (props) => {
@@ -16,6 +16,8 @@ const CategoryList: FC<CategoryListProps> = (props) => {
     categories,
     visibleCategory
   } = props
+
+  console.log({ visibleCategory })
 
   SwiperCore.use([HashNavigation])
   const swiperRef = useRef(null) as any
@@ -32,6 +34,7 @@ const CategoryList: FC<CategoryListProps> = (props) => {
   }
 
   const [active, setActive] = useState<string | null>(visibleCategory ?? null)
+  // console.log(visibleCategory)
 
   const activeHandler = (code: string) => {
     const element = document.getElementById(code)
@@ -40,7 +43,6 @@ const CategoryList: FC<CategoryListProps> = (props) => {
       const yOffset = -100
       const y = element.getBoundingClientRect().top + window.scrollY + yOffset
       window.scrollTo({ top: y, behavior: 'smooth' })
-      setActive(code)
       window.location.hash = `navigation-${code}`
     }
   }
@@ -48,6 +50,7 @@ const CategoryList: FC<CategoryListProps> = (props) => {
   const onHashSet = () => {
     const hash = window.location.hash
     const hashFormat = hash.slice(12, hash.length)
+    console.log({ hashFormat })
     setActive(hashFormat)
   }
 
@@ -70,7 +73,7 @@ const CategoryList: FC<CategoryListProps> = (props) => {
             className='category-list--slide'
           >
             <CategoryItem
-              active={ active === item.code }
+              isActive={active === item.code}
               activeHandler={activeHandler}
               {...item}
             />

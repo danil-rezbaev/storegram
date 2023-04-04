@@ -4,7 +4,7 @@ import { useAppSelector } from '../hooks/redux'
 
 export type RenderPriceProps = {
   title?: string | number | null,
-  price: string | number | undefined,
+  price?: string | number,
   className?: string
 }
 
