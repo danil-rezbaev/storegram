@@ -11,7 +11,7 @@ import 'swiper/css/pagination'
 import 'swiper/css'
 import ProductInfoControl from '../pages/catalog/components/ProductInfoControl'
 import { ProductCurrentOptions } from '../layout/types/catalog/productsDataTypes'
-import { SERVER_URL } from '../const'
+import Image from '../components/Image/Image'
 
 export type ProductInfoProps = unknown
 
@@ -80,7 +80,7 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
             <SwiperSlide
               key={index}
             >
-              <img src={`${SERVER_URL}${item}`} alt="" className="product-info--img"/>
+              <Image image={images.length ? images[0] : undefined} className="product-info--img"/>
             </SwiperSlide>
           ))}
         </Swiper>

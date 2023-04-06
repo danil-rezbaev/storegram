@@ -7,8 +7,7 @@ import { addProduct, removeProduct } from '../../../store/basketSlice'
 import RenderPrice from '../../../components/RenderPrice'
 import CropText from '../../../components/CropText'
 import { useTranslation } from 'react-i18next'
-import templateImage from '../../../assets/images/pages/catalog/noImage.png'
-import { SERVER_URL } from '../../../const'
+import Image from '../../../components/Image/Image'
 
 export type BasketProductCardProps = ProductItemStore
 
@@ -38,15 +37,11 @@ const BasketProductCard: FC<BasketProductCardProps> = (props) => {
     }
   }, [count])
 
-  const imageFormat = images?.length
-    ? `${SERVER_URL}${images[0]}`
-    : templateImage
-
   return (
     <div className="basket-product-card">
       <div className="basket-product-card--body">
         <div className="basket-product-card--img-container">
-          <img src={imageFormat} alt="" className="basket-product-card--img"/>
+          <Image image={images.length ? images[0] : undefined} className="basket-product-card--img" />
         </div>
 
         <div className="basket-product-card--content">
