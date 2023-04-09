@@ -1,0 +1,19 @@
+@use "../../../variables";
+
+.product-content-loader {
+  text-align: left;
+
+  &--container {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5%;
+  }
+
+  @media (min-width: 768px) {
+    &--container {
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 2%;
+    }
+  }
+}

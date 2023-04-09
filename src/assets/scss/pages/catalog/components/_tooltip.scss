@@ -7,7 +7,7 @@
 
   .tooltip-inner {
     max-width: 350px;
-    width: calc(100% - 70px);
+    width: fit-content;
     margin-left: auto;
     background: rgba(variables.$dark-gray, 0.99);
   }

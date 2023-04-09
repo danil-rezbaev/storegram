@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useState } from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { ReactComponent as CloseIcon } from '../assets/images/pages/catalog/close.svg'
 import BottomPopup from '../components/bottomPopup/BottomPopup'
 import SelectOptionsContainer from '../components/selectOptions/SelectOptionsContainer'
@@ -12,6 +12,7 @@ import 'swiper/css'
 import ProductInfoControl from '../pages/catalog/components/ProductInfoControl'
 import { ProductCurrentOptions } from '../layout/types/catalog/productsDataTypes'
 import Image from '../components/Image/Image'
+import { ReactComponent as InfoIcon } from '../assets/images/pages/catalog/info.svg'
 
 export type ProductInfoProps = unknown
 
@@ -29,7 +30,8 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
     images,
     title,
     description,
-    options
+    options,
+    hint
     // properties,
   } = product
 
@@ -48,13 +50,11 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
     dispatch(visibleHandle({ value }))
   }
 
-  // const renderTooltip = (
-  //   <Tooltip className="tooltip">
-  //     { properties
-  //       ? <ProductProperties data={properties} />
-  //       : <p>{t('catalog:productInfoModal.propertiesNotFound')}</p> }
-  //   </Tooltip>
-  // )
+  const renderHint = (
+    <Tooltip className="tooltip">
+      { hint }
+    </Tooltip>
+  )
 
   return (
     <BottomPopup
@@ -90,11 +90,11 @@ const ProductInfoModal: FC<ProductInfoProps> = () => {
         <div className="product-info--header">
           <h1 className="product-info--title">{title}</h1>
 
-          {/* { properties */}
-          {/*  ? <OverlayTrigger placement="left" overlay={renderTooltip}> */}
-          {/*      <InfoIcon/> */}
-          {/*    </OverlayTrigger> */}
-          {/*  : null } */}
+           { hint
+             ? <OverlayTrigger placement="left" overlay={renderHint}>
+                <InfoIcon />
+              </OverlayTrigger>
+             : null }
         </div>
 
         <p className="product-info--description">{description}</p>

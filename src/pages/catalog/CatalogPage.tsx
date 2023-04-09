@@ -6,14 +6,16 @@ import Page from '../../components/page/Page'
 import CatalogHeader from './components/CatalogHeader'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { fetchGetStore } from '../../store/storeSlice'
+import CategoryListLoader from './components/CategoryListLoader'
+import ProductCategoryLoader from './components/ProductCategoryLoader'
 
 function CatalogPage () {
   const { status, data } = useAppSelector(store => store.storeInfo)
-  const { _id, products, categories } = data
+  const { _id, products, categories = [] } = data
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (!status && _id) {
+    if (status !== 'fulfilled' && _id) {
       dispatch(fetchGetStore({ id: _id }))
     }
   }, [])
@@ -26,20 +28,36 @@ function CatalogPage () {
     )
   }
 
+  if (status === 'pending') {
+    return (
+      <Page className="page--catalog">
+        <CategoryListLoader/>
+
+        <div
+          className="catalog--body"
+          style={{
+            marginTop: '16px'
+          }}
+        >
+          <ProductCategoryLoader/>
+        </div>
+      </Page>
+    )
+  }
+
   return (
     <Page className="page--catalog">
-       <CatalogHeader categories={categories} />
+      <CatalogHeader categories={categories} />
 
-       <div className="catalog--body">
+      <div className="catalog--body">
         <ProductList
           products={products}
           categories={categories}
         />
-       </div>
+      </div>
 
-       <GoInBasketButton className="catalog--control"/>
-
-       <ProductInfoModal />
+      <GoInBasketButton className="catalog--control"/>
+      <ProductInfoModal />
     </Page>
   )
 }

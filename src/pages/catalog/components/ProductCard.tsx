@@ -57,7 +57,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
   const openModalClick = () => dispatch(openModal(product))
 
   const imageFormat = images?.length
-    ? `${SERVER_URL}${images[0]}`
+    ? `${SERVER_URL}/${images[0]}`
     : templateImage
 
   return (

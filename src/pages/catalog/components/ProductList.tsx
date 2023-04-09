@@ -29,13 +29,13 @@ const ProductList: FC<ProductListProps> = (props) => {
 
   return (
     <div className="product-list">
-       { _.map(productCategories, ([key, value]) => (
+      {_.map(productCategories, ([key, value]) => (
         <ProductCategory
           key={key}
           category={matchCategory(key)}
           items={value}
         />
-       ))}
+      ))}
     </div>
   )
 }

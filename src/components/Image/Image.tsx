@@ -15,7 +15,7 @@ const Image: FC<ImageProps> = (props) => {
 
   return (
     <img
-      src={image ? `${SERVER_URL}${image}` : undefined}
+      src={image ? `${SERVER_URL}/${image}` : undefined}
       className={className}
       onError={({ currentTarget }) => {
         currentTarget.onerror = null

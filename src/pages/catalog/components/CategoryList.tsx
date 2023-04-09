@@ -17,8 +17,6 @@ const CategoryList: FC<CategoryListProps> = (props) => {
     visibleCategory
   } = props
 
-  console.log({ visibleCategory })
-
   SwiperCore.use([HashNavigation])
   const swiperRef = useRef(null) as any
 
@@ -34,7 +32,6 @@ const CategoryList: FC<CategoryListProps> = (props) => {
   }
 
   const [active, setActive] = useState<string | null>(visibleCategory ?? null)
-  // console.log(visibleCategory)
 
   const activeHandler = (code: string) => {
     const element = document.getElementById(code)
@@ -50,7 +47,6 @@ const CategoryList: FC<CategoryListProps> = (props) => {
   const onHashSet = () => {
     const hash = window.location.hash
     const hashFormat = hash.slice(12, hash.length)
-    console.log({ hashFormat })
     setActive(hashFormat)
   }
 
