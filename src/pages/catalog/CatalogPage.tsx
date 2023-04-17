@@ -4,19 +4,23 @@ import GoInBasketButton from './components/GoInBasketButton'
 import ProductInfoModal from '../../modals/ProductInfoModal'
 import Page from '../../components/page/Page'
 import CatalogHeader from './components/CatalogHeader'
-import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { fetchGetStore } from '../../store/storeSlice'
+import { useAppSelector } from '../../hooks/redux'
 import CategoryListLoader from './components/CategoryListLoader'
 import ProductCategoryLoader from './components/ProductCategoryLoader'
+import { useGetStoreMutation } from '../../store/store/storeApi'
 
 function CatalogPage () {
   const { status, data } = useAppSelector(store => store.storeInfo)
   const { _id, products, categories = [] } = data
-  const dispatch = useAppDispatch()
+  const [identifyStore] = useGetStoreMutation()
+
+  const getStore = async () => {
+    await identifyStore(_id)
+  }
 
   useEffect(() => {
-    if (status !== 'fulfilled' && _id) {
-      dispatch(fetchGetStore({ id: _id }))
+    if (status === 'pending' && _id) {
+      getStore()
     }
   }, [])
 

@@ -1,23 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ProductItemStore } from '../layout/types/catalog/productsDataTypes'
-import { Product } from '../pages/basket/BasketTypes'
+import { ProductItemStore } from '../../layout/types/catalog/productsDataTypes'
+import { Product } from '../../pages/basket/BasketTypes'
+import { initialState } from './data'
 
 export type ProductInfoSlice = {
   product: Product,
   visible: boolean,
-}
-
-const initialState: ProductInfoSlice = {
-  product: {
-    _id: '',
-    category: 'any',
-    images: [],
-    title: 'Без названия',
-    description: '',
-    price: 0,
-    options: []
-  },
-  visible: false
 }
 
 const productInfoSlice = createSlice({

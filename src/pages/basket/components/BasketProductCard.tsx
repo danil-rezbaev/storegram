@@ -3,7 +3,7 @@ import { ProductItemStore } from '../../../layout/types/catalog/productsDataType
 import BasketProductOptions from './BasketProductOptions'
 import Counter from '../../../components/Counter'
 import { useAppDispatch } from '../../../hooks/redux'
-import { addProduct, removeProduct } from '../../../store/basketSlice'
+import { addProduct, removeProduct } from '../../../store/basket/basketSlice'
 import RenderPrice from '../../../components/RenderPrice'
 import CropText from '../../../components/CropText'
 import { useTranslation } from 'react-i18next'

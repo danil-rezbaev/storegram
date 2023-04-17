@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ProductItemOptions, ProductItemOptionsValue } from '../layout/types/catalog/productsDataTypes'
+import { ProductItemOptions, ProductItemOptionsValue } from '../../layout/types/catalog/productsDataTypes'
 import _ from 'lodash'
+import { initialState } from './data'
 
 export type ProductInfoSlice = {
   questions: ProductItemOptions[],
@@ -9,15 +10,6 @@ export type ProductInfoSlice = {
   productId: number,
   questionCounter: number,
   questionLength: number
-}
-
-const initialState: ProductInfoSlice = {
-  questions: [],
-  selectedOptions: {},
-  visible: false,
-  productId: 0,
-  questionCounter: 0,
-  questionLength: 0
 }
 
 const optionsQuizSlice = createSlice({

@@ -4,7 +4,7 @@ import { ReactComponent as CloseIcon } from '../assets/images/pages/catalog/clos
 import BottomPopup from '../components/bottomPopup/BottomPopup'
 import SelectOptionsContainer from '../components/selectOptions/SelectOptionsContainer'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
-import { visibleHandle } from '../store/productInfoSlice'
+import { visibleHandle } from '../store/productInfo/productInfoSlice'
 import { Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css/pagination'

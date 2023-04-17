@@ -1,28 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { CurrentOptions, SelectedOptions } from '../layout/types/catalog/productsDataTypes'
+import { CurrentOptions, SelectedOptions } from '../../layout/types/catalog/productsDataTypes'
+import { saveStore } from './utils'
+import { initialState } from './data'
 
 export type SelectedOptionsType = {
   options: SelectedOptions,
   filled: boolean
 }
-
-const initialState: SelectedOptionsType = {
-  options: {},
-  filled: false
-}
-
-// function isBasketState (obj: any): obj is SelectedOptions {
-//   if (!obj) return false
-//
-//   const objAsBasketState = obj as SelectedOptionsType
-//   return (objAsBasketState.filled !== undefined)
-// }
-//
-// const initialState = isBasketState(JSON.parse(localStorage.getItem('selectedOptions') as string))
-//   ? JSON.parse(localStorage.getItem('selectedOptions') as string)
-//   : defaultState
-
-const saveStore = (state: SelectedOptionsType) => localStorage.setItem('basket', JSON.stringify(state))
 
 const selectedOptions = createSlice({
   name: 'selectedOptions',

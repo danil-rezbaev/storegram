@@ -1,23 +1,31 @@
 import { configureStore } from '@reduxjs/toolkit'
-import globalReducer from './globalSlice'
-import basketReducer from './basketSlice'
-import productInfoReducer from './productInfoSlice'
-import propertyQuizReducer from './optionsQuizSlice'
-import selectedOptionsReducer from './selectedOptions'
-import storeReducer from './storeSlice'
+import { setupListeners } from '@reduxjs/toolkit/query'
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-const store = configureStore({
+import { api } from './api'
+import globalReducer from './global/globalSlice'
+import basketReducer from './basket/basketSlice'
+import storeReducer from './store/storeSlice'
+import productInfoReducer from './productInfo/productInfoSlice'
+import propertyQuizReducer from './optionsQuiz/optionsQuizSlice'
+import selectedOptionsReducer from './selectedOptions/selectedOptions'
+
+export const store = configureStore({
   reducer: {
+    [api.reducerPath]: api.reducer,
     global: globalReducer,
     basket: basketReducer,
     storeInfo: storeReducer,
     productInfo: productInfoReducer,
     optionsQuiz: propertyQuizReducer,
     selectedOptions: selectedOptionsReducer
-  }
+  },
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(api.middleware)
 })
 
-export default store
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector
+export const useAppDispatch = () => useDispatch<AppDispatch>()
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+setupListeners(store.dispatch)

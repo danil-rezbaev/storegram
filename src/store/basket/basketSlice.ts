@@ -4,7 +4,9 @@ import {
   ProductItemOptionsValue,
   ProductItemStore,
   TotalProductProperties
-} from '../layout/types/catalog/productsDataTypes'
+} from '../../layout/types/catalog/productsDataTypes'
+import { initialState } from './data'
+import { saveStore } from './utils'
 
 export type BasketState = {
   products: Record<string, ProductItemStore>,
@@ -12,29 +14,6 @@ export type BasketState = {
   amount: number,
   quantity: number
 }
-
-const defaultState: BasketState = {
-  products: {},
-  totalProductProperties: {},
-  amount: 0,
-  quantity: 0
-}
-
-function isBasketState (obj: any): obj is BasketState {
-  if (!obj) return false
-
-  const objAsBasketState = obj as BasketState
-  return (objAsBasketState.products !== undefined &&
-          objAsBasketState.totalProductProperties !== undefined &&
-          objAsBasketState.amount !== undefined &&
-          objAsBasketState.quantity !== undefined)
-}
-
-const initialState = isBasketState(JSON.parse(localStorage.getItem('basket') as string))
-  ? JSON.parse(localStorage.getItem('basket') as string)
-  : defaultState
-
-const saveStore = (state: BasketState) => localStorage.setItem('basket', JSON.stringify(state))
 
 const basketSlice = createSlice({
   name: 'basket',

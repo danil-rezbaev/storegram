@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import BasketProductCard from './BasketProductCard'
 import _ from 'lodash'
-import { BasketState } from '../../../store/basketSlice'
+import { BasketState } from '../../../store/basket/basketSlice'
 
 export type BasketProductListProps = {
   basketStore: BasketState
