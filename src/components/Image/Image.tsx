@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { SERVER_URL } from '../../const'
+import { REACT_APP_SERVER_URL } from '../../const'
 import templateImage from '../../assets/images/pages/catalog/noImage.png'
 
 export type ImageProps = {
@@ -15,7 +15,7 @@ const Image: FC<ImageProps> = (props) => {
 
   return (
     <img
-      src={image ? `${SERVER_URL}/${image}` : undefined}
+      src={image ? `${REACT_APP_SERVER_URL}/${image}` : undefined}
       className={className}
       onError={({ currentTarget }) => {
         currentTarget.onerror = null

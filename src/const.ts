@@ -1,2 +1,1 @@
-export const SERVER_URL = 'https://typper.online'
-// export const SERVER_URL = 'http://localhost:5000'
+export const { REACT_APP_SERVER_URL } = process.env
